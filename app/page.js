@@ -1,5 +1,7 @@
 import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
+import FeaturedNews from '@/components/FeaturedNews'
+import HallOfFame from '@/components/HallOfFame'
 import Services from '@/components/Services'
 import Works from '@/components/Works'
 import WhyBeeTeam from '@/components/WhyBeeTeam'
@@ -12,6 +14,8 @@ return (
 <Hero />
 <Services />
 <Works />
+<FeaturedNews/>
+<HallOfFame/>
 <WhyBeeTeam />
 <Footer/>
 </>
