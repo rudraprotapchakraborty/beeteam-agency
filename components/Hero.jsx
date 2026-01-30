@@ -3,163 +3,182 @@
 import { motion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion'
 import { useRef, useEffect } from 'react'
 
-export default function Vision() {
+export default function UltraVision() {
   const containerRef = useRef(null)
   
-  // Mouse Tracking for Spotlight & Lens Flare
+  // Mouse tracking
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
 
   useEffect(() => {
     const handleMouseMove = (e) => {
-      const { clientX, clientY } = e
-      mouseX.set(clientX)
-      mouseY.set(clientY)
+      const { innerWidth, innerHeight } = window
+      mouseX.set((e.clientX / innerWidth) - 0.5)
+      mouseY.set((e.clientY / innerHeight) - 0.5)
     }
     window.addEventListener("mousemove", handleMouseMove)
     return () => window.removeEventListener("mousemove", handleMouseMove)
   }, [mouseX, mouseY])
 
-  // Scroll Tracking for 3D Parallax
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"]
   })
 
-  const smoothProgress = useSpring(scrollYProgress, { stiffness: 60, damping: 20 })
-  
-  // High-End Perspective Transforms
-  const rotateX = useTransform(smoothProgress, [0, 1], [25, -25])
-  const rotateY = useTransform(smoothProgress, [0, 1], [-20, 20])
-  const imageZ = useTransform(smoothProgress, [0, 0.5, 1], [0, 100, 0])
-  const bgTextX = useTransform(smoothProgress, [0, 1], [-150, 150])
+  // Smoothing
+  const springConfig = { stiffness: 100, damping: 30, mass: 1 }
+  const smoothMouseX = useSpring(mouseX, springConfig)
+  const smoothMouseY = useSpring(mouseY, springConfig)
+  const smoothScroll = useSpring(scrollYProgress, springConfig)
+
+  // 3D Transforms
+  const rotateX = useTransform(smoothMouseY, [-0.5, 0.5], [10, -10])
+  const rotateY = useTransform(smoothMouseX, [-0.5, 0.5], [-12, 12])
+  const bgTextX = useTransform(smoothScroll, [0, 1], [-100, 100])
 
   return (
     <section 
       ref={containerRef} 
-      className="relative min-h-screen flex items-center justify-center py-40 overflow-hidden bg-[#020202] cursor-none"
+      className="relative min-h-[150vh] flex items-center justify-center py-40 overflow-hidden bg-white cursor-none"
     >
-      {/* 1. KINETIC FILM GRAIN (The "Secret Sauce") */}
-      <div className="absolute inset-0 pointer-events-none z-[60] opacity-[0.04]">
-        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-          <filter id="noiseFilter">
-            <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
-          </filter>
+      {/* 1. KINETIC GRAIN (Inverted for Light) */}
+      <div className="absolute inset-0 pointer-events-none z-[100] opacity-[0.04] mix-blend-multiply">
+        <svg viewBox="0 0 200 200" className="w-full h-full">
+          <filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" /></filter>
           <rect width="100%" height="100%" filter="url(#noiseFilter)" />
         </svg>
       </div>
 
-      {/* 2. DYNAMIC CURSOR SPOTLIGHT */}
+      {/* 2. AMBIENT LIGHT (Subtle Red/Yellow Bloom) */}
       <motion.div
-        className="fixed inset-0 z-50 pointer-events-none"
+        className="fixed inset-0 z-10 pointer-events-none"
         style={{
           background: useTransform(
             [mouseX, mouseY],
-            ([x, y]) => `radial-gradient(700px circle at ${x}px ${y}px, rgba(255,199,0,0.12), transparent 70%)`
+            ([x, y]) => `radial-gradient(1200px circle at ${(x + 0.5) * 100}% ${(y + 0.5) * 100}%, rgba(255,199,0,0.06), rgba(225,29,72,0.03), transparent 70%)`
           )
         }}
       />
-      
-      {/* Lens Flare Ring Cursor */}
-      <motion.div
-        className="fixed top-0 left-0 w-12 h-12 border border-[#FFC700]/30 rounded-full z-[100] pointer-events-none backdrop-blur-[2px]"
-        style={{ x: mouseX, y: mouseY, translateX: "-50%", translateY: "-50%" }}
-        transition={{ type: "spring", stiffness: 400, damping: 30 }}
-      >
-        <div className="absolute inset-0 m-auto w-1 h-1 bg-[#FFC700] rounded-full shadow-[0_0_15px_#FFC700]" />
-      </motion.div>
 
-      {/* 3. PARALLAX BACKGROUND LAYER */}
+      {/* 3. MEGA GHOST TEXT (Layered behind) */}
       <motion.div 
         style={{ x: bgTextX }}
-        className="absolute inset-0 flex items-center justify-center opacity-[0.07] select-none -z-10"
+        className="absolute inset-0 flex flex-col items-center justify-center opacity-[0.03] select-none pointer-events-none"
       >
-        <h2 className="text-[30vw] font-black text-white italic tracking-tighter whitespace-nowrap">
-          PRODUCTION
+        <h2 className="text-[35vw] font-black text-black leading-none uppercase italic tracking-tighter">
+          HYPER
         </h2>
       </motion.div>
 
-      {/* 4. MAIN STAGE */}
-      <div className="max-w-7xl mx-auto px-10 grid grid-cols-1 lg:grid-cols-2 gap-32 items-center relative z-20">
-        
-        {/* THE 3D SLAB */}
-        <div className="perspective-[2500px]">
-          <motion.div
-            style={{ rotateX, rotateY, z: imageZ }}
-            className="relative rounded-[30px] overflow-hidden group shadow-[0_80px_150px_-20px_rgba(0,0,0,0.8)] border border-white/5 bg-zinc-900"
-          >
-            {/* Chromatic Aberration Hover Effect */}
+      {/* 4. MAIN 3D STAGE */}
+      <div className="relative z-20 w-full max-w-7xl px-10 perspective-[3000px]">
+        <motion.div
+          style={{ 
+            rotateX, 
+            rotateY, 
+            transformStyle: "preserve-3d" 
+          }}
+          className="relative grid grid-cols-1 lg:grid-cols-2 gap-20 items-center"
+        >
+          
+          {/* THE MULTI-LAYER IMAGE SLAB */}
+          <div className="relative group" style={{ transformStyle: "preserve-3d" }}>
+            
+            {/* LAYER 0: Light Soft Shadow */}
+            <div className="absolute inset-0 bg-black/5 blur-[80px] rounded-3xl translate-y-16 scale-90" />
+
+            {/* LAYER 1: The Main Image */}
             <motion.div 
-              className="absolute inset-0 z-20 opacity-0 group-hover:opacity-40 pointer-events-none transition-opacity duration-700 bg-[url('https://beeteam.agency/wp-content/uploads/2025/02/6-1-2048x1152.png')] bg-cover mix-blend-screen scale-105 translate-x-1"
-            />
-            
-            <motion.img
-              src="https://beeteam.agency/wp-content/uploads/2025/02/6-1-2048x1152.png"
-              alt="Cinematic Vision"
-              className="relative z-10 w-full h-[650px] object-cover contrast-[1.1] brightness-[0.8] group-hover:brightness-[1.1] transition-all duration-1000 ease-out"
-            />
-
-            {/* Viewfinder Corner Accents */}
-            <div className="absolute top-8 left-8 w-6 h-6 border-t-2 border-l-2 border-white/20 z-30" />
-            <div className="absolute bottom-8 right-8 w-6 h-6 border-b-2 border-r-2 border-white/20 z-30" />
-          </motion.div>
-        </div>
-
-        {/* TYPOGRAPHY BLOCK */}
-        <div className="flex flex-col gap-12">
-          <motion.div 
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <div className="flex items-center gap-4 mb-8">
-              <span className="h-[1px] w-16 bg-[#FFC700]" />
-              <span className="text-[#FFC700] uppercase tracking-[0.8em] text-[10px] font-black">
-                Visual Blueprint
-              </span>
-            </div>
-            
-            <h3 className="text-7xl lg:text-9xl font-black text-white leading-[0.8] tracking-tighter">
-              BEYOND <br /> 
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-400 to-white/20">IMAGINE.</span> <br />
-              <span className="italic text-[#FFC700] drop-shadow-[0_0_30px_rgba(255,199,0,0.3)]">BEETEAM.</span>
-            </h3>
-          </motion.div>
-
-          <motion.div 
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.4 }}
-            className="space-y-8 pl-4"
-          >
-            <p className="text-2xl text-zinc-300 font-light leading-snug max-w-lg">
-              We define the <span className="font-bold text-white">gravitational pull</span> of your brand’s narrative. 
-            </p>
-            <p className="text-zinc-500 text-lg max-w-md leading-relaxed">
-              Every pixel is polished. Every transition is a heartbeat. We don't just produce content; we curate experiences that linger long after the screen goes black.
-            </p>
-          </motion.div>
-
-          {/* THE CINEMATIC ACTION */}
-          <motion.div className="pt-4 pl-4">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="group relative px-14 py-6 bg-transparent border border-white/10 rounded-[18px] text-white text-[11px] font-black uppercase tracking-[0.4em] overflow-hidden"
+               className="relative z-10 rounded-2xl overflow-hidden border border-black/5 bg-zinc-100 shadow-2xl"
+               style={{ translateZ: 50 }}
             >
-              <span className="relative z-10 group-hover:text-black transition-colors duration-300">
-                Initiate Sequence
-              </span>
-              <div className="absolute inset-0 bg-[#FFC700] -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out" />
+              <motion.img
+                src="https://beeteam.agency/wp-content/uploads/2025/02/6-1-2048x1152.png"
+                className="w-full h-[650px] object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-[1.5s] ease-out"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-white/40 via-transparent to-transparent" />
+            </motion.div>
+
+            {/* LAYER 2: Floating Viewfinder (Yellow Accent) */}
+            <motion.div 
+              style={{ translateZ: 150 }}
+              className="absolute inset-[-30px] border-[1.5px] border-yellow-400 rounded-3xl pointer-events-none z-30"
+            >
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full py-2 text-black text-[9px] tracking-[0.8em] font-black bg-yellow-400 px-4">
+                SYSTEM_STABLE_V2
+              </div>
+              <div className="absolute top-4 left-4 w-10 h-10 border-t-4 border-l-4 border-black" />
+              <div className="absolute bottom-4 right-4 w-10 h-10 border-b-4 border-r-4 border-red-600" />
+            </motion.div>
+
+            {/* LAYER 3: Data Streams (Red Accent) */}
+            <motion.div 
+              style={{ translateZ: 250, x: useTransform(smoothMouseX, [-0.5, 0.5], [15, -15]) }}
+              className="absolute top-20 -right-10 z-40 bg-white p-6 border border-black/5 rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.1)]"
+            >
+               <div className="text-red-600 font-black text-xs mb-2 italic">LIVE TELEMETRY</div>
+               <div className="h-1 w-32 bg-zinc-100 overflow-hidden">
+                 <motion.div 
+                   animate={{ x: [-128, 128] }} 
+                   transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                   className="h-full w-full bg-red-600" 
+                 />
+               </div>
+               <div className="mt-2 text-[10px] text-black font-mono">FRM_RATE: 120.4 FPS</div>
+            </motion.div>
+          </div>
+
+          {/* TYPOGRAPHY BLOCK */}
+          <motion.div 
+            style={{ translateZ: 180 }}
+            className="flex flex-col gap-8 text-black"
+          >
+            <div className="flex items-center gap-4">
+               <motion.div 
+                animate={{ scale: [1, 1.3, 1] }} 
+                transition={{ repeat: Infinity, duration: 2 }}
+                className="h-3 w-3 bg-red-600 rounded-full shadow-[0_0_15px_rgba(225,29,72,0.4)]" 
+               />
+               <span className="uppercase tracking-[0.8em] text-[10px] font-black text-black/40">Visual Interface</span>
+            </div>
+
+            <h3 className="text-8xl font-black leading-[0.85] tracking-tighter text-black">
+              BEYOND <br /> 
+              <span className="bg-yellow-400 px-4">LIMITS.</span> <br />
+              <span className="text-zinc-200">PRODUCTION.</span>
+            </h3>
+
+            <div className="h-[4px] w-24 bg-red-600" />
+
+            <p className="text-3xl font-light leading-tight text-zinc-600 italic">
+              Manipulating the <span className="font-black text-black">Visual Fabric</span> of the modern era.
+            </p>
+
+            <motion.button
+              whileHover={{ scale: 1.05, y: -5 }}
+              whileTap={{ scale: 0.95 }}
+              className="w-fit mt-10 px-14 py-6 bg-black text-white font-black uppercase tracking-[0.4em] text-[11px] rounded-full hover:bg-red-600 transition-colors shadow-2xl"
+            >
+              Enter the Void
             </motion.button>
           </motion.div>
-        </div>
+        </motion.div>
       </div>
 
-      {/* 5. ANAMORPHIC VIGNETTE & LETTERBOXING */}
-      <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_300px_rgba(0,0,0,1)] z-40" />
-      <div className="absolute top-0 w-full h-24 bg-gradient-to-b from-black via-black/80 to-transparent z-40" />
-      <div className="absolute bottom-0 w-full h-24 bg-gradient-to-t from-black via-black/80 to-transparent z-40" />
+      {/* CUSTOM CURSOR CROSSHAIR (Black/Red) */}
+      <motion.div
+        className="fixed top-0 left-0 w-16 h-16 z-[1000] pointer-events-none flex items-center justify-center"
+        style={{ 
+          x: useTransform(smoothMouseX, [-0.5, 0.5], [0, typeof window !== 'undefined' ? window.innerWidth : 0]), 
+          y: useTransform(smoothMouseY, [-0.5, 0.5], [0, typeof window !== 'undefined' ? window.innerHeight : 0]),
+          translateX: "-50%", translateY: "-50%" 
+        }}
+      >
+        <div className="absolute inset-0 border border-black/10 rounded-full animate-spin-slow" />
+        <div className="w-[1.5px] h-6 bg-red-600 absolute" />
+        <div className="w-6 h-[1.5px] bg-red-600 absolute" />
+        <div className="w-1 h-1 bg-black rounded-full" />
+      </motion.div>
     </section>
   )
 }

@@ -12,10 +12,10 @@ return (
 <>
 <Navbar />
 <Hero />
-<Services />
-<Works />
 <FeaturedNews/>
+<Works />
 <HallOfFame/>
+<Services />
 <WhyBeeTeam />
 <Footer/>
 </>
