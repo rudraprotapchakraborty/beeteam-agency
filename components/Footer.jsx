@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Facebook, Instagram, Linkedin, Youtube, ArrowUp, ArrowRight } from 'lucide-react'
+import { Facebook, Instagram, Linkedin, Youtube, ArrowUp, ArrowRight, Mail, MapPin, Zap, Globe } from 'lucide-react'
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -16,82 +16,119 @@ export default function Footer() {
   ]
 
   return (
-    <footer className="relative bg-white pt-32 pb-12 overflow-hidden border-t border-black/5">
+    <footer id='contact' className="relative bg-white pt-40 pb-12 overflow-hidden border-t-8 border-black selection:bg-black selection:text-white">
       
-      {/* 1. SOFT GRADIENT MASK */}
-      <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-zinc-50 to-transparent z-10" />
-      <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-2/3 h-48 bg-yellow-400/10 blur-[120px] rounded-full pointer-events-none" />
+      {/* KINETIC BACKGROUND: Grid & Light Leaks */}
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
+           style={{ backgroundImage: `linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)`, backgroundSize: '60px 60px' }} />
+      <div className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-full h-[600px] bg-red-600/5 blur-[120px] rounded-full pointer-events-none" />
       
-      <div className="max-w-7xl mx-auto px-10 relative z-20">
+      <div className="max-w-[1500px] mx-auto px-10 relative z-20">
         
-        {/* 2. THE "BIG CALL" SECTION */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 mb-32 items-center">
+        {/* THE "BIG CALL" SECTION */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 mb-48 items-start">
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
+            className="space-y-12"
           >
-            <h2 className="text-6xl md:text-8xl font-black text-black tracking-tighter leading-none mb-8">
-              LET'S <br /> <span className="text-red-600">CREATE</span> <br /> HISTORY.
+            <div className="flex items-center gap-6">
+               <div className="px-4 py-1 bg-black text-white text-[10px] font-black uppercase tracking-widest">Final_Directive</div>
+               <div className="h-px flex-1 bg-black/10" />
+            </div>
+            <h2 className="text-7xl md:text-[110px] font-black text-black tracking-tighter leading-[0.75] uppercase">
+              LET'S <br /> <span className="text-red-600 italic">CREATE</span> <br /> HISTORY.
             </h2>
-            <p className="text-zinc-500 text-lg max-w-sm font-medium leading-relaxed border-l-4 border-yellow-400 pl-6">
-              Based in Dhaka. Operating globally. Redefining the cinematic experience one frame at a time.
-            </p>
+            <div className="relative p-12 bg-zinc-50 border-l-8 border-black shadow-xl shadow-black/5 max-w-md">
+               <p className="text-zinc-500 text-xl font-black uppercase tracking-tighter leading-none italic">
+                 Based in Dhaka. <br />
+                 Operating globally. <br />
+                 Redefining the lens.
+               </p>
+            </div>
           </motion.div>
 
           <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="relative group p-1 bg-gradient-to-br from-black/5 to-transparent rounded-[3rem]"
+            className="relative group"
           >
-            <div className="bg-zinc-50 p-12 rounded-[2.9rem] border border-black/5 flex flex-col gap-8">
-              <h3 className="text-black text-3xl font-black tracking-tighter">START A PROJECT</h3>
-              <p className="text-zinc-500">Ready to take your brand to the silver screen? Let’s talk about your vision.</p>
+            <div className="bg-black p-16 rounded-[4rem] flex flex-col gap-12 relative z-10 shadow-[0_50px_100px_rgba(0,0,0,0.2)]">
+              <div className="space-y-4">
+                <h3 className="text-white text-5xl font-black tracking-tighter uppercase leading-none">START A <br /> PROJECT</h3>
+                <p className="text-zinc-400 font-bold uppercase text-xs tracking-widest">Our engine is primed for your vision.</p>
+              </div>
+              
               <motion.button 
-                whileHover={{ gap: "24px" }}
-                className="group flex items-center gap-4 bg-black text-white px-10 py-5 rounded-full font-black uppercase text-xs tracking-widest transition-all shadow-[0_20px_40px_rgba(0,0,0,0.1)] hover:bg-red-600"
+                whileHover={{ scale: 1.05, rotate: -1 }}
+                whileTap={{ scale: 0.95 }}
+                className="group flex items-center justify-between bg-yellow-400 text-black px-12 py-10 rounded-full font-black uppercase text-sm tracking-[0.2em] transition-all"
               >
-                Get In Touch <ArrowRight size={18} strokeWidth={3} />
+                Inquire Node 
+                <div className="w-14 h-14 rounded-full bg-black flex items-center justify-center text-white group-hover:rotate-45 transition-transform duration-500">
+                   <ArrowRight size={28} strokeWidth={3} />
+                </div>
               </motion.button>
             </div>
           </motion.div>
         </div>
 
-        {/* 3. NAVIGATION COLUMNS */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-32 border-b border-black/5 pb-24">
-          <div className="space-y-8">
-            <h4 className="text-black font-black text-[10px] uppercase tracking-[0.4em]">Explore</h4>
-            <div className="flex flex-col gap-4">
+        {/* NAVIGATION COLUMNS */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-16 mb-40 border-b-2 border-black/5 pb-32">
+          <div className="space-y-10">
+            <h4 className="text-red-600 font-black text-[12px] uppercase tracking-[0.5em]">System_Map</h4>
+            <div className="flex flex-col gap-6">
               {['Home', 'About Us', 'Our Process', 'Services', 'Works'].map((link) => (
-                <motion.a key={link} href="#" whileHover={{ x: 10, color: "#E11D48" }} className="text-zinc-400 text-sm font-bold uppercase tracking-widest transition-colors">{link}</motion.a>
+                <motion.a 
+                  key={link} 
+                  href="#" 
+                  whileHover={{ x: 10, color: "#000" }} 
+                  className="text-zinc-400 text-[13px] font-black uppercase tracking-[0.2em] transition-colors"
+                >
+                  {link}
+                </motion.a>
               ))}
             </div>
           </div>
 
-          <div className="space-y-8">
-            <h4 className="text-black font-black text-[10px] uppercase tracking-[0.4em]">Connect</h4>
-            <div className="flex flex-col gap-4">
+          <div className="space-y-10">
+            <h4 className="text-red-600 font-black text-[12px] uppercase tracking-[0.5em]">Digital_Nodes</h4>
+            <div className="flex flex-col gap-6">
               {['Instagram', 'Vimeo', 'LinkedIn', 'YouTube', 'Facebook'].map((link) => (
-                <motion.a key={link} href="#" whileHover={{ x: 10, color: "#E11D48" }} className="text-zinc-400 text-sm font-bold uppercase tracking-widest transition-colors">{link}</motion.a>
+                <motion.a 
+                  key={link} 
+                  href="#" 
+                  whileHover={{ x: 10, color: "#000" }} 
+                  className="text-zinc-400 text-[13px] font-black uppercase tracking-[0.2em] transition-colors"
+                >
+                  {link}
+                </motion.a>
               ))}
             </div>
           </div>
 
-          <div className="col-span-2 space-y-8">
-            <h4 className="text-black font-black text-[10px] uppercase tracking-[0.4em]">Headquarters</h4>
-            <div className="space-y-4">
-              <p className="text-black text-lg font-bold leading-relaxed">
-                Dhaka, Bangladesh <br />
-                <span className="text-zinc-400 text-sm font-medium">support@beeteam.agency</span>
-              </p>
+          <div className="col-span-2 space-y-12">
+            <h4 className="text-red-600 font-black text-[12px] uppercase tracking-[0.5em]">HQ_Transmission</h4>
+            <div className="space-y-10">
+              <div className="space-y-6">
+                <div className="flex items-center gap-4 text-black">
+                   <Globe size={24} className="text-red-600" />
+                   <p className="text-2xl font-black tracking-tighter uppercase">Dhaka, Bangladesh</p>
+                </div>
+                <div className="flex items-center gap-4 text-zinc-500">
+                   <Mail size={20} className="text-black" />
+                   <span className="text-sm font-black tracking-widest uppercase underline decoration-2 decoration-red-600">support@beeteam.agency</span>
+                </div>
+              </div>
               <div className="flex gap-4">
                 {socialLinks.map((social, i) => (
                   <motion.a
                     key={i}
                     href={social.href}
-                    whileHover={{ scale: 1.1, backgroundColor: "#000", color: "#FFF" }}
-                    className="w-12 h-12 flex items-center justify-center rounded-2xl bg-zinc-50 border border-black/5 text-black transition-all"
+                    whileHover={{ y: -5, backgroundColor: "#000", color: "#FFF" }}
+                    className="w-14 h-14 flex items-center justify-center rounded-full bg-zinc-100 border border-black/5 text-black transition-all shadow-md"
                   >
                     {social.icon}
                   </motion.a>
@@ -101,33 +138,38 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* 4. THE MASSIVE LOGO (Light-Mode Kinetic Backdrop) */}
-        <div className="relative h-20 md:h-40 overflow-hidden select-none pointer-events-none mb-20">
+        {/* THE MASSIVE LOGO (Ghosted Backdrop) */}
+        <div className="relative h-24 md:h-64 overflow-hidden select-none pointer-events-none mb-20 flex items-center justify-center">
           <motion.h1 
-            initial={{ y: 100 }}
-            whileInView={{ y: 0 }}
-            transition={{ duration: 1 }}
-            className="text-[20vw] font-black text-black/[0.04] leading-none text-center"
+            initial={{ y: 200, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            className="text-[25vw] font-black text-black/[0.04] leading-none tracking-[-0.08em]"
           >
             BEETEAM
           </motion.h1>
         </div>
 
-        {/* 5. FINAL BAR */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-          <p className="text-[10px] text-zinc-400 font-black uppercase tracking-[0.3em]">
-            Copyright 2026 — Developed for Excellence by <span className="text-black">Beeteam</span>
-          </p>
+        {/* FINAL TERMINAL BAR */}
+        <div className="flex flex-col md:flex-row justify-between items-center gap-10 pt-10 border-t-2 border-black/5">
+          <div className="flex flex-col md:flex-row items-center gap-8">
+             <div className="px-6 py-2 bg-zinc-50 border-2 border-black rounded-none">
+                <p className="text-[10px] text-black font-black uppercase tracking-[0.2em]">Node: Active_2026</p>
+             </div>
+             <p className="text-[11px] text-zinc-400 font-black uppercase tracking-[0.3em]">
+               © 2026 — Built by <span className="text-black hover:text-red-600 cursor-pointer transition-colors">Beeteam Lab</span>
+            </p>
+          </div>
 
           <motion.button
             onClick={scrollToTop}
             whileHover={{ y: -10 }}
-            className="group flex flex-col items-center gap-2"
+            className="group flex flex-col items-center gap-4"
           >
-            <div className="w-12 h-12 rounded-full border border-black/5 flex items-center justify-center text-zinc-300 group-hover:border-black group-hover:text-black transition-colors">
-              <ArrowUp size={20} />
+            <div className="w-16 h-16 rounded-full border-2 border-black/10 flex items-center justify-center text-black group-hover:border-black group-hover:bg-yellow-400 transition-all duration-500 shadow-xl">
+              <ArrowUp size={28} strokeWidth={3} />
             </div>
-            <span className="text-[8px] font-black text-zinc-400 uppercase tracking-widest group-hover:text-black transition-colors">Back to top</span>
+            <span className="text-[10px] font-black text-zinc-400 uppercase tracking-[0.5em] group-hover:text-black transition-colors">UPLINK</span>
           </motion.button>
         </div>
       </div>

@@ -1,75 +1,94 @@
 'use client'
 
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
-import { Target, Users, Sparkles, MessageSquare, ShieldCheck } from 'lucide-react'
+import { Target, Users, Sparkles, MessageSquare, Zap, Fingerprint, ChevronRight, Binary } from 'lucide-react'
 
 const features = [
   {
     title: "Artistic Storytelling",
     desc: "Mastering narratives that elevate your brand’s impact to new heights.",
     icon: <Sparkles size={32} />,
-    accent: "#E11D48" // Red
+    accent: "#000000" 
   },
   {
     title: "Expert Craftsmanship",
     desc: "Every project reflects unmatched quality from seasoned industry experts.",
     icon: <Users size={32} />,
-    accent: "#000000" // Black
+    accent: "#E11D48" // Warning Red
   },
   {
     title: "Brand Alignment",
     desc: "Productions that align seamlessly with your identity and goals.",
     icon: <Target size={32} />,
-    accent: "#FFC700" // Yellow
+    accent: "#000000"
   },
   {
     title: "Deep Collaboration",
     desc: "We gain deep insights into your brand essence and audience dynamics.",
     icon: <MessageSquare size={32} />,
-    accent: "#E11D48" // Red
+    accent: "#E11D48"
   }
 ]
 
 export default function WhyBeeTeam() {
   return (
-    <section className="bg-white py-32 overflow-hidden relative border-t border-black/5">
-      {/* Background Soft Glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.02)_0%,transparent_70%)] pointer-events-none" />
+    <section id='about' className="bg-white py-40 overflow-hidden relative border-t border-black/5 selection:bg-black selection:text-white">
+      
+      {/* Background HUD Grid (Smaller, tighter for technical feel) */}
+      <div className="absolute inset-0 opacity-[0.05] pointer-events-none" 
+           style={{ backgroundImage: `radial-gradient(#000 1px, transparent 1px)`, backgroundSize: '30px 30px' }} />
 
-      <div className="max-w-7xl mx-auto px-8 relative z-10">
+      <div className="max-w-[1500px] mx-auto px-10 relative z-10">
         
         {/* HEADER SECTION */}
-        <div className="flex flex-col lg:flex-row gap-16 items-center mb-32">
+        <div className="flex flex-col lg:flex-row gap-20 items-start mb-48">
           <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="lg:w-3/5"
+            className="lg:w-3/5 space-y-12"
           >
-            <div className="flex items-center gap-4 mb-6">
-              <span className="w-12 h-2 bg-red-600" />
-              <span className="text-black text-[10px] font-black uppercase tracking-[0.5em]">The Distinction</span>
+            <div className="flex items-center gap-4">
+              <Binary className="text-red-600" size={24} />
+              <span className="text-black/40 text-[12px] font-black uppercase tracking-[0.8em]">Core_Identity_v2.6</span>
             </div>
-            <h2 className="text-7xl lg:text-9xl font-black tracking-tighter text-black leading-[0.8]">
-              WHY <br /> <span className="text-transparent bg-clip-text bg-gradient-to-r from-black to-zinc-400">BEETEAM?</span>
+            
+            <h2 className="text-[90px] lg:text-[150px] font-black tracking-tighter text-black leading-[0.75] uppercase">
+              THE <br /> <span className="text-zinc-200">EDGE.</span>
             </h2>
-            <p className="mt-8 text-zinc-500 text-xl leading-relaxed max-w-xl font-medium border-l-4 border-yellow-400 pl-8">
-              We transcend traditional cinematography. We engineer <span className="text-black font-bold underline decoration-red-600">visual legacies</span> through high-art storytelling and brand psychology.
-            </p>
+            
+            <div className="relative p-12 border-l-8 border-black bg-zinc-50 rounded-tr-[4rem] shadow-xl shadow-black/5">
+               <p className="text-zinc-500 text-3xl leading-tight max-w-xl font-black uppercase tracking-tighter">
+                We transcend traditional cinematography. We engineer <span className="text-red-600 italic">visual legacies</span> through high-art storytelling.
+              </p>
+            </div>
           </motion.div>
 
+          {/* THE COMMAND BLOCK: High Contrast Yellow */}
           <motion.div 
-            initial={{ opacity: 0, scale: 0.9, rotate: 3 }}
-            whileInView={{ opacity: 1, scale: 1, rotate: -2 }}
+            initial={{ opacity: 0, scale: 0.9, x: 50 }}
+            whileInView={{ opacity: 1, scale: 1, x: 0 }}
             viewport={{ once: true }}
-            whileHover={{ rotate: 0, scale: 1.02 }}
-            className="lg:w-2/5 bg-yellow-400 p-12 rounded-[3rem] shadow-[0_30px_60px_rgba(255,199,0,0.3)] relative overflow-hidden group"
+            whileHover={{ y: -10, rotate: -1 }}
+            className="lg:w-2/5 bg-yellow-400 p-16 rounded-[4rem] shadow-[0_50px_100px_rgba(0,0,0,0.1)] relative overflow-hidden group border-4 border-black"
           >
-            <ShieldCheck className="absolute -top-6 -right-6 text-black/10 w-40 h-40 group-hover:rotate-12 transition-transform duration-700" />
-            <h3 className="text-3xl font-black mb-6 text-black leading-tight tracking-tighter italic">Tailored <br />Precision.</h3>
-            <p className="text-black leading-relaxed font-bold text-lg">
-              Every frame is a calculated decision. We don't just "make videos"—we collaborate to solve business challenges with cinematic artistry.
-            </p>
+            {/* Scanlines */}
+            <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(0,0,0,0.05)_50%,transparent_50%)] bg-[length:100%_4px] opacity-30" />
+            <Fingerprint className="absolute -top-10 -right-10 text-black/10 w-64 h-64 group-hover:scale-110 transition-transform duration-1000" strokeWidth={1} />
+            
+            <div className="relative z-10 space-y-10">
+               <div className="w-20 h-3 bg-black" />
+               <h3 className="text-6xl font-black text-black leading-none tracking-tighter uppercase">TAILORED <br />PRECISION.</h3>
+               <p className="text-black leading-relaxed font-bold text-lg uppercase tracking-tight">
+                Every frame is a tactical decision. We synthesize cinematic artistry to solve global business challenges.
+               </p>
+               
+               <div className="pt-6">
+                  <div className="inline-flex items-center gap-4 px-8 py-4 bg-black text-white text-[11px] font-black uppercase tracking-widest rounded-none shadow-2xl">
+                      SYSTEM_OPTIMIZED <div className="w-2 h-2 bg-red-600 rounded-full animate-ping" />
+                  </div>
+               </div>
+            </div>
           </motion.div>
         </div>
 
@@ -101,11 +120,6 @@ function FeatureCard({ item, index }) {
     y.set((e.clientY - rect.top) / rect.height - 0.5)
   }
 
-  function handleMouseLeave() {
-    x.set(0)
-    y.set(0)
-  }
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -113,44 +127,38 @@ function FeatureCard({ item, index }) {
       viewport={{ once: true }}
       transition={{ delay: index * 0.1 }}
       onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
+      onMouseLeave={() => { x.set(0); y.set(0) }}
       style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-      className="group relative h-[400px] w-full"
+      className="group relative h-[480px] w-full cursor-crosshair"
     >
-      {/* 3D Paper Slab */}
+      {/* 3D Technical Slab */}
       <div 
-        style={{ transform: "translateZ(30px)" }}
-        className="absolute inset-0 bg-zinc-50 rounded-[3rem] p-10 border border-black/5 group-hover:bg-white group-hover:shadow-[0_40px_80px_-15px_rgba(0,0,0,0.1)] transition-all duration-500 flex flex-col justify-between overflow-hidden"
+        style={{ transform: "translateZ(40px)" }}
+        className="absolute inset-0 bg-zinc-50 rounded-[3rem] p-12 border border-black/5 group-hover:border-black group-hover:bg-white transition-all duration-500 flex flex-col justify-between overflow-hidden shadow-xl shadow-black/0 group-hover:shadow-black/5"
       >
         <div className="relative z-10">
           <div 
-            className="w-16 h-16 rounded-2xl flex items-center justify-center mb-8 shadow-sm transition-all duration-500 group-hover:scale-110 group-hover:-rotate-3"
-            style={{ 
-              backgroundColor: 'white', 
-              color: item.accent,
-              border: `1px solid ${item.accent}20` 
-            }}
+            className="w-20 h-20 rounded-2xl flex items-center justify-center mb-10 transition-all duration-700 group-hover:rotate-[360deg] group-hover:bg-black group-hover:text-white shadow-lg bg-white border border-black/5"
+            style={{ color: item.accent }}
           >
             {item.icon}
           </div>
-          <h4 className="text-2xl font-black text-black mb-4 tracking-tighter">
+          <h4 className="text-3xl font-black text-black mb-6 tracking-tighter uppercase group-hover:text-red-600 transition-colors leading-none">
             {item.title}
           </h4>
-          <p className="text-zinc-500 group-hover:text-black transition-colors leading-relaxed font-medium">
+          <p className="text-zinc-500 group-hover:text-black transition-colors leading-relaxed font-bold uppercase text-xs tracking-tight">
             {item.desc}
           </p>
         </div>
 
-        <div className="relative z-10 flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.3em] text-zinc-300 group-hover:text-red-600 transition-colors">
-          <span>Explore Service</span>
-          <div className="w-0 group-hover:w-8 h-[2px] bg-red-600 transition-all duration-500" />
+        <div className="relative z-10 flex items-center gap-4 text-[10px] font-black uppercase tracking-[0.4em] text-zinc-300 group-hover:text-black transition-all">
+          <span>Analyze Node</span>
+          <ChevronRight size={14} className="group-hover:translate-x-2 transition-transform" />
         </div>
         
-        {/* Subtle Bottom Accent Line */}
-        <div 
-          className="absolute bottom-0 left-0 h-1 w-0 group-hover:w-full transition-all duration-700" 
-          style={{ backgroundColor: item.accent }}
-        />
+        {/* HUD Corners */}
+        <div className="absolute top-8 left-8 w-6 h-6 border-t-2 border-l-2 border-black/5 group-hover:border-red-600 transition-colors" />
+        <div className="absolute bottom-8 right-8 w-6 h-6 border-b-2 border-r-2 border-black/5 group-hover:border-black transition-colors" />
       </div>
     </motion.div>
   )

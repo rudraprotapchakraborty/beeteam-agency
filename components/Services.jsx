@@ -8,21 +8,22 @@ import {
   Megaphone, 
   Music, 
   Sparkles,
-  ArrowUpRight 
+  ArrowUpRight,
+  Zap,
+  Layers,
+  ChevronRight
 } from 'lucide-react'
 
 const services = [
   {
     title: "Full Length",
-    subtitle: "Film Production",
     tag: "FEATURE // 001",
     desc: "Epic narrative storytelling designed for the silver screen.",
-    accent: "#FFC700", // Yellow
+    accent: "#000000",
     icon: <Film size={32} />
   },
   {
     title: "Short Film",
-    subtitle: "Production",
     tag: "NARRATIVE // 002",
     desc: "Condensed visual impact with deep emotional resonance.",
     accent: "#E11D48", // Red
@@ -30,69 +31,74 @@ const services = [
   },
   {
     title: "Documentary",
-    subtitle: "Production",
     tag: "REALITY // 003",
     desc: "Truth captured through a cinematic and raw lens.",
-    accent: "#FFC700", // Yellow
+    accent: "#000000",
     icon: <Sparkles size={32} />
   },
   {
     title: "Advertisement",
-    subtitle: "Production",
     tag: "COMMERCIAL // 004",
     desc: "High-conversion visual assets for global brands.",
-    accent: "#E11D48", // Red
+    accent: "#E11D48",
     icon: <Tv size={32} />
   },
   {
     title: "Promotional",
-    subtitle: "& Campaigns",
     tag: "MARKETING // 005",
     desc: "Strategic visual campaigns that dominate the digital space.",
-    accent: "#FFC700", // Yellow
+    accent: "#000000",
     icon: <Megaphone size={32} />
   },
   {
     title: "Music",
-    subtitle: "Production",
     tag: "CONTENT // 006",
     desc: "Versatile, high-fidelity content for modern platforms.",
-    accent: "#E11D48", // Red
+    accent: "#E11D48",
     icon: <Music size={32} />
   },
 ];
 
 export default function Services() {
   return (
-    <section className="bg-white py-32 overflow-hidden relative">
-      {/* Subtle Grainy Overlay */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none z-50 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-multiply" />
+    <section id='services' className="bg-white py-40 overflow-hidden relative selection:bg-black selection:text-white">
+      {/* BACKGROUND: Technical Grid Blueprint */}
+      <div className="absolute inset-0 opacity-[0.05] pointer-events-none" 
+           style={{ backgroundImage: `linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)`, backgroundSize: '80px 80px' }} />
       
       <div className="max-w-[1600px] mx-auto px-10 relative z-10">
         
-        {/* HEADER */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-32 gap-8">
-          <div className="space-y-6">
+        {/* HEADER: Surgical Brutalism */}
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-48 gap-16">
+          <div className="space-y-10">
             <motion.div 
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              className="flex items-center gap-4 text-red-600"
+              className="flex items-center gap-6 text-black"
             >
-              <div className="w-2 h-2 rounded-full bg-red-600 animate-pulse" />
-              <span className="text-[10px] font-black uppercase tracking-[0.6em]">Premium Services // 2026</span>
+              <Layers size={24} strokeWidth={3} />
+              <span className="text-[14px] font-black uppercase tracking-[1em]">Capabilities_Manifesto</span>
             </motion.div>
+            
             <motion.h2 
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              className="text-7xl md:text-9xl font-black text-black tracking-tighter leading-[0.8]"
+              className="text-8xl md:text-[140px] font-black text-black tracking-tighter leading-[0.75]"
             >
-              OUR <br /> <span className="text-transparent bg-clip-text bg-gradient-to-r from-black via-zinc-500 to-zinc-300">EXPERTISE.</span>
+              CORE <br /> 
+              <span className="text-zinc-200 italic">ENGINE.</span>
             </motion.h2>
           </div>
           
-          <motion.p className="text-zinc-400 text-xs max-w-[320px] leading-relaxed font-bold uppercase tracking-[0.2em] border-l-2 border-yellow-400 pl-6">
-            Technical precision meets visual dominance. We architect brand legacies through high-fidelity cinema.
-          </motion.p>
+          <motion.div className="bg-zinc-50 border-t-8 border-black p-12 shadow-2xl shadow-black/5 max-w-sm rounded-br-[60px]">
+              <div className="flex gap-2 mb-6 text-red-600">
+                <Zap size={16} fill="currentColor" />
+                <Zap size={16} fill="currentColor" />
+              </div>
+              <p className="text-zinc-500 text-sm font-bold uppercase tracking-tight leading-relaxed">
+                Deploying technical precision to architect brand legacies. Our expertise is a fusion of visual dominance and narrative soul.
+              </p>
+          </motion.div>
         </div>
 
         {/* SERVICES GRID */}
@@ -118,86 +124,74 @@ function ServiceCard({ service, index }) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ delay: index * 0.1 }}
+      transition={{ delay: index * 0.05, duration: 0.8 }}
       onMouseMove={onMouseMove}
-      className="group relative h-[500px] bg-zinc-50 rounded-[2.5rem] p-12 flex flex-col justify-between cursor-pointer overflow-hidden border border-black/[0.03] hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.1)] transition-all duration-500"
+      className="group relative h-[620px] bg-zinc-50 rounded-[4rem] p-16 flex flex-col justify-between cursor-pointer overflow-hidden border border-black/5 transition-all duration-700 hover:bg-white hover:shadow-[0_80px_100px_-30px_rgba(0,0,0,0.1)] hover:border-black/20"
     >
-      {/* Light Aura Glow */}
+      {/* Reveal Aura */}
       <motion.div 
-        className="absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
+        className="absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-0"
         style={{ 
           background: useTransform(
             [mouseX, mouseY],
-            (latest) => `radial-gradient(400px circle at ${latest[0]}px ${latest[1]}px, ${service.accent}15, transparent 80%)`
+            (latest) => `radial-gradient(500px circle at ${latest[0]}px ${latest[1]}px, ${service.accent}08, transparent 80%)`
           )
         }}
       />
 
-      {/* Floating Index Number */}
-      <div 
-        className="absolute top-0 right-0 p-10 opacity-[0.05] group-hover:opacity-[0.15] transition-all duration-700 select-none font-black text-[12vw]"
-        style={{ color: service.accent }}
-      >
-        0{index + 1}
+      {/* Background Reference Number */}
+      <div className="absolute -top-10 -left-10 opacity-[0.04] group-hover:opacity-[0.1] transition-all duration-1000 select-none font-black text-[20vw] pointer-events-none text-black">
+        {index + 1}
       </div>
 
       <div className="relative z-10">
         {/* ICON BLOCK */}
-        <div 
-          className="w-16 h-16 rounded-2xl flex items-center justify-center mb-8 transition-all duration-500 group-hover:scale-110 group-hover:-rotate-3"
-          style={{ 
-            backgroundColor: 'white', 
-            color: 'black',
-            boxShadow: `0 10px 20px -5px ${service.accent}30`,
-            border: `1px solid ${service.accent}40`
-          }}
-        >
+        <div className="w-24 h-24 rounded-3xl flex items-center justify-center mb-14 transition-all duration-700 group-hover:scale-110 group-hover:rotate-12 shadow-xl bg-white border border-black/5 text-black group-hover:bg-black group-hover:text-white">
           {service.icon}
         </div>
 
-        <div className="space-y-2">
-          <span className="text-[10px] font-black tracking-[0.4em] uppercase" style={{ color: service.accent === '#FFC700' ? '#B88E00' : service.accent }}>
-            {service.tag}
-          </span>
-          <h3 className="text-black text-5xl font-black leading-tight tracking-tighter group-hover:translate-x-2 transition-transform duration-500">
+        <div className="space-y-6">
+          <div className="flex items-center gap-4">
+             <div className="w-12 h-[2px]" style={{ backgroundColor: service.accent }} />
+             <span className="text-[12px] font-black tracking-[0.4em] uppercase text-zinc-400 group-hover:text-black transition-colors">
+               {service.tag}
+             </span>
+          </div>
+          <h3 className="text-black text-6xl font-black leading-[0.85] tracking-tighter group-hover:text-red-600 transition-all duration-500 uppercase">
             {service.title}
           </h3>
         </div>
       </div>
 
       <div className="relative z-10">
-        <p className="text-zinc-500 text-sm font-medium leading-relaxed max-w-[260px] mb-8">
+        <p className="text-zinc-500 text-base font-bold leading-relaxed max-w-[260px] mb-14 group-hover:text-black transition-colors">
           {service.desc}
         </p>
         
-        <div className="flex items-center gap-4 group/btn">
-          <div 
-            className="w-12 h-12 rounded-full border border-black/10 flex items-center justify-center transition-all duration-500 relative overflow-hidden"
-          >
+        <div className="flex items-center gap-6 group/btn">
+          <div className="w-20 h-20 rounded-full border-2 border-black/10 flex items-center justify-center transition-all duration-500 relative overflow-hidden group-hover:border-black group-hover:scale-110 shadow-lg bg-white">
             <motion.div 
-              className="absolute inset-0 scale-0 group-hover:scale-100 transition-transform duration-500"
-              style={{ backgroundColor: 'black' }}
+              className="absolute inset-0 translate-y-full group-hover:translate-y-0 transition-transform duration-500 bg-black"
             />
-            <ArrowUpRight className="relative z-10 text-black group-hover:text-white transition-colors duration-500" size={20} />
+            <ArrowUpRight className="relative z-10 text-black group-hover:text-white transition-colors duration-500" size={32} strokeWidth={3} />
           </div>
-          <span className="text-[10px] font-black text-black/30 uppercase tracking-[0.3em] group-hover:text-black transition-colors">
-            Inquire Project
-          </span>
+          <div className="flex flex-col">
+             <span className="text-[11px] font-black text-red-600 uppercase tracking-[0.3em] opacity-0 group-hover:opacity-100 transition-all duration-500">
+               Live_Node
+             </span>
+             <span className="text-sm font-black text-black uppercase tracking-tight flex items-center gap-2">
+               Inquire Project <ChevronRight size={14} />
+             </span>
+          </div>
         </div>
       </div>
 
-      {/* Camera Viewfinder Detail (Yellow or Red) */}
-      <div 
-        className="absolute top-6 left-6 w-4 h-4 border-t-2 border-l-2 opacity-0 group-hover:opacity-100 transition-all duration-500"
-        style={{ borderColor: service.accent }}
-      />
-      <div 
-        className="absolute bottom-6 right-6 w-4 h-4 border-b-2 border-r-2 opacity-0 group-hover:opacity-100 transition-all duration-500"
-        style={{ borderColor: service.accent }}
-      />
+      {/* Surgical Viewfinder Corners */}
+      <div className="absolute top-12 right-12 w-8 h-8 border-t-4 border-r-4 border-black/5 group-hover:border-red-600 transition-all duration-700" />
+      <div className="absolute bottom-12 left-12 w-8 h-8 border-b-4 border-l-4 border-black/5 group-hover:border-black transition-all duration-700" />
     </motion.div>
   );
 }

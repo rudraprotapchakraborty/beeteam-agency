@@ -1,42 +1,47 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
-import { ChevronDown, Sparkles, Zap } from 'lucide-react'
+import { motion, AnimatePresence, useScroll, useTransform, useSpring } from 'framer-motion'
+import { ChevronDown, Sparkles, Zap, Activity } from 'lucide-react'
 import MegaMenu from './MegaMenu'
 
 const navLinks = [
   { name: 'Home', href: '/' },
-  { name: 'About Us', href: '/about' },
-  { name: 'Services', href: '#', hasDropdown: true },
-  { name: 'Our Works', href: '/portfolio' },
-  { name: 'Clients', href: '/clients' },
-  { name: 'Contact Us', href: '/contact' },
+  { name: 'About Us', href: '#about' },
+  { name: 'Services', href: '#services'},
+  { name: 'Our Works', href: '#works' },
+  // { name: 'Clients', href: '/clients' },
+  { name: 'Contact Us', href: '#contact' },
 ]
 
-export default function Navbar() {
-  // FIXED: Removed the <number | null> type annotation for standard JS
+export default function UltimateNavbar() {
   const [hoveredIndex, setHoveredIndex] = useState(null)
-  const [isServicesOpen, setIsServicesOpen] = useState(false)
+  // const [isServicesOpen, setIsServicesOpen] = useState(false)
   
   const { scrollY } = useScroll()
 
-  // --- Cinematic Morphing Logic ---
-  // These values transition as you scroll from 0px to 100px
-  const backgroundColor = useTransform(
+  // --- ULTIMATE MORPHING LOGIC ---
+  // The navbar transforms from a full-width header into a floating "Command Center"
+  const springConfig = { stiffness: 100, damping: 30, mass: 1 }
+  
+  const rawBackgroundColor = useTransform(
     scrollY,
     [0, 100],
-    ['rgba(255, 199, 0, 1)', 'rgba(255, 255, 255, 0.75)']
+    ['rgba(255, 199, 0, 1)', 'rgba(255, 255, 255, 0.8)']
   )
-  const navWidth = useTransform(scrollY, [0, 100], ['100%', '94%'])
-  const navTop = useTransform(scrollY, [0, 100], ['0px', '24px'])
-  const navPadding = useTransform(scrollY, [0, 100], ['26px', '14px'])
-  const borderRadius = useTransform(scrollY, [0, 100], ['0px', '100px'])
+  const backgroundColor = useSpring(rawBackgroundColor, springConfig)
+
+  const navWidth = useTransform(scrollY, [0, 100], ['100%', '92%'])
+  const navTop = useTransform(scrollY, [0, 100], ['0px', '20px'])
+  const navPadding = useTransform(scrollY, [0, 100], ['28px', '12px'])
+  const borderRadius = useTransform(scrollY, [0, 100], ['0px', '40px'])
+  
+  // High-end glass shadow
   const navShadow = useTransform(
     scrollY,
     [0, 100],
-    ['0px 0px 0px rgba(0,0,0,0)', '0px 20px 60px -10px rgba(0,0,0,0.15)']
+    ['0px 0px 0px rgba(0,0,0,0)', '0px 40px 80px -20px rgba(0,0,0,0.15)']
   )
 
   return (
@@ -50,29 +55,38 @@ export default function Navbar() {
         borderRadius,
         boxShadow: navShadow,
       }}
-      className="fixed left-1/2 -translate-x-1/2 z-[100] backdrop-blur-2xl border border-white/10 transition-shadow duration-500"
+      className="fixed left-1/2 -translate-x-1/2 z-[1000] backdrop-blur-3xl border border-white/20 transition-all duration-700 ease-out flex items-center justify-center"
     >
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-10">
+      <div className="w-full max-w-[1400px] mx-auto flex items-center justify-between px-8">
         
-        {/* LOGO: Cinematic Scale & Glow */}
+        {/* LOGO: Reactive Depth */}
         <motion.div 
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="relative cursor-pointer shrink-0"
+          whileHover={{ scale: 1.05, rotate: [-1, 1, 0] }}
+          className="relative cursor-pointer shrink-0 flex items-center gap-3"
         >
-          <Image
-            src="/beeteam_logo.png"
-            alt="Beeteam"
-            width={130}
-            height={36}
-            className="object-contain"
-            priority
-          />
+          <div className="relative h-10 w-32">
+             <Image
+                src="/beeteam_logo.png"
+                alt="Beeteam"
+                fill
+                className="object-contain"
+                priority
+              />
+          </div>
+          {/* Status Indicator for "Ultimate" feel */}
+          <div className="hidden xl:flex items-center gap-2 px-3 py-1 bg-black/5 rounded-full border border-black/5">
+            <motion.div 
+               animate={{ opacity: [1, 0.4, 1] }} 
+               transition={{ repeat: Infinity, duration: 2 }}
+               className="w-1.5 h-1.5 bg-red-600 rounded-full" 
+            />
+            <span className="text-[8px] font-black uppercase tracking-widest opacity-40">System_Live</span>
+          </div>
         </motion.div>
 
-        {/* NAVIGATION: Kinetic "Floating Island" Pills */}
+        {/* NAVIGATION: The "Liquid Island" */}
         <nav 
-          className="hidden lg:flex items-center gap-1 bg-black/5 p-1 rounded-full border border-black/5 relative"
+          className="hidden lg:flex items-center gap-1 bg-black/[0.03] p-1.5 rounded-full border border-black/[0.03] relative shadow-inner"
           onMouseLeave={() => {
             setHoveredIndex(null)
             setIsServicesOpen(false)
@@ -88,45 +102,52 @@ export default function Navbar() {
                 else setIsServicesOpen(false)
               }}
             >
-              <a
+              <motion.a
                 href={link.href}
-                className={`relative z-10 px-6 py-2.5 flex items-center gap-1.5 text-[13px] font-bold uppercase tracking-wider transition-colors duration-500 ${
-                  hoveredIndex === index ? 'text-black' : 'text-black/60'
+                className={`relative z-10 px-6 py-2.5 flex items-center gap-2 text-[12px] font-black uppercase tracking-[0.15em] transition-colors duration-300 ${
+                  hoveredIndex === index ? 'text-black' : 'text-black/50'
                 }`}
               >
                 {link.name}
                 {link.hasDropdown && (
                   <motion.div
-                    animate={{ rotate: isServicesOpen ? 180 : 0 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                    animate={{ rotate: isServicesOpen ? 180 : 0, y: isServicesOpen ? -1 : 0 }}
                   >
-                    <ChevronDown size={14} strokeWidth={3} />
+                    <ChevronDown size={14} strokeWidth={3} className={isServicesOpen ? 'text-red-600' : ''} />
                   </motion.div>
                 )}
-              </a>
+              </motion.a>
 
-              {/* THE LIQUID PILL: Slides and stretches between items */}
               {hoveredIndex === index && (
                 <motion.div
-                  layoutId="nav-pill-bg"
-                  className="absolute inset-0 bg-white rounded-full shadow-sm"
-                  transition={{ type: "spring", bounce: 0.15, duration: 0.5 }}
+                  layoutId="ultimate-pill"
+                  className="absolute inset-0 bg-white rounded-full shadow-[0_10px_20px_rgba(0,0,0,0.06)]"
+                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                 />
               )}
 
-              {/* MEGA MENU: Ultra-Depth Reveal */}
               {link.hasDropdown && (
                 <AnimatePresence>
                   {isServicesOpen && (
                     <motion.div
-                      initial={{ opacity: 0, y: 30, scale: 0.92, filter: 'blur(10px)' }}
-                      animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
-                      exit={{ opacity: 0, y: 20, scale: 0.92, filter: 'blur(10px)' }}
-                      transition={{ duration: 0.4, ease: [0.19, 1, 0.22, 1] }}
-                      className="absolute top-[160%] left-1/2 -translate-x-1/2 w-[850px]"
+                      initial={{ opacity: 0, y: 20, rotateX: -15, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, rotateX: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 10, rotateX: 5, scale: 0.95 }}
+                      transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
+                      style={{ perspective: "1000px" }}
+                      className="absolute top-[140%] left-1/2 -translate-x-1/2 w-[900px]"
                     >
-                      <div className="bg-white/95 backdrop-blur-3xl rounded-[40px] shadow-[0_50px_100px_rgba(0,0,0,0.2)] border border-white/40 overflow-hidden">
-                        <MegaMenu />
+                      <div className="bg-white/90 backdrop-blur-3xl rounded-[32px] shadow-[0_40px_100px_rgba(0,0,0,0.25)] border border-white/50 overflow-hidden ring-1 ring-black/5">
+                         <div className="p-1">
+                            <MegaMenu />
+                         </div>
+                         {/* Bottom Bar for MegaMenu */}
+                         <div className="bg-zinc-50/50 p-4 border-t border-black/5 flex justify-between items-center">
+                            <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-black/40">
+                               <Activity size={12} /> Global Capabilities v4.0
+                            </div>
+                            <span className="text-[10px] font-black text-red-600">Browse All Services →</span>
+                         </div>
                       </div>
                     </motion.div>
                   )}
@@ -136,21 +157,36 @@ export default function Navbar() {
           ))}
         </nav>
 
-        {/* CTA: High-Energy Button with Reflection */}
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.96 }}
-          className="group relative hidden lg:flex items-center gap-2 bg-black text-white px-8 py-4 rounded-full font-black text-[11px] uppercase tracking-[0.2em] overflow-hidden shadow-2xl"
-        >
-          <span className="relative z-10 flex items-center gap-2">
-            Get a Quote <Sparkles size={14} className="text-yellow-400" />
-          </span>
-          
-          {/* Internal gloss reflection sweep */}
-          <motion.div 
-            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out" 
-          />
-        </motion.button>
+        {/* CTA: Kinetic Energy Button */}
+        <div className="flex items-center gap-4">
+            <motion.div 
+               className="hidden xl:block text-right pr-4 border-r border-black/10"
+               style={{ opacity: useTransform(scrollY, [0, 50], [1, 0]) }}
+            >
+                <p className="text-[10px] font-black uppercase tracking-tighter leading-none">Inquiry_Ready</p>
+                <p className="text-[9px] font-medium text-black/40">Avg. Response: 2h</p>
+            </motion.div>
+
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="group relative flex items-center gap-3 bg-black text-white px-8 py-4 rounded-full font-black text-[11px] uppercase tracking-[0.25em] overflow-hidden"
+            >
+              <span className="relative z-10 flex items-center gap-2">
+                Get a Quote <Sparkles size={14} className="text-yellow-400 group-hover:rotate-12 transition-transform" />
+              </span>
+              
+              {/* Ultra Glow Sweep */}
+              <motion.div 
+                animate={{ x: ['-100%', '200%'] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "linear", repeatDelay: 1 }}
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12" 
+              />
+              
+              {/* Hover Background Color Shift */}
+              <div className="absolute inset-0 bg-red-600 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
+            </motion.button>
+        </div>
       </div>
     </motion.header>
   )
