@@ -104,6 +104,7 @@ export default function BeeTeamUltraHero() {
 
         {/* 1. ARCHITECTURAL BRANDING */}
         <motion.div 
+        suppressHydrationWarning
           style={{ 
             scale: bgTextScale, 
             opacity: bgTextOpacity,
@@ -202,6 +203,7 @@ export default function BeeTeamUltraHero() {
 
         {/* 4. TACTICAL HUD */}
         <motion.div
+        suppressHydrationWarning
           className="fixed top-0 left-0 w-24 h-24 z-[1000] pointer-events-none flex items-center justify-center"
           style={{ 
             x: useTransform(smoothMouseX, [-0.5, 0.5], [0, typeof window !== 'undefined' ? window.innerWidth : 0]), 

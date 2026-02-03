@@ -11,13 +11,11 @@ const navLinks = [
   { name: 'About Us', href: '#about' },
   { name: 'Services', href: '#services'},
   { name: 'Our Works', href: '#works' },
-  // { name: 'Clients', href: '/clients' },
   { name: 'Contact Us', href: '#contact' },
 ]
 
 export default function UltimateNavbar() {
   const [hoveredIndex, setHoveredIndex] = useState(null)
-  // const [isServicesOpen, setIsServicesOpen] = useState(false)
   
   const { scrollY } = useScroll()
 
@@ -83,79 +81,6 @@ export default function UltimateNavbar() {
             <span className="text-[8px] font-black uppercase tracking-widest opacity-40">System_Live</span>
           </div>
         </motion.div>
-
-        {/* NAVIGATION: The "Liquid Island" */}
-        <nav 
-          className="hidden lg:flex items-center gap-1 bg-black/[0.03] p-1.5 rounded-full border border-black/[0.03] relative shadow-inner"
-          onMouseLeave={() => {
-            setHoveredIndex(null)
-            setIsServicesOpen(false)
-          }}
-        >
-          {navLinks.map((link, index) => (
-            <div
-              key={link.name}
-              className="relative"
-              onMouseEnter={() => {
-                setHoveredIndex(index)
-                if (link.hasDropdown) setIsServicesOpen(true)
-                else setIsServicesOpen(false)
-              }}
-            >
-              <motion.a
-                href={link.href}
-                className={`relative z-10 px-6 py-2.5 flex items-center gap-2 text-[12px] font-black uppercase tracking-[0.15em] transition-colors duration-300 ${
-                  hoveredIndex === index ? 'text-black' : 'text-black/50'
-                }`}
-              >
-                {link.name}
-                {link.hasDropdown && (
-                  <motion.div
-                    animate={{ rotate: isServicesOpen ? 180 : 0, y: isServicesOpen ? -1 : 0 }}
-                  >
-                    <ChevronDown size={14} strokeWidth={3} className={isServicesOpen ? 'text-red-600' : ''} />
-                  </motion.div>
-                )}
-              </motion.a>
-
-              {hoveredIndex === index && (
-                <motion.div
-                  layoutId="ultimate-pill"
-                  className="absolute inset-0 bg-white rounded-full shadow-[0_10px_20px_rgba(0,0,0,0.06)]"
-                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                />
-              )}
-
-              {link.hasDropdown && (
-                <AnimatePresence>
-                  {isServicesOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 20, rotateX: -15, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, rotateX: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 10, rotateX: 5, scale: 0.95 }}
-                      transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
-                      style={{ perspective: "1000px" }}
-                      className="absolute top-[140%] left-1/2 -translate-x-1/2 w-[900px]"
-                    >
-                      <div className="bg-white/90 backdrop-blur-3xl rounded-[32px] shadow-[0_40px_100px_rgba(0,0,0,0.25)] border border-white/50 overflow-hidden ring-1 ring-black/5">
-                         <div className="p-1">
-                            <MegaMenu />
-                         </div>
-                         {/* Bottom Bar for MegaMenu */}
-                         <div className="bg-zinc-50/50 p-4 border-t border-black/5 flex justify-between items-center">
-                            <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-black/40">
-                               <Activity size={12} /> Global Capabilities v4.0
-                            </div>
-                            <span className="text-[10px] font-black text-red-600">Browse All Services →</span>
-                         </div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              )}
-            </div>
-          ))}
-        </nav>
 
         {/* CTA: Kinetic Energy Button */}
         <div className="flex items-center gap-4">
