@@ -137,10 +137,10 @@ export default function BeeTeamUltraHero() {
           }}
           className="relative z-20 w-full max-w-7xl grid grid-cols-1 lg:grid-cols-2 gap-20 items-center px-12"
         >
-          <div className="relative h-[600px]" style={{ transformStyle: "preserve-3d" }}>
+          <div className="relative mt-12 h-[600px]" style={{ transformStyle: "preserve-3d" }}>
             <div className="absolute inset-0 bg-black/5 blur-[80px] rounded-full scale-90 translate-y-20" />
             <motion.div 
-               className="relative z-10 w-full h-full rounded-2xl overflow-hidden border border-black/5 shadow-[0_40px_80px_-15px_rgba(0,0,0,0.1)] bg-zinc-100"
+               className="relative z-10 w-4xl h-xl rounded-2xl overflow-hidden border border-black/5 shadow-[0_40px_80px_-15px_rgba(0,0,0,0.1)] bg-zinc-100"
                style={{ translateZ: 60 }}
             >
               <img
@@ -184,15 +184,15 @@ export default function BeeTeamUltraHero() {
             </motion.div>
           </div>
 
-          <motion.div style={{ translateZ: 150 }} className="flex flex-col items-start">
+          <motion.div style={{ translateZ: 150 }} className="ml-64 flex flex-col items-start">
             <motion.div className="px-4 py-1 bg-black text-white text-[11px] font-black uppercase tracking-[0.5em] mb-6">Global Studio</motion.div>
-            <h1 className="text-8xl xl:text-[10rem] font-black leading-[0.8] tracking-tighter text-black uppercase italic">
-              LIMITLESS <br />
-              <span className="text-yellow-400 drop-shadow-sm">VISIONS.</span>
+            <h1 className="text-7xl xl:text-[8rem] font-black leading-[0.8] tracking-tighter text-black uppercase italic">
+              BEE <br />
+              <span className="text-yellow-400 drop-shadow-sm">TEAM.</span>
             </h1>
             <div className="h-1 w-32 bg-red-600 my-10" />
             <p className="max-w-md text-xl font-medium text-zinc-500 leading-tight">
-              A symphony of <span className="text-black font-black">Spatial Engineering</span> and cinematic soul.
+             Featured on the <span className="text-black font-black">Financial express.</span>
             </p>
             <motion.button whileHover={{ scale: 1.05, x: 15 }} className="group relative mt-14 overflow-hidden px-14 py-7 bg-black text-white font-black uppercase text-[10px] tracking-[0.6em]">
               <span className="relative z-10 group-hover:text-black transition-colors">Initiate Sequence</span>
