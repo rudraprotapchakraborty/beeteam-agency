@@ -1,5 +1,6 @@
 'use client'
 
+import React from 'react'
 import { motion, useMotionValue, useTransform } from 'framer-motion'
 import { 
   Film, 
@@ -11,7 +12,8 @@ import {
   ArrowUpRight,
   Zap,
   Layers,
-  ChevronRight
+  ChevronRight,
+  Target
 } from 'lucide-react'
 
 const services = [
@@ -26,14 +28,14 @@ const services = [
     title: "Short Film",
     tag: "NARRATIVE // 002",
     desc: "Condensed visual impact with deep emotional resonance.",
-    accent: "#E11D48", // Red
+    accent: "#E11D48", 
     icon: <Video size={32} />
   },
   {
     title: "Documentary",
     tag: "REALITY // 003",
     desc: "Truth captured through a cinematic and raw lens.",
-    accent: "#000000",
+    accent: "#D4AF37", // Gold
     icon: <Sparkles size={32} />
   },
   {
@@ -61,48 +63,49 @@ const services = [
 
 export default function Services() {
   return (
-    <section id='services' className="bg-white py-40 overflow-hidden relative selection:bg-black selection:text-white">
-      {/* BACKGROUND: Technical Grid Blueprint */}
-      <div className="absolute inset-0 opacity-[0.05] pointer-events-none" 
-           style={{ backgroundImage: `linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)`, backgroundSize: '80px 80px' }} />
+    <section id='services' className="bg-white py-32 overflow-hidden relative selection:bg-black selection:text-white">
       
-      <div className="max-w-[1600px] mx-auto px-10 relative z-10">
+      {/* Background: Sharp Technical Blueprint */}
+      <div className="absolute inset-0 opacity-[0.04] pointer-events-none" 
+           style={{ backgroundImage: `radial-gradient(#000 2px, transparent 2px)`, backgroundSize: '50px 50px' }} />
+      
+      <div className="max-w-[1600px] mx-auto px-8 relative z-10">
         
-        {/* HEADER: Surgical Brutalism */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-48 gap-16">
-          <div className="space-y-10">
+        {/* Header: Editorial High-Contrast */}
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-32 gap-12 border-b-4 border-black pb-16">
+          <div className="space-y-6">
             <motion.div 
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              className="flex items-center gap-6 text-black"
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              className="flex items-center gap-4 text-black"
             >
-              <Layers size={24} strokeWidth={3} />
-              <span className="text-[14px] font-black uppercase tracking-[1em]">Capabilities_Manifesto</span>
+              <Target size={20} strokeWidth={3} />
+              <span className="text-[12px] font-black uppercase tracking-[0.8em]">Capabilities_Manifesto_2026</span>
             </motion.div>
             
             <motion.h2 
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              className="text-8xl md:text-[140px] font-black text-black tracking-tighter leading-[0.75]"
+              className="text-[clamp(4rem,10vw,9rem)] font-black text-black tracking-tighter leading-[0.8] uppercase"
             >
-              CORE <br /> 
-              <span className="text-zinc-200 italic">ENGINE.</span>
+              Core <br /> 
+              <span className="text-white bg-black px-4 ml-[-0.5rem]">Engine.</span>
             </motion.h2>
           </div>
           
-          <motion.div className="bg-zinc-50 border-t-8 border-black p-12 shadow-2xl shadow-black/5 max-w-sm rounded-br-[60px]">
-              <div className="flex gap-2 mb-6 text-red-600">
+          <motion.div className="bg-white border-2 border-black p-10 shadow-[10px_10px_0px_rgba(0,0,0,1)] max-w-sm">
+              <div className="flex gap-2 mb-4 text-black">
                 <Zap size={16} fill="currentColor" />
-                <Zap size={16} fill="currentColor" />
+                <span className="text-[10px] font-black uppercase tracking-widest">Power_Grid: Active</span>
               </div>
-              <p className="text-zinc-500 text-sm font-bold uppercase tracking-tight leading-relaxed">
-                Deploying technical precision to architect brand legacies. Our expertise is a fusion of visual dominance and narrative soul.
+              <p className="text-black text-xs font-bold uppercase tracking-tight leading-tight">
+                Architecting brand legacies through technical dominance. Every frame calibrated for maximum psychological impact.
               </p>
           </motion.div>
         </div>
 
-        {/* SERVICES GRID */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Services Grid: Pure White/Black */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-black/10 border border-black/10">
           {services.map((service, i) => (
             <ServiceCard key={i} service={service} index={i} />
           ))}
@@ -124,74 +127,70 @@ function ServiceCard({ service, index }) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
-      transition={{ delay: index * 0.05, duration: 0.8 }}
+      transition={{ delay: index * 0.05 }}
       onMouseMove={onMouseMove}
-      className="group relative h-[620px] bg-zinc-50 rounded-[4rem] p-16 flex flex-col justify-between cursor-pointer overflow-hidden border border-black/5 transition-all duration-700 hover:bg-white hover:shadow-[0_80px_100px_-30px_rgba(0,0,0,0.1)] hover:border-black/20"
+      className="group relative h-[600px] bg-white p-14 flex flex-col justify-between cursor-pointer overflow-hidden transition-all duration-500 hover:z-20"
     >
-      {/* Reveal Aura */}
+      {/* Subtle Interactive Aura - No Grays */}
       <motion.div 
         className="absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-0"
         style={{ 
           background: useTransform(
             [mouseX, mouseY],
-            (latest) => `radial-gradient(500px circle at ${latest[0]}px ${latest[1]}px, ${service.accent}08, transparent 80%)`
+            (latest) => `radial-gradient(400px circle at ${latest[0]}px ${latest[1]}px, ${service.accent}15, transparent 80%)`
           )
         }}
       />
 
-      {/* Background Reference Number */}
-      <div className="absolute -top-10 -left-10 opacity-[0.04] group-hover:opacity-[0.1] transition-all duration-1000 select-none font-black text-[20vw] pointer-events-none text-black">
-        {index + 1}
+      {/* Decorative ID */}
+      <div className="absolute top-10 right-10 text-black/10 font-black text-2xl tracking-tighter group-hover:text-black group-hover:translate-x-[-10px] transition-all duration-500">
+        0{index + 1}
       </div>
 
       <div className="relative z-10">
-        {/* ICON BLOCK */}
-        <div className="w-24 h-24 rounded-3xl flex items-center justify-center mb-14 transition-all duration-700 group-hover:scale-110 group-hover:rotate-12 shadow-xl bg-white border border-black/5 text-black group-hover:bg-black group-hover:text-white">
+        {/* ICON BLOCK: High Contrast Black/White */}
+        <div className="w-20 h-20 bg-white border-2 border-black flex items-center justify-center mb-12 group-hover:bg-black group-hover:text-white group-hover:scale-110 group-hover:-rotate-6 transition-all duration-500 shadow-[6px_6px_0px_rgba(0,0,0,0.1)] group-hover:shadow-[0px_0px_0px_rgba(0,0,0,0)]">
           {service.icon}
         </div>
 
-        <div className="space-y-6">
-          <div className="flex items-center gap-4">
-             <div className="w-12 h-[2px]" style={{ backgroundColor: service.accent }} />
-             <span className="text-[12px] font-black tracking-[0.4em] uppercase text-zinc-400 group-hover:text-black transition-colors">
+        <div className="space-y-4">
+          <div className="flex items-center gap-3">
+             <div className="w-8 h-1" style={{ backgroundColor: service.accent }} />
+             <span className="text-[11px] font-black tracking-[0.4em] uppercase text-black/40 group-hover:text-black transition-colors">
                {service.tag}
              </span>
           </div>
-          <h3 className="text-black text-6xl font-black leading-[0.85] tracking-tighter group-hover:text-red-600 transition-all duration-500 uppercase">
+          <h3 className="text-black text-6xl font-black leading-[0.8] tracking-tighter transition-all duration-500 uppercase group-hover:tracking-normal group-hover:text-red-600">
             {service.title}
           </h3>
         </div>
       </div>
 
       <div className="relative z-10">
-        <p className="text-zinc-500 text-base font-bold leading-relaxed max-w-[260px] mb-14 group-hover:text-black transition-colors">
+        <p className="text-black font-bold text-sm leading-tight max-w-[240px] mb-12 uppercase tracking-tight">
           {service.desc}
         </p>
         
-        <div className="flex items-center gap-6 group/btn">
-          <div className="w-20 h-20 rounded-full border-2 border-black/10 flex items-center justify-center transition-all duration-500 relative overflow-hidden group-hover:border-black group-hover:scale-110 shadow-lg bg-white">
-            <motion.div 
-              className="absolute inset-0 translate-y-full group-hover:translate-y-0 transition-transform duration-500 bg-black"
-            />
-            <ArrowUpRight className="relative z-10 text-black group-hover:text-white transition-colors duration-500" size={32} strokeWidth={3} />
+        <div className="flex items-center gap-6">
+          <div className="w-16 h-16 rounded-none border-2 border-black flex items-center justify-center transition-all duration-300 relative overflow-hidden group-hover:bg-black group-hover:text-white">
+            <ArrowUpRight size={28} strokeWidth={3} />
           </div>
           <div className="flex flex-col">
-             <span className="text-[11px] font-black text-red-600 uppercase tracking-[0.3em] opacity-0 group-hover:opacity-100 transition-all duration-500">
-               Live_Node
+             <span className="text-[10px] font-black text-red-600 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
+               Inquiry_Ready
              </span>
-             <span className="text-sm font-black text-black uppercase tracking-tight flex items-center gap-2">
-               Inquire Project <ChevronRight size={14} />
+             <span className="text-sm font-black text-black uppercase tracking-tighter flex items-center gap-1 group-hover:gap-3 transition-all">
+               Start Project <ChevronRight size={14} strokeWidth={3} />
              </span>
           </div>
         </div>
       </div>
 
-      {/* Surgical Viewfinder Corners */}
-      <div className="absolute top-12 right-12 w-8 h-8 border-t-4 border-r-4 border-black/5 group-hover:border-red-600 transition-all duration-700" />
-      <div className="absolute bottom-12 left-12 w-8 h-8 border-b-4 border-l-4 border-black/5 group-hover:border-black transition-all duration-700" />
+      {/* Grid Corner Detail */}
+      <div className="absolute bottom-0 left-0 w-full h-1 bg-black transform scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left" />
     </motion.div>
   );
 }

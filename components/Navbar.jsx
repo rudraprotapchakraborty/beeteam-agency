@@ -1,117 +1,132 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
-import { motion, AnimatePresence, useScroll, useTransform, useSpring } from 'framer-motion'
-import { ChevronDown, Sparkles, Zap, Activity } from 'lucide-react'
-import MegaMenu from './MegaMenu'
+import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion'
+import { ArrowUpRight, Activity, MapPin } from 'lucide-react'
 
 const navLinks = [
-  { name: 'Home', href: '/' },
-  { name: 'About Us', href: '#about' },
-  { name: 'Services', href: '#services'},
-  { name: 'Our Works', href: '#works' },
-  { name: 'Contact Us', href: '#contact' },
+  { name: 'Home', href: '#hero' },
+  { name: 'About', href: '#about' },
+  { name: 'Services', href: '#services' },
+  { name: 'Works', href: '#works' },
+  { name: 'Contact', href: '#contact' },
 ]
 
-export default function UltimateNavbar() {
-  const [hoveredIndex, setHoveredIndex] = useState(null)
-  
+export default function MaterialExpressiveNavbar() {
   const { scrollY } = useScroll()
+  const [hoveredLink, setHoveredLink] = useState(null)
 
-  // --- ULTIMATE MORPHING LOGIC ---
-  // The navbar transforms from a full-width header into a floating "Command Center"
-  const springConfig = { stiffness: 100, damping: 30, mass: 1 }
+  // Physics Config for smooth morphing
+  const fluidSpring = { type: "spring", stiffness: 300, damping: 30, mass: 0.8 }
+  const hoverSpring = { type: "spring", stiffness: 500, damping: 30 }
+
+  // 1. Structural Morphing
+  const navWidth = useTransform(scrollY, [0, 80], ['100%', '94%'])
+  const navTop = useTransform(scrollY, [0, 80], ['0px', '24px'])
+  const navRadius = useTransform(scrollY, [0, 80], ['0px', '12px'])
   
-  const rawBackgroundColor = useTransform(
+  // 2. High Contrast Palette
+  const navBg = useTransform(
     scrollY,
-    [0, 100],
-    ['rgba(255, 199, 0, 1)', 'rgba(255, 255, 255, 0.8)']
+    [0, 80],
+    ['rgba(255, 255, 255, 1)', 'rgba(255, 255, 255, 1)'] 
   )
-  const backgroundColor = useSpring(rawBackgroundColor, springConfig)
-
-  const navWidth = useTransform(scrollY, [0, 100], ['100%', '92%'])
-  const navTop = useTransform(scrollY, [0, 100], ['0px', '20px'])
-  const navPadding = useTransform(scrollY, [0, 100], ['28px', '12px'])
-  const borderRadius = useTransform(scrollY, [0, 100], ['0px', '40px'])
   
-  // High-end glass shadow
   const navShadow = useTransform(
     scrollY,
-    [0, 100],
-    ['0px 0px 0px rgba(0,0,0,0)', '0px 40px 80px -20px rgba(0,0,0,0.15)']
+    [0, 80],
+    ['0px 0px 0px rgba(0,0,0,0)', '20px 20px 0px rgba(0,0,0,1)']
   )
+
+  const borderOpacity = useTransform(scrollY, [0, 80], ['rgba(0,0,0,1)', 'rgba(0,0,0,1)'])
 
   return (
     <motion.header
       style={{
-        backgroundColor,
-        width: navWidth,
-        top: navTop,
-        paddingTop: navPadding,
-        paddingBottom: navPadding,
-        borderRadius,
+        width: useSpring(navWidth, fluidSpring),
+        top: useSpring(navTop, fluidSpring),
+        borderRadius: useSpring(navRadius, fluidSpring),
+        backgroundColor: navBg,
         boxShadow: navShadow,
+        borderWidth: '2px',
+        borderColor: borderOpacity,
       }}
-      className="fixed left-1/2 -translate-x-1/2 z-[1000] backdrop-blur-3xl border border-white/20 transition-all duration-700 ease-out flex items-center justify-center"
+      className="fixed left-1/2 -translate-x-1/2 z-[1000] flex items-center justify-between px-6 py-4 md:px-12 overflow-hidden border-black selection:bg-black selection:text-white"
     >
-      <div className="w-full max-w-[1400px] mx-auto flex items-center justify-between px-8">
-        
-        {/* LOGO: Reactive Depth */}
+      {/* LEFT: BRAND & STATUS */}
+      <div className="flex items-center gap-8">
         <motion.div 
-          whileHover={{ scale: 1.05, rotate: [-1, 1, 0] }}
-          className="relative cursor-pointer shrink-0 flex items-center gap-3"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="relative h-10 w-28 cursor-pointer"
         >
-          <div className="relative h-10 w-32">
-             <Image
-                src="/beeteam_logo.png"
-                alt="Beeteam"
-                fill
-                className="object-contain"
-                priority
-              />
-          </div>
-          {/* Status Indicator for "Ultimate" feel */}
-          <div className="hidden xl:flex items-center gap-2 px-3 py-1 bg-black/5 rounded-full border border-black/5">
-            <motion.div 
-               animate={{ opacity: [1, 0.4, 1] }} 
-               transition={{ repeat: Infinity, duration: 2 }}
-               className="w-1.5 h-1.5 bg-red-600 rounded-full" 
-            />
-            <span className="text-[8px] font-black uppercase tracking-widest opacity-40">System_Live</span>
+          <Image 
+            src="/beeteam_full_logo.png" 
+            alt="Beeteam Logo" 
+            fill 
+            className="object-contain"
+            priority 
+          />
+        </motion.div>
+      </div>
+
+      {/* CENTER: NAV LINKS - Solid Typography */}
+      <nav className="hidden md:flex items-center gap-2 relative">
+        {navLinks.map((link) => (
+          <motion.a
+            key={link.name}
+            href={link.href}
+            onMouseEnter={() => setHoveredLink(link.name)}
+            onMouseLeave={() => setHoveredLink(null)}
+            className="px-6 py-2 text-[11px] font-black uppercase tracking-widest text-black relative z-10 transition-colors"
+          >
+            {link.name}
+            <AnimatePresence>
+              {hoveredLink === link.name && (
+                <motion.span
+                  layoutId="nav-hover-bg"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute inset-0 bg-black rounded-none -z-10"
+                />
+              )}
+            </AnimatePresence>
+            <motion.span 
+              className="absolute inset-0 text-white flex items-center justify-center -z-0 opacity-0 group-hover:opacity-100"
+              animate={{ opacity: hoveredLink === link.name ? 1 : 0 }}
+            >
+              {link.name}
+            </motion.span>
+          </motion.a>
+        ))}
+      </nav>
+
+      {/* RIGHT: ACTION CTA */}
+      <div className="flex items-center gap-6">
+        <motion.div 
+          style={{ opacity: useTransform(scrollY, [0, 50], [1, 0]) }}
+          className="hidden xl:flex items-center gap-3 pr-6 border-r-2 border-black"
+        >
+          <MapPin size={16} strokeWidth={3} className="text-red-600" />
+          <div className="text-left">
+            <p className="text-[10px] font-black text-black uppercase leading-none">HQ</p>
+            <p className="text-[12px] font-black text-black uppercase tracking-tighter">Dhaka, Bangladesh</p>
           </div>
         </motion.div>
 
-        {/* CTA: Kinetic Energy Button */}
-        <div className="flex items-center gap-4">
-            <motion.div 
-               className="hidden xl:block text-right pr-4 border-r border-black/10"
-               style={{ opacity: useTransform(scrollY, [0, 50], [1, 0]) }}
-            >
-                <p className="text-[10px] font-black uppercase tracking-tighter leading-none">Inquiry_Ready</p>
-                <p className="text-[9px] font-medium text-black/40">Avg. Response: 2h</p>
-            </motion.div>
-
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="group relative flex items-center gap-3 bg-black text-white px-8 py-4 rounded-full font-black text-[11px] uppercase tracking-[0.25em] overflow-hidden"
-            >
-              <span className="relative z-10 flex items-center gap-2">
-                Get a Quote <Sparkles size={14} className="text-yellow-400 group-hover:rotate-12 transition-transform" />
-              </span>
-              
-              {/* Ultra Glow Sweep */}
-              <motion.div 
-                animate={{ x: ['-100%', '200%'] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "linear", repeatDelay: 1 }}
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12" 
-              />
-              
-              {/* Hover Background Color Shift */}
-              <div className="absolute inset-0 bg-red-600 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
-            </motion.button>
-        </div>
+        <motion.button
+          whileHover={{ x: 5, y: -5 }}
+          whileTap={{ scale: 0.98 }}
+          className="group relative flex items-center gap-3 bg-[#FFD700] text-black border-2 border-black px-8 py-3 rounded-none overflow-hidden shadow-[4px_4px_0px_#000] hover:shadow-none transition-all"
+        >
+          <span className="relative z-10 text-[11px] font-black uppercase tracking-[0.2em]">
+            Inquire Node
+          </span>
+          <ArrowUpRight size={18} strokeWidth={3} className="relative z-10 group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" />
+        </motion.button>
       </div>
     </motion.header>
   )
