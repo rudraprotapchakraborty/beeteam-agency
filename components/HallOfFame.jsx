@@ -47,7 +47,7 @@ export default function HallOfFame() {
   const [selectedImage, setSelectedImage] = useState(null)
 
   return (
-    <section className="bg-white py-32 overflow-hidden relative selection:bg-black selection:text-[#D4AF37]">
+    <section id='certification' className="bg-white py-32 overflow-hidden relative selection:bg-black selection:text-[#D4AF37]">
       
       {/* Editorial Grid Background */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
@@ -68,7 +68,7 @@ export default function HallOfFame() {
             </motion.div>
             
             <h2 className="text-[clamp(3.5rem,8vw,8.5rem)] font-black text-black tracking-tighter leading-[0.8] uppercase">
-              Hall of <br /> <span className="text-white bg-black px-4 ml-[-0.5rem]">Prowess.</span>
+              Hall of <br /> <span className="text-white bg-black px-4 ml-[-0.5rem]">Fame.</span>
             </h2>
           </div>
 

@@ -1,45 +1,59 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import Image from 'next/image'
-import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion'
-import { ArrowUpRight, Activity, MapPin } from 'lucide-react'
+import { useState } from "react";
+import Image from "next/image";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useSpring,
+  AnimatePresence,
+} from "framer-motion";
+import { ArrowUpRight, Activity, MapPin } from "lucide-react";
 
 const navLinks = [
-  { name: 'Home', href: '#hero' },
-  { name: 'About', href: '#about' },
-  { name: 'Services', href: '#services' },
-  { name: 'Works', href: '#works' },
-  { name: 'Contact', href: '#contact' },
-]
+  { name: "Home", href: "#hero" },
+  { name: "News", href: "#news" },
+  { name: "Works", href: "#works" },
+  { name: "Certification", href: "#certification" },
+];
 
 export default function MaterialExpressiveNavbar() {
-  const { scrollY } = useScroll()
-  const [hoveredLink, setHoveredLink] = useState(null)
+  const { scrollY } = useScroll();
+  const [hoveredLink, setHoveredLink] = useState(null);
 
   // Physics Config for smooth morphing
-  const fluidSpring = { type: "spring", stiffness: 300, damping: 30, mass: 0.8 }
-  const hoverSpring = { type: "spring", stiffness: 500, damping: 30 }
+  const fluidSpring = {
+    type: "spring",
+    stiffness: 300,
+    damping: 30,
+    mass: 0.8,
+  };
+  const hoverSpring = { type: "spring", stiffness: 500, damping: 30 };
 
   // 1. Structural Morphing
-  const navWidth = useTransform(scrollY, [0, 80], ['100%', '94%'])
-  const navTop = useTransform(scrollY, [0, 80], ['0px', '24px'])
-  const navRadius = useTransform(scrollY, [0, 80], ['0px', '12px'])
-  
+  const navWidth = useTransform(scrollY, [0, 80], ["100%", "94%"]);
+  const navTop = useTransform(scrollY, [0, 80], ["0px", "24px"]);
+  const navRadius = useTransform(scrollY, [0, 80], ["0px", "12px"]);
+
   // 2. High Contrast Palette
   const navBg = useTransform(
     scrollY,
     [0, 80],
-    ['rgba(255, 255, 255, 1)', 'rgba(255, 255, 255, 1)'] 
-  )
-  
+    ["rgba(255, 255, 255, 1)", "rgba(255, 255, 255, 1)"],
+  );
+
   const navShadow = useTransform(
     scrollY,
     [0, 80],
-    ['0px 0px 0px rgba(0,0,0,0)', '20px 20px 0px rgba(0,0,0,1)']
-  )
+    ["0px 0px 0px rgba(0,0,0,0)", "20px 20px 0px rgba(0,0,0,1)"],
+  );
 
-  const borderOpacity = useTransform(scrollY, [0, 80], ['rgba(0,0,0,1)', 'rgba(0,0,0,1)'])
+  const borderOpacity = useTransform(
+    scrollY,
+    [0, 80],
+    ["rgba(0,0,0,1)", "rgba(0,0,0,1)"],
+  );
 
   return (
     <motion.header
@@ -49,24 +63,24 @@ export default function MaterialExpressiveNavbar() {
         borderRadius: useSpring(navRadius, fluidSpring),
         backgroundColor: navBg,
         boxShadow: navShadow,
-        borderWidth: '2px',
+        borderWidth: "2px",
         borderColor: borderOpacity,
       }}
       className="fixed left-1/2 -translate-x-1/2 z-[1000] flex items-center justify-between px-6 py-4 md:px-12 overflow-hidden border-black selection:bg-black selection:text-white"
     >
       {/* LEFT: BRAND & STATUS */}
       <div className="flex items-center gap-8">
-        <motion.div 
+        <motion.div
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className="relative h-10 w-28 cursor-pointer"
         >
-          <Image 
-            src="/beeteam_full_logo.png" 
-            alt="Beeteam Logo" 
-            fill 
+          <Image
+            src="/beeteam_full_logo.png"
+            alt="Beeteam Logo"
+            fill
             className="object-contain"
-            priority 
+            priority
           />
         </motion.div>
       </div>
@@ -94,7 +108,7 @@ export default function MaterialExpressiveNavbar() {
                 />
               )}
             </AnimatePresence>
-            <motion.span 
+            <motion.span
               className="absolute inset-0 text-white flex items-center justify-center -z-0 opacity-0 group-hover:opacity-100"
               animate={{ opacity: hoveredLink === link.name ? 1 : 0 }}
             >
@@ -106,28 +120,40 @@ export default function MaterialExpressiveNavbar() {
 
       {/* RIGHT: ACTION CTA */}
       <div className="flex items-center gap-6">
-        <motion.div 
+        <motion.div
           style={{ opacity: useTransform(scrollY, [0, 50], [1, 0]) }}
           className="hidden xl:flex items-center gap-3 pr-6 border-r-2 border-black"
         >
           <MapPin size={16} strokeWidth={3} className="text-red-600" />
           <div className="text-left">
-            <p className="text-[10px] font-black text-black uppercase leading-none">HQ</p>
-            <p className="text-[12px] font-black text-black uppercase tracking-tighter">Dhaka, Bangladesh</p>
+            <p className="text-[10px] font-black text-black uppercase leading-none">
+              Shop no -24, 480, Sarker, R E F Tower, Gawair, dakshinkhan
+            </p>
+            <p className="text-[12px] font-black text-black uppercase tracking-tighter">
+              Dhaka, Bangladesh
+            </p>
           </div>
         </motion.div>
 
-        <motion.button
+        {/* UPDATED BUTTON */}
+        <motion.a
+          href="https://www.imdb.com/title/tt39394821"
+          target="_blank"
+          rel="noopener noreferrer"
           whileHover={{ x: 5, y: -5 }}
           whileTap={{ scale: 0.98 }}
-          className="group relative flex items-center gap-3 bg-[#FFD700] text-black border-2 border-black px-8 py-3 rounded-none overflow-hidden shadow-[4px_4px_0px_#000] hover:shadow-none transition-all"
+          className="group relative flex items-center gap-3 bg-[#FFD700] text-black border-2 border-black px-8 py-3 rounded-none overflow-hidden shadow-[4px_4px_0px_#000] hover:shadow-none transition-all cursor-pointer"
         >
           <span className="relative z-10 text-[11px] font-black uppercase tracking-[0.2em]">
-            Inquire Node
+            IMDb
           </span>
-          <ArrowUpRight size={18} strokeWidth={3} className="relative z-10 group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" />
-        </motion.button>
+          <ArrowUpRight
+            size={18}
+            strokeWidth={3}
+            className="relative z-10 group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform"
+          />
+        </motion.a>
       </div>
     </motion.header>
-  )
+  );
 }

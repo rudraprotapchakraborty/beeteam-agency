@@ -2,18 +2,30 @@
 
 import React from 'react'
 import { motion } from 'framer-motion'
-import { Facebook, Instagram, Linkedin, Youtube, ArrowUp, ArrowRight, Mail, Globe, Activity, Terminal } from 'lucide-react'
+import { Facebook, Instagram, Youtube, ArrowUp, ArrowRight, Mail, Globe, Activity, Terminal } from 'lucide-react'
 
 export default function Footer() {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
+  // Unified Social Links Configuration
   const socialLinks = [
-    { icon: <Facebook size={18} />, href: "#" },
-    { icon: <Instagram size={18} />, href: "#" },
-    { icon: <Linkedin size={18} />, href: "#" },
-    { icon: <Youtube size={18} />, href: "#" },
+    { 
+      icon: <Facebook size={18} />, 
+      href: "https://facebook.com", 
+      label: "Facebook" 
+    },
+    { 
+      icon: <Instagram size={18} />, 
+      href: "https://instagram.com", 
+      label: "Instagram" 
+    },
+    { 
+      icon: <Youtube size={18} />, 
+      href: "https://youtube.com", 
+      label: "YouTube" 
+    },
   ]
 
   return (
@@ -45,9 +57,9 @@ export default function Footer() {
             </h2>
             <div className="relative p-10 border-l-[12px] border-black bg-white shadow-[20px_20px_0px_rgba(0,0,0,0.05)] max-w-sm">
                <p className="text-black text-2xl font-black uppercase tracking-tighter leading-none">
-                  Based in Dhaka. <br />
-                  Global Standards. <br />
-                  Visual Authority.
+                 Based in Dhaka. <br />
+                 Global Standards. <br />
+                 Visual Authority.
                </p>
             </div>
           </motion.div>
@@ -90,7 +102,7 @@ export default function Footer() {
               {['Home', 'About Us', 'Process', 'Services', 'Works'].map((link) => (
                 <motion.a 
                   key={link} 
-                  href="#" 
+                  href={`#${link.toLowerCase().replace(/\s+/g, '-')}`} 
                   whileHover={{ x: 8, color: "#E11D48" }} 
                   className="text-black/60 text-[14px] font-black uppercase tracking-tight transition-colors"
                 >
@@ -103,14 +115,16 @@ export default function Footer() {
           <div className="space-y-8">
             <h4 className="text-black font-black text-[12px] uppercase tracking-[0.4em]">Digital_Nodes</h4>
             <div className="flex flex-col gap-4">
-              {['Instagram', 'Vimeo', 'LinkedIn', 'YouTube', 'Facebook'].map((link) => (
+              {socialLinks.map((social) => (
                 <motion.a 
-                  key={link} 
-                  href="#" 
+                  key={social.label} 
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   whileHover={{ x: 8, color: "#E11D48" }} 
                   className="text-black/60 text-[14px] font-black uppercase tracking-tight transition-colors"
                 >
-                  {link}
+                  {social.label}
                 </motion.a>
               ))}
             </div>
@@ -126,7 +140,9 @@ export default function Footer() {
                 </div>
                 <div className="flex items-center gap-4 text-black">
                    <Mail size={20} strokeWidth={3} />
-                   <span className="text-sm font-black tracking-widest uppercase underline decoration-4 decoration-[#FFD700] hover:decoration-red-600 cursor-pointer transition-all">hello@beeteam.agency</span>
+                   <a href="mailto:hello@beeteam.agency" className="text-sm font-black tracking-widest uppercase underline decoration-4 decoration-[#FFD700] hover:decoration-red-600 cursor-pointer transition-all">
+                    hello@beeteam.agency
+                   </a>
                 </div>
               </div>
               <div className="flex gap-4">
@@ -134,6 +150,8 @@ export default function Footer() {
                   <motion.a
                     key={i}
                     href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     whileHover={{ scale: 1.1, backgroundColor: "#000", color: "#FFF" }}
                     className="w-14 h-14 flex items-center justify-center bg-white border-2 border-black text-black transition-all shadow-[4px_4px_0px_#000]"
                   >
@@ -145,7 +163,7 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* LOGO BACKDROP: Bold and Solid */}
+        {/* LOGO BACKDROP */}
         <div className="relative h-24 md:h-56 overflow-hidden select-none pointer-events-none mb-16 flex items-center justify-center">
           <motion.h1 
             initial={{ y: 150 }}

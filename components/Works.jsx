@@ -37,7 +37,7 @@ export default function Works() {
               <span className="text-[11px] font-black uppercase tracking-[0.6em] text-black">Precision_Optics_2026</span>
             </div>
             <h2 className="text-[clamp(3.5rem,9vw,8.5rem)] font-black uppercase tracking-tighter leading-[0.8] text-black">
-              Visual <br /> <span className="underline decoration-4 underline-offset-8 decoration-black">Portfolio.</span>
+              Our <br /> <span className="underline decoration-4 underline-offset-8 decoration-black">Works.</span>
             </h2>
           </motion.div>
 
