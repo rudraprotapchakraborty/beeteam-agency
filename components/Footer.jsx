@@ -13,17 +13,17 @@ export default function Footer() {
   const socialLinks = [
     { 
       icon: <Facebook size={18} />, 
-      href: "https://facebook.com", 
+      href: "https://www.facebook.com/beeteam", 
       label: "Facebook" 
     },
     { 
       icon: <Instagram size={18} />, 
-      href: "https://instagram.com", 
+      href: "https://www.instagram.com/beeteam26", 
       label: "Instagram" 
     },
     { 
       icon: <Youtube size={18} />, 
-      href: "https://youtube.com", 
+      href: "https://www.youtube.com/@BeeTeamltd", 
       label: "YouTube" 
     },
   ]
