@@ -131,7 +131,7 @@ export default function BeeTeamProfessionalHero() {
               className="relative overflow-hidden border-[10px] border-black shadow-[30px_30px_0px_rgba(0,0,0,0.1)]"
             >
               <img
-                src="/hero.jpg"
+                src="/hero2.jpg"
                 className="w-full aspect-video object-cover"
                 alt="Feature"
               />

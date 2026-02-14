@@ -12,10 +12,8 @@ import {
 import { ArrowUpRight, Activity, MapPin } from "lucide-react";
 
 const navLinks = [
-  { name: "Home", href: "#hero" },
-  { name: "News", href: "#news" },
-  { name: "Works", href: "#works" },
-  { name: "Certification", href: "#certification" },
+  { name: "Home", href: "/" },
+  { name: "Works", href: "/works" },
 ];
 
 export default function MaterialExpressiveNavbar() {
