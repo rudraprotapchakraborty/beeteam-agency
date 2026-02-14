@@ -16,6 +16,34 @@ const ITEMS_PER_PAGE = 4
 export default function FeaturedNews() {
   const container = useRef(null)
   const [page, setPage] = useState(1)
+  const [language, setLanguage] = useState("en")
+
+  // Load language from localStorage
+  useEffect(() => {
+    const savedLang = localStorage.getItem("lang")
+    if (savedLang) setLanguage(savedLang)
+  }, [])
+
+  const translations = {
+    en: {
+      title1: "GLOBAL",
+      title2: "PRESS",
+      title3: "INTELLIGENCE",
+      tagline: "Archived Media Logs · University of Chankarphul",
+      read: "Read",
+      ref: "REF"
+    },
+    bn: {
+      title1: "গ্লোবাল",
+      title2: "প্রেস",
+      title3: "ইন্টেলিজেন্স",
+      tagline: "সংরক্ষিত মিডিয়া লগ · চঙ্কারফুল বিশ্ববিদ্যালয়",
+      read: "পড়ুন",
+      ref: "রেফ"
+    }
+  }
+
+  const t = translations[language]
 
   const totalPages = Math.ceil(newsData.length / ITEMS_PER_PAGE)
   const start = (page - 1) * ITEMS_PER_PAGE
@@ -27,7 +55,6 @@ export default function FeaturedNews() {
       ref={container}
       className="relative bg-[#fafafa] py-24 overflow-hidden"
     >
-      {/* Ambient light */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-[10%] right-[10%] w-[35%] h-[35%] bg-[#FFD700]/5 blur-[140px]" />
       </div>
@@ -43,11 +70,15 @@ export default function FeaturedNews() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-6xl font-extrabold text-black tracking-tight leading-[1.05] mb-4">
-            GLOBAL <span className="text-[#FFD700]">PRESS</span> INTELLIGENCE
+            {t.title1}{" "}
+            <span className="text-[#FFD700]">
+              {t.title2}
+            </span>{" "}
+            {t.title3}
           </h2>
 
           <p className="text-xs text-black/50 font-medium tracking-wide">
-            Archived Media Logs · University of Chankarphul
+            {t.tagline}
           </p>
         </motion.div>
 
@@ -55,12 +86,19 @@ export default function FeaturedNews() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <AnimatePresence mode="wait">
             {paginatedNews.map((news, index) => (
-              <PressCard key={news.href} news={news} index={index + start} />
+              <PressCard
+                key={news.href}
+                news={news}
+                index={index + start}
+                language={language}
+                readLabel={t.read}
+                refLabel={t.ref}
+              />
             ))}
           </AnimatePresence>
         </div>
 
-        {/* CLEAN PAGINATION */}
+        {/* PAGINATION */}
         <div className="flex justify-center items-center gap-6 mt-16 text-sm">
 
           <motion.button
@@ -107,7 +145,7 @@ export default function FeaturedNews() {
 
 /* ---------------- CARD ---------------- */
 
-function PressCard({ news, index }) {
+function PressCard({ news, index, readLabel, refLabel }) {
   const [thumbnail, setThumbnail] = useState(null)
   const [loading, setLoading] = useState(true)
 
@@ -146,7 +184,6 @@ function PressCard({ news, index }) {
           />
         )}
 
-        {/* Subtle category label (no pill) */}
         <div className="absolute top-4 left-4 text-[9px] font-semibold uppercase tracking-wide text-black bg-white/80 px-2 py-1 rounded-md backdrop-blur-sm">
           {news.category}
         </div>
@@ -167,13 +204,13 @@ function PressCard({ news, index }) {
         </div>
 
         <div className="flex justify-between items-center pt-5 border-t border-black/5 text-xs text-black/40">
-          <span>REF_{index + 1}</span>
+          <span>{refLabel}_{index + 1}</span>
 
           <motion.span
             whileHover={{ x: 4 }}
             className="flex items-center gap-1 font-medium text-black group-hover:text-[#D97706] transition"
           >
-            Read <ExternalLink size={13} />
+            {readLabel} <ExternalLink size={13} />
           </motion.span>
         </div>
 

@@ -1,25 +1,62 @@
 'use client'
 
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Play, X, ArrowUpRight } from 'lucide-react'
 
 /* ---------------- DATA ---------------- */
 
 const projects = [
-  { id: "VpOd1qnnJHw", title: "Brand Narrative", category: "Film" },
-  { id: "nvwHhE5el6o", title: "Corporate Vision", category: "TVC" },
-  { id: "UqMWgsWH7RU", title: "Dynamic Motion", category: "OVC" },
-  { id: "por5d5Nelog", title: "Product Story", category: "Ads" },
-  { id: "2LJWoKDKiqc", title: "Cinematic Journey", category: "Documentary" },
-  { id: "QTgY29dOPnQ", title: "Music Visual", category: "Music Video" },
+  { id: "VpOd1qnnJHw", title: "Brand Narrative", category: "film" },
+  { id: "nvwHhE5el6o", title: "Corporate Vision", category: "tvc" },
+  { id: "UqMWgsWH7RU", title: "Dynamic Motion", category: "ovc" },
+  { id: "por5d5Nelog", title: "Product Story", category: "ads" },
+  { id: "2LJWoKDKiqc", title: "Cinematic Journey", category: "doc" },
+  { id: "QTgY29dOPnQ", title: "Music Visual", category: "music" },
 ]
-
-/* ---------------- COMPONENT ---------------- */
 
 export default function Works() {
   const [selectedProject, setSelectedProject] = useState(null)
+  const [language, setLanguage] = useState("en")
   const containerRef = useRef(null)
+
+  useEffect(() => {
+    const savedLang = localStorage.getItem("lang")
+    if (savedLang) setLanguage(savedLang)
+  }, [])
+
+  const translations = {
+    en: {
+      title1: "OUR",
+      title2: "WORKS",
+      subtitle:
+        "A curated selection of cinematic narratives and high-impact visual storytelling.",
+      categories: {
+        film: "Film",
+        tvc: "TVC",
+        ovc: "OVC",
+        ads: "Ads",
+        doc: "Documentary",
+        music: "Music Video"
+      }
+    },
+    bn: {
+      title1: "আমাদের",
+      title2: "কাজসমূহ",
+      subtitle:
+        "সিনেমাটিক গল্প ও উচ্চ-প্রভাবশালী ভিজ্যুয়াল স্টোরিটেলিং-এর নির্বাচিত সংগ্রহ।",
+      categories: {
+        film: "ফিল্ম",
+        tvc: "টিভিসি",
+        ovc: "ওভিসি",
+        ads: "বিজ্ঞাপন",
+        doc: "ডকুমেন্টারি",
+        music: "মিউজিক ভিডিও"
+      }
+    }
+  }
+
+  const t = translations[language]
 
   return (
     <section
@@ -28,7 +65,6 @@ export default function Works() {
       className="relative py-24 bg-[#fafafa] overflow-hidden"
     >
 
-      {/* Ambient Glow */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-[5%] right-[5%] w-[35%] h-[35%] bg-[#FFD700]/10 blur-[140px]" />
       </div>
@@ -44,11 +80,11 @@ export default function Works() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.05] text-black mb-4">
-            OUR <span className="text-[#FFD700]">WORKS</span>
+            {t.title1} <span className="text-[#FFD700]">{t.title2}</span>
           </h2>
 
           <p className="text-sm text-black/50 max-w-xl mx-auto">
-            A curated selection of cinematic narratives and high-impact visual storytelling.
+            {t.subtitle}
           </p>
         </motion.div>
 
@@ -60,6 +96,7 @@ export default function Works() {
               item={item}
               index={i}
               onClick={() => setSelectedProject(item)}
+              categoryLabel={t.categories[item.category]}
             />
           ))}
         </div>
@@ -108,7 +145,7 @@ export default function Works() {
 
 /* ---------------- CARD ---------------- */
 
-function ProjectCard({ item, index, onClick }) {
+function ProjectCard({ item, index, onClick, categoryLabel }) {
   return (
     <motion.div
       onClick={onClick}
@@ -119,7 +156,6 @@ function ProjectCard({ item, index, onClick }) {
       className="group relative h-[360px] bg-white rounded-2xl overflow-hidden border border-black/5 cursor-pointer transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_30px_80px_-25px_rgba(0,0,0,0.15)]"
     >
 
-      {/* Background Preview */}
       <div className="absolute inset-0">
         <iframe
           className="w-full h-full scale-[1.6] opacity-80 group-hover:scale-[1.5] transition-transform duration-[2s] ease-out pointer-events-none"
@@ -128,11 +164,10 @@ function ProjectCard({ item, index, onClick }) {
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
       </div>
 
-      {/* Content */}
       <div className="absolute inset-0 flex flex-col justify-between p-6 text-white z-10">
 
         <div className="flex justify-between items-start text-xs text-white/60">
-          <span>{item.category}</span>
+          <span>{categoryLabel}</span>
 
           <motion.div
             whileHover={{ x: 4 }}
@@ -156,7 +191,6 @@ function ProjectCard({ item, index, onClick }) {
 
       </div>
 
-      {/* Bottom Accent Line */}
       <motion.div
         className="absolute bottom-0 left-0 h-[2px] bg-[#FFD700]"
         initial={{ width: 0 }}

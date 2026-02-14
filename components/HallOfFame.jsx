@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
 import { X, Maximize2, ShieldCheck, ChevronRight } from 'lucide-react'
 
@@ -41,7 +41,36 @@ const awards = [
 
 export default function HallOfFame() {
   const [selectedImage, setSelectedImage] = useState(null)
+  const [language, setLanguage] = useState("en")
   const containerRef = useRef(null)
+
+  useEffect(() => {
+    const savedLang = localStorage.getItem("lang")
+    if (savedLang) setLanguage(savedLang)
+  }, [])
+
+  const translations = {
+    en: {
+      title1: "HALL OF",
+      title2: "FAME",
+      subtitle:
+        "Verified cinematic certifications and international recognitions for 2026.",
+      registry: "Registry ID",
+      exhibition: "Unrestricted Global Exhibition",
+      verify: "Verify"
+    },
+    bn: {
+      title1: "গৌরবের",
+      title2: "দেয়াল",
+      subtitle:
+        "২০২৬ সালের জন্য যাচাইকৃত চলচ্চিত্র সার্টিফিকেশন ও আন্তর্জাতিক স্বীকৃতি।",
+      registry: "রেজিস্ট্রি আইডি",
+      exhibition: "সীমাহীন বৈশ্বিক প্রদর্শনী",
+      verify: "যাচাই করুন"
+    }
+  }
+
+  const t = translations[language]
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -68,14 +97,15 @@ export default function HallOfFame() {
           className="text-center mb-14"
         >
           <h2 className="text-4xl md:text-5xl font-extrabold text-black mb-4">
-            HALL OF <span className="text-[#FFD700]">FAME</span>
+            {t.title1} <span className="text-[#FFD700]">{t.title2}</span>
           </h2>
+
           <p className="text-xs text-black/50 font-medium max-w-lg mx-auto">
-            Verified cinematic certifications and international recognitions for 2026.
+            {t.subtitle}
           </p>
         </motion.div>
 
-        {/* COMPACT GRID */}
+        {/* GRID */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {awards.map((award, i) => (
             <AwardCard
@@ -83,6 +113,7 @@ export default function HallOfFame() {
               award={award}
               index={i}
               onOpen={() => setSelectedImage(award.url)}
+              verifyLabel={t.verify}
             />
           ))}
         </div>
@@ -90,13 +121,13 @@ export default function HallOfFame() {
         {/* FOOTER */}
         <div className="mt-16 pt-8 border-t border-black/5 flex flex-col md:flex-row justify-between items-center gap-6 text-sm">
           <div>
-            <div className="text-black/40 text-xs">Registry ID</div>
+            <div className="text-black/40 text-xs">{t.registry}</div>
             <div className="font-semibold text-black">BT-CERT-GLOBAL-26</div>
           </div>
 
           <div className="flex items-center gap-2 text-black">
             <ShieldCheck size={18} className="text-[#FFD700]" />
-            <span className="font-medium">Unrestricted Global Exhibition</span>
+            <span className="font-medium">{t.exhibition}</span>
           </div>
         </div>
       </div>
@@ -133,7 +164,7 @@ export default function HallOfFame() {
 
 /* ---------------- CARD ---------------- */
 
-function AwardCard({ award, index, onOpen }) {
+function AwardCard({ award, index, onOpen, verifyLabel }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -143,7 +174,6 @@ function AwardCard({ award, index, onOpen }) {
       onClick={onOpen}
       className="group bg-white rounded-xl border border-black/5 overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-lg"
     >
-      {/* Image */}
       <div className="relative aspect-[4/3] overflow-hidden">
         <motion.img
           src={award.url}
@@ -153,7 +183,6 @@ function AwardCard({ award, index, onOpen }) {
         />
       </div>
 
-      {/* Info */}
       <div className="p-5 space-y-3">
 
         <div className="flex justify-between items-center text-xs text-black/40">
@@ -176,7 +205,7 @@ function AwardCard({ award, index, onOpen }) {
         <div className="flex justify-between items-center pt-4 border-t border-black/5 text-xs">
           <span className="text-black/40">{award.date}</span>
           <span className="flex items-center gap-1 text-black font-medium">
-            Verify <ChevronRight size={14} className="text-[#FFD700]" />
+            {verifyLabel} <ChevronRight size={14} className="text-[#FFD700]" />
           </span>
         </div>
 

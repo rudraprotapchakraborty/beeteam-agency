@@ -1,10 +1,38 @@
 'use client'
 
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
-import { useRef } from 'react'
+import { useRef, useState, useEffect } from 'react'
 
 export default function LatestRelease() {
   const containerRef = useRef(null)
+  const [language, setLanguage] = useState("en")
+
+  // Load language from localStorage
+  useEffect(() => {
+    const savedLang = localStorage.getItem("lang")
+    if (savedLang) setLanguage(savedLang)
+  }, [])
+
+  const translations = {
+    en: {
+      title1: "LATEST",
+      title2: "RELEASE",
+      tagline: "Production House · Studio 2026",
+      resolution: "Resolution",
+      client: "Client",
+      duration: "Duration"
+    },
+    bn: {
+      title1: "সর্বশেষ",
+      title2: "প্রকাশনা",
+      tagline: "প্রোডাকশন হাউস · স্টুডিও ২০২৬",
+      resolution: "রেজোলিউশন",
+      client: "ক্লায়েন্ট",
+      duration: "সময়কাল"
+    }
+  }
+
+  const t = translations[language]
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -44,9 +72,9 @@ export default function LatestRelease() {
           className="text-center mb-14"
         >
           <h2 className="text-4xl md:text-6xl font-extrabold text-black tracking-tight leading-[1.05] mb-4">
-            LATEST{" "}
+            {t.title1}{" "}
             <span className="text-[#FFD700] relative">
-              RELEASE
+              {t.title2}
               <motion.span
                 className="absolute left-0 -bottom-1 h-[2px] w-full bg-[#FFD700]"
                 initial={{ scaleX: 0 }}
@@ -58,11 +86,11 @@ export default function LatestRelease() {
           </h2>
 
           <p className="text-xs text-black/50 font-medium tracking-wide">
-            Production House · Studio 2026
+            {t.tagline}
           </p>
         </motion.div>
 
-        {/* COMPACT VIDEO THUMBNAIL */}
+        {/* VIDEO */}
         <motion.div
           style={{ scale: scaleSoft }}
           initial={{ opacity: 0, y: 40 }}
@@ -79,7 +107,6 @@ export default function LatestRelease() {
             allowFullScreen
           />
 
-          {/* Soft Fade Overlay */}
           <motion.div
             className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent pointer-events-none"
             initial={{ opacity: 0 }}
@@ -97,13 +124,20 @@ export default function LatestRelease() {
           className="mt-8 flex flex-wrap justify-center gap-8 text-xs text-black/60 font-medium tracking-wide"
         >
           <div>
-            Resolution · <span className="text-black font-semibold">4K UHD</span>
+            {t.resolution} ·{" "}
+            <span className="text-black font-semibold">4K UHD</span>
           </div>
+
           <div>
-            Client · <span className="text-black font-semibold">Financial Express</span>
+            {t.client} ·{" "}
+            <span className="text-black font-semibold">
+              Financial Express
+            </span>
           </div>
+
           <div>
-            Duration · <span className="text-[#D97706] font-semibold">02:44</span>
+            {t.duration} ·{" "}
+            <span className="text-[#D97706] font-semibold">02:44</span>
           </div>
         </motion.div>
 

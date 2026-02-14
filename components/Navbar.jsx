@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import {
   motion,
@@ -9,18 +9,48 @@ import {
   useSpring,
   AnimatePresence,
 } from "framer-motion";
-import { ArrowUpRight, MapPin, Globe } from "lucide-react";
-
-const navLinks = [
-  { name: "Home", href: "/" },
-  { name: "Works", href: "/works" },
-];
+import { ArrowUpRight, MapPin } from "lucide-react";
 
 export default function MaterialExpressiveNavbar() {
   const { scrollY } = useScroll();
   const [hoveredLink, setHoveredLink] = useState(null);
+  const [language, setLanguage] = useState("en");
 
-  // Physics Config for fluid motion
+  // Load saved language
+  useEffect(() => {
+    const savedLang = localStorage.getItem("lang");
+    if (savedLang) setLanguage(savedLang);
+  }, []);
+
+  // Toggle language
+  const changeLanguage = (lang) => {
+    setLanguage(lang);
+    localStorage.setItem("lang", lang);
+  };
+
+  // Translations
+  const translations = {
+    en: {
+      home: "Home",
+      works: "Works",
+      location: "Dhaka, BD",
+      imdb: "IMDb",
+    },
+    bn: {
+      home: "হোম",
+      works: "কাজসমূহ",
+      location: "ঢাকা, বাংলাদেশ",
+      imdb: "আইএমডিবি",
+    },
+  };
+
+  const t = translations[language];
+
+  const navLinks = [
+    { name: t.home, href: "/" },
+    { name: t.works, href: "/works" },
+  ];
+
   const fluidSpring = {
     type: "spring",
     stiffness: 260,
@@ -28,12 +58,10 @@ export default function MaterialExpressiveNavbar() {
     mass: 0.8,
   };
 
-  // 1. Structural Morphing: Transitions to a floating pill on scroll
   const navWidth = useTransform(scrollY, [0, 80], ["100%", "90%"]);
   const navTop = useTransform(scrollY, [0, 80], ["0px", "20px"]);
-  const navRadius = useTransform(scrollY, [0, 80], ["0px", "100px"]); // Full pill radius
+  const navRadius = useTransform(scrollY, [0, 80], ["0px", "100px"]);
 
-  // 2. Soft UI Palette
   const navBg = useTransform(
     scrollY,
     [0, 80],
@@ -43,16 +71,13 @@ export default function MaterialExpressiveNavbar() {
   const navShadow = useTransform(
     scrollY,
     [0, 80],
-    [
-      "0px 0px 0px rgba(0,0,0,0)",
-      "0px 20px 40px rgba(0,0,0,0.05)" // Soft shadow instead of hard brutalist
-    ]
+    ["0px 0px 0px rgba(0,0,0,0)", "0px 20px 40px rgba(0,0,0,0.05)"]
   );
 
   const borderOpacity = useTransform(
     scrollY,
     [0, 80],
-    ["rgba(0,0,0,0)", "rgba(0,0,0,0.05)"] // Subtle border
+    ["rgba(0,0,0,0)", "rgba(0,0,0,0.05)"]
   );
 
   return (
@@ -66,9 +91,9 @@ export default function MaterialExpressiveNavbar() {
         borderWidth: "1px",
         borderColor: borderOpacity,
       }}
-      className="fixed left-1/2 -translate-x-1/2 z-[1000] flex items-center justify-between px-8 py-3 backdrop-blur-xl selection:bg-[#FFD700] selection:text-black"
+      className="fixed left-1/2 -translate-x-1/2 z-[1000] flex items-center justify-between px-8 py-3 backdrop-blur-xl"
     >
-      {/* LEFT: BRAND & LOCATION */}
+      {/* LEFT */}
       <div className="flex items-center gap-6">
         <motion.div
           whileHover={{ scale: 1.05 }}
@@ -84,19 +109,18 @@ export default function MaterialExpressiveNavbar() {
           />
         </motion.div>
 
-        {/* Subtle Location Pill */}
-        <motion.div 
+        <motion.div
           style={{ opacity: useTransform(scrollY, [0, 50], [1, 0]) }}
           className="hidden xl:flex items-center gap-2 pl-6 border-l border-black/5"
         >
           <MapPin size={12} className="text-[#FFD700]" />
           <span className="text-[9px] font-black uppercase tracking-widest text-black/40">
-            Dhaka, BD
+            {t.location}
           </span>
         </motion.div>
       </div>
 
-      {/* CENTER: NAV LINKS - Pill Hover */}
+      {/* CENTER NAV */}
       <nav className="hidden md:flex items-center gap-1 bg-black/5 p-1 rounded-full">
         {navLinks.map((link) => (
           <motion.a
@@ -104,11 +128,16 @@ export default function MaterialExpressiveNavbar() {
             href={link.href}
             onMouseEnter={() => setHoveredLink(link.name)}
             onMouseLeave={() => setHoveredLink(null)}
-            className="px-6 py-2 text-[10px] font-black uppercase tracking-widest text-black relative z-10 transition-colors"
+            className="px-6 py-2 text-[10px] font-black uppercase tracking-widest relative z-10"
           >
-            <span className={hoveredLink === link.name ? "text-white" : "text-black"}>
+            <span
+              className={
+                hoveredLink === link.name ? "text-white" : "text-black"
+              }
+            >
               {link.name}
             </span>
+
             <AnimatePresence>
               {hoveredLink === link.name && (
                 <motion.span
@@ -125,18 +154,18 @@ export default function MaterialExpressiveNavbar() {
         ))}
       </nav>
 
-      {/* RIGHT: ACTION CTA - Yellow Theme */}
-      <div className="flex items-center gap-4">
+      {/* RIGHT */}
+      <div className="flex items-center gap-6">
         <motion.a
           href="https://www.imdb.com/title/tt39394821"
           target="_blank"
           rel="noopener noreferrer"
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
-          className="group relative flex items-center gap-2 bg-[#FFD700] text-black px-6 py-2.5 rounded-full overflow-hidden shadow-lg shadow-amber-200/50 transition-all cursor-pointer"
+          className="group relative flex items-center gap-2 bg-[#FFD700] text-black px-6 py-2.5 rounded-full overflow-hidden shadow-lg shadow-amber-200/50 transition-all"
         >
           <span className="relative z-10 text-[10px] font-black uppercase tracking-[0.2em]">
-            IMDb
+            {t.imdb}
           </span>
           <ArrowUpRight
             size={14}
@@ -144,10 +173,28 @@ export default function MaterialExpressiveNavbar() {
             className="group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform"
           />
         </motion.a>
-        
-        {/* Globe Icon Micro-interaction */}
-        <div className="p-2 bg-black/5 rounded-full hover:bg-[#FFD700]/20 transition-colors cursor-pointer">
-          <Globe size={16} className="text-black/60" />
+
+        {/* LANGUAGE SWITCHER */}
+        <div className="flex items-center text-[10px] font-black uppercase tracking-widest">
+          <button
+            onClick={() => changeLanguage("en")}
+            className={`transition-colors ${
+              language === "en" ? "text-black" : "text-black/40"
+            }`}
+          >
+            EN
+          </button>
+
+          <span className="mx-2 text-black/30">|</span>
+
+          <button
+            onClick={() => changeLanguage("bn")}
+            className={`transition-colors ${
+              language === "bn" ? "text-black" : "text-black/40"
+            }`}
+          >
+            বাংলা
+          </button>
         </div>
       </div>
     </motion.header>

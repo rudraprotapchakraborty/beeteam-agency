@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import {
   Facebook,
@@ -13,6 +13,42 @@ import {
 } from 'lucide-react'
 
 export default function CompactFooter() {
+
+  const [language, setLanguage] = useState("en")
+
+  useEffect(() => {
+    const savedLang = localStorage.getItem("lang")
+    if (savedLang) setLanguage(savedLang)
+  }, [])
+
+  const translations = {
+    en: {
+      title1: "CREATE",
+      title2: "HISTORY.",
+      subtitle: "Let’s build cinematic narratives that define the next era.",
+      whatsapp: "WhatsApp Us",
+      navigation: "Navigation",
+      home: "Home",
+      works: "Works",
+      social: "Social",
+      contact: "Contact",
+      copyright: "© 2026 Beeteam Lab. All rights reserved."
+    },
+    bn: {
+      title1: "ইতিহাস",
+      title2: "গড়ুন।",
+      subtitle: "চলুন এমন সিনেমাটিক গল্প তৈরি করি যা পরবর্তী যুগকে সংজ্ঞায়িত করবে।",
+      whatsapp: "হোয়াটসঅ্যাপ করুন",
+      navigation: "নেভিগেশন",
+      home: "হোম",
+      works: "কাজসমূহ",
+      social: "সোশ্যাল",
+      contact: "যোগাযোগ",
+      copyright: "© ২০২৬ বিটিম ল্যাব। সর্বস্বত্ব সংরক্ষিত।"
+    }
+  }
+
+  const t = translations[language]
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -39,45 +75,45 @@ export default function CompactFooter() {
   return (
     <footer
       id="contact"
-      className="relative bg-[#fafafa] pt-24 pb-10 overflow-hidden"
+      className="relative bg-[#fafafa] pt-20 pb-8 overflow-hidden"
     >
 
-      {/* Ambient Glow */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute bottom-[10%] left-[10%] w-[30%] h-[30%] bg-[#FFD700]/10 blur-[140px]" />
       </div>
 
       <div className="max-w-6xl mx-auto px-6 relative z-10">
 
-        {/* HEADER BLOCK */}
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-16 mb-20">
+        {/* HEADER */}
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-12 mb-16">
 
-          <div className="space-y-6">
+          <div className="space-y-5">
             <motion.h2
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="text-4xl md:text-6xl font-extrabold leading-[1.05] tracking-tight text-black"
+              className="text-4xl md:text-5xl font-extrabold leading-[1.05] tracking-tight text-black"
             >
-              CREATE <br />
-              <span className="text-[#FFD700]">HISTORY.</span>
+              {t.title1} <br />
+              <span className="text-[#FFD700]">{t.title2}</span>
             </motion.h2>
 
             <p className="text-sm text-black/50 max-w-sm">
-              Let’s build cinematic narratives that define the next era.
+              {t.subtitle}
             </p>
           </div>
 
-          {/* CTA */}
           <motion.a
-            href="tel:+8801400872857"
+            href="https://wa.me/8801400872857"
+            target="_blank"
+            rel="noopener noreferrer"
             whileHover={{ y: -4 }}
             whileTap={{ scale: 0.98 }}
             transition={{ type: "spring", stiffness: 300 }}
-            className="group flex items-center gap-3 bg-black text-white px-8 py-4 text-xs font-semibold tracking-wide rounded-lg shadow-md hover:shadow-[0_20px_60px_-20px_rgba(0,0,0,0.35)] transition-all duration-300"
+            className="group flex items-center gap-3 bg-black text-white px-7 py-3 text-xs font-semibold tracking-wide rounded-lg shadow-md transition-all duration-300"
           >
-            Start Project
+            {t.whatsapp}
             <ArrowRight
               size={16}
               className="group-hover:translate-x-1 transition-transform"
@@ -86,22 +122,21 @@ export default function CompactFooter() {
 
         </div>
 
-        {/* NAV GRID */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 py-14 border-y border-black/5">
+        {/* GRID */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 py-10 border-y border-black/5 items-start">
 
-          {/* Navigation */}
-          <div className="space-y-5">
+          <div className="space-y-4">
             <h4 className="text-xs font-semibold text-black/40 tracking-wide">
-              Navigation
+              {t.navigation}
             </h4>
 
-            <div className="flex flex-col gap-3 text-sm">
+            <div className="flex flex-col gap-2 text-sm">
               <motion.a
                 href="/"
                 whileHover={{ x: 4 }}
                 className="text-black/70 hover:text-black transition-colors"
               >
-                Home
+                {t.home}
               </motion.a>
 
               <motion.a
@@ -109,18 +144,17 @@ export default function CompactFooter() {
                 whileHover={{ x: 4 }}
                 className="text-black/70 hover:text-black transition-colors"
               >
-                Works
+                {t.works}
               </motion.a>
             </div>
           </div>
 
-          {/* Social */}
-          <div className="space-y-5">
+          <div className="space-y-4">
             <h4 className="text-xs font-semibold text-black/40 tracking-wide">
-              Social
+              {t.social}
             </h4>
 
-            <div className="flex flex-col gap-3 text-sm">
+            <div className="flex flex-col gap-2 text-sm">
               {socialLinks.map((s, i) => (
                 <motion.a
                   key={i}
@@ -136,60 +170,68 @@ export default function CompactFooter() {
             </div>
           </div>
 
-          {/* Contact / Location */}
-          <div className="space-y-6">
+          <div className="space-y-4">
             <h4 className="text-xs font-semibold text-black/40 tracking-wide">
-              Contact
+              {t.contact}
             </h4>
 
             <div className="flex items-start gap-3 text-black text-sm leading-relaxed">
-              <Globe size={18} className="text-[#FFD700] mt-1" />
+              <Globe size={16} className="text-[#FFD700] mt-1" />
               <div>
                 Shop no -24, 480, Sarker,<br />
-                R E F Tower, Gawair, Dakshinkhan,<br />
-                Dhaka, 1230, Bangladesh
+                R E F Tower, Gawair,<br />
+                Dakshinkhan, Dhaka 1230
               </div>
             </div>
 
             <div className="flex items-center gap-3 text-black text-sm font-medium">
-              <Phone size={16} className="text-[#FFD700]" />
+              <Phone size={15} className="text-[#FFD700]" />
               <a href="tel:+8801400872857">
                 +880 1400 87 2857
               </a>
             </div>
 
-            {/* Social Icons */}
-            <div className="flex gap-4 pt-2">
+            <div className="flex gap-3 pt-2">
               {socialLinks.map((s, i) => (
                 <motion.a
                   key={i}
                   href={s.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  whileHover={{ y: -4 }}
+                  whileHover={{ y: -3 }}
                   whileTap={{ scale: 0.95 }}
-                  className="w-10 h-10 flex items-center justify-center border border-black/10 rounded-lg bg-white hover:bg-[#FFD700] transition-all duration-300 shadow-sm"
+                  className="w-9 h-9 flex items-center justify-center border border-black/10 rounded-lg bg-white hover:bg-[#FFD700] transition-all duration-300 shadow-sm"
                 >
                   {s.icon}
                 </motion.a>
               ))}
             </div>
-
           </div>
+
+          <div className="w-full h-[200px] rounded-xl overflow-hidden border border-black/10 shadow-sm">
+            <iframe
+              src="https://www.google.com/maps?q=REF+Tower+Gawair+Dakshinkhan+Dhaka&output=embed"
+              width="100%"
+              height="100%"
+              loading="lazy"
+              allowFullScreen
+              className="grayscale contrast-125"
+            />
+          </div>
+
         </div>
 
-        {/* STATUS BAR */}
-        <div className="flex justify-between items-center pt-8 text-sm">
+        <div className="flex justify-between items-center pt-6 text-sm">
 
           <div className="text-black/40">
-            © 2026 Beeteam Lab. All rights reserved.
+            {t.copyright}
           </div>
 
           <motion.button
             onClick={scrollToTop}
             whileHover={{ y: -4 }}
             whileTap={{ scale: 0.95 }}
-            className="w-10 h-10 flex items-center justify-center border border-black/10 rounded-lg bg-white hover:bg-[#FFD700] transition-all duration-300"
+            className="w-9 h-9 flex items-center justify-center border border-black/10 rounded-lg bg-white hover:bg-[#FFD700] transition-all duration-300"
           >
             <ArrowUp size={16} />
           </motion.button>

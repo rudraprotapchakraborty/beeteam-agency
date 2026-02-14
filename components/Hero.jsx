@@ -1,11 +1,39 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { ArrowDown, ExternalLink } from "lucide-react";
 
 export default function BeeTeamYellowStackedHero() {
   const containerRef = useRef(null);
+  const [language, setLanguage] = useState("en");
+
+  // Load language from localStorage
+  useEffect(() => {
+    const savedLang = localStorage.getItem("lang");
+    if (savedLang) setLanguage(savedLang);
+  }, []);
+
+  const translations = {
+    en: {
+      title1: "BEETEAM",
+      title2: "STUDIOS",
+      subtitle:
+        "Engineering cinematic authority for high-performance global brands.",
+      contact: "Contact",
+      viewWork: "View Work",
+    },
+    bn: {
+      title1: "বিটিম",
+      title2: "স্টুডিওস",
+      subtitle:
+        "উচ্চ-ক্ষমতাসম্পন্ন বৈশ্বিক ব্র্যান্ডের জন্য সিনেমাটিক কর্তৃত্ব নির্মাণ।",
+      contact: "যোগাযোগ",
+      viewWork: "কাজ দেখুন",
+    },
+  };
+
+  const t = translations[language];
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -27,7 +55,7 @@ export default function BeeTeamYellowStackedHero() {
       ref={containerRef}
       className="relative min-h-[120vh] bg-[#fafafa] overflow-hidden font-sans pb-24"
     >
-      {/* Soft Ambient Light */}
+      {/* Ambient Background */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <div className="absolute top-[-15%] left-[15%] w-[40%] h-[40%] bg-[#FFD700]/10 blur-[140px]" />
         <div className="absolute bottom-[-10%] right-[10%] w-[35%] h-[35%] bg-yellow-200/20 blur-[120px]" />
@@ -43,10 +71,11 @@ export default function BeeTeamYellowStackedHero() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="text-center max-w-3xl mb-14"
         >
+          {/* Translated Title */}
           <h1 className="text-4xl md:text-6xl font-extrabold text-black tracking-tight leading-[1.05] mb-4">
-            BEETEAM{" "}
+            {t.title1}{" "}
             <span className="text-[#FFD700] relative">
-              STUDIOS
+              {t.title2}
               <motion.span
                 layoutId="underline"
                 className="absolute left-0 -bottom-1 h-[2px] w-full bg-[#FFD700]"
@@ -58,47 +87,48 @@ export default function BeeTeamYellowStackedHero() {
             </span>
           </h1>
 
+          {/* Subtitle */}
           <p className="text-sm md:text-base text-black/60 font-medium max-w-xl mx-auto leading-relaxed">
-            Engineering cinematic authority for high-performance global brands.
+            {t.subtitle}
           </p>
 
           {/* Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
-<motion.button
-  onClick={() => {
-    document.getElementById("contact")?.scrollIntoView({
-      behavior: "smooth"
-    });
-  }}
-  whileHover={{ scale: 1.04 }}
-  whileTap={{ scale: 0.97 }}
-  transition={{ type: "spring", stiffness: 400, damping: 20 }}
-  className="px-6 py-3 bg-[#FFD700] text-black text-xs font-bold tracking-widest rounded-lg shadow-md hover:shadow-[0_8px_30px_-8px_rgba(255,215,0,0.6)] transition-all duration-300 flex items-center gap-2"
->
-  Contact
-  <motion.span
-    animate={{ y: [0, 3, 0] }}
-    transition={{ duration: 1.6, repeat: Infinity }}
-  >
-    <ArrowDown size={14} strokeWidth={3} />
-  </motion.span>
-</motion.button>
 
+            <motion.button
+              onClick={() => {
+                document.getElementById("contact")?.scrollIntoView({
+                  behavior: "smooth",
+                });
+              }}
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ type: "spring", stiffness: 400, damping: 20 }}
+              className="px-6 py-3 bg-[#FFD700] text-black text-xs font-bold tracking-widest rounded-lg shadow-md hover:shadow-[0_8px_30px_-8px_rgba(255,215,0,0.6)] transition-all duration-300 flex items-center gap-2"
+            >
+              {t.contact}
+              <motion.span
+                animate={{ y: [0, 3, 0] }}
+                transition={{ duration: 1.6, repeat: Infinity }}
+              >
+                <ArrowDown size={14} strokeWidth={3} />
+              </motion.span>
+            </motion.button>
 
             <a href="/works" target="_blank" rel="noopener noreferrer">
-  <motion.button
-    whileHover={{ opacity: 0.7 }}
-    className="flex items-center gap-2 text-black text-xs font-semibold tracking-wide transition-all duration-300"
-  >
-    View Work
-    <ExternalLink size={14} />
-  </motion.button>
-</a>
+              <motion.button
+                whileHover={{ opacity: 0.7 }}
+                className="flex items-center gap-2 text-black text-xs font-semibold tracking-wide transition-all duration-300"
+              >
+                {t.viewWork}
+                <ExternalLink size={14} />
+              </motion.button>
+            </a>
 
           </div>
         </motion.div>
 
-        {/* HERO VISUAL */}
+        {/* HERO IMAGE */}
         <div className="relative w-full max-w-5xl">
           <motion.div
             style={{
@@ -118,7 +148,6 @@ export default function BeeTeamYellowStackedHero() {
               transition={{ duration: 1.2, ease: "easeOut" }}
             />
 
-            {/* Subtle overlay fade */}
             <motion.div
               className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent"
               initial={{ opacity: 0 }}
@@ -127,6 +156,7 @@ export default function BeeTeamYellowStackedHero() {
             />
           </motion.div>
         </div>
+
       </div>
     </section>
   );
