@@ -4,8 +4,6 @@ import React, { useState, useRef } from 'react'
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
 import { X, Maximize2, ShieldCheck, ChevronRight } from 'lucide-react'
 
-/* ---------------- DATA ---------------- */
-
 const awards = [
   {
     url: "https://i.ibb.co/s9X5JxM4/Whats-App-Image-2026-01-26-at-4-32-53-PM.jpg",
@@ -41,8 +39,6 @@ const awards = [
   }
 ]
 
-/* ---------------- COMPONENT ---------------- */
-
 export default function HallOfFame() {
   const [selectedImage, setSelectedImage] = useState(null)
   const containerRef = useRef(null)
@@ -52,41 +48,35 @@ export default function HallOfFame() {
     offset: ["start end", "end start"]
   })
 
-  const ySoft = useTransform(scrollYProgress, [0, 1], [0, -60])
+  const ySoft = useTransform(scrollYProgress, [0, 1], [0, -40])
 
   return (
     <section
       id="certification"
       ref={containerRef}
-      className="relative bg-[#fafafa] py-24 overflow-hidden"
+      className="relative bg-[#fafafa] py-20"
     >
-      {/* Ambient Glow */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-[10%] left-[5%] w-[35%] h-[35%] bg-[#FFD700]/10 blur-[140px]" />
-      </div>
-
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
+      <div className="max-w-6xl mx-auto px-6">
 
         {/* HEADER */}
         <motion.div
           style={{ y: ySoft }}
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          transition={{ duration: 0.7 }}
+          className="text-center mb-14"
         >
-          <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.05] text-black mb-4">
+          <h2 className="text-4xl md:text-5xl font-extrabold text-black mb-4">
             HALL OF <span className="text-[#FFD700]">FAME</span>
           </h2>
-
-          <p className="text-xs text-black/50 font-medium tracking-wide max-w-xl mx-auto">
-            Verified cinematic certifications and international recognitions for the 2026 cycle.
+          <p className="text-xs text-black/50 font-medium max-w-lg mx-auto">
+            Verified cinematic certifications and international recognitions for 2026.
           </p>
         </motion.div>
 
-        {/* GRID */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* COMPACT GRID */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {awards.map((award, i) => (
             <AwardCard
               key={award.id}
@@ -97,14 +87,14 @@ export default function HallOfFame() {
           ))}
         </div>
 
-        {/* FOOTER STRIP */}
-        <div className="mt-20 pt-10 border-t border-black/5 flex flex-col md:flex-row justify-between items-center gap-8 text-sm">
+        {/* FOOTER */}
+        <div className="mt-16 pt-8 border-t border-black/5 flex flex-col md:flex-row justify-between items-center gap-6 text-sm">
           <div>
             <div className="text-black/40 text-xs">Registry ID</div>
             <div className="font-semibold text-black">BT-CERT-GLOBAL-26</div>
           </div>
 
-          <div className="flex items-center gap-3 text-black">
+          <div className="flex items-center gap-2 text-black">
             <ShieldCheck size={18} className="text-[#FFD700]" />
             <span className="font-medium">Unrestricted Global Exhibition</span>
           </div>
@@ -121,22 +111,19 @@ export default function HallOfFame() {
             className="fixed inset-0 z-[1000] bg-white/95 backdrop-blur-xl flex items-center justify-center p-8"
             onClick={() => setSelectedImage(null)}
           >
-            <motion.button
-              whileHover={{ rotate: 90 }}
-              className="absolute top-8 right-8 text-black"
-            >
-              <X size={36} />
-            </motion.button>
-
             <motion.img
-              initial={{ scale: 0.92, y: 30 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.92, y: 30 }}
+              initial={{ scale: 0.95 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.95 }}
               transition={{ type: "spring", stiffness: 120 }}
               src={selectedImage}
-              className="max-w-full max-h-[85vh] object-contain rounded-2xl shadow-[0_40px_120px_-30px_rgba(0,0,0,0.25)]"
+              className="max-w-full max-h-[85vh] object-contain rounded-xl shadow-[0_40px_120px_-30px_rgba(0,0,0,0.25)]"
               onClick={(e) => e.stopPropagation()}
             />
+
+            <button className="absolute top-8 right-8 text-black">
+              <X size={32} />
+            </button>
           </motion.div>
         )}
       </AnimatePresence>
@@ -149,58 +136,48 @@ export default function HallOfFame() {
 function AwardCard({ award, index, onOpen }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 40 }}
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.08 }}
       onClick={onOpen}
-      className="group relative h-[460px] bg-white rounded-2xl border border-black/5 overflow-hidden cursor-pointer transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_30px_80px_-25px_rgba(0,0,0,0.15)]"
+      className="group bg-white rounded-xl border border-black/5 overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-lg"
     >
       {/* Image */}
-      <div className="absolute inset-0">
+      <div className="relative aspect-[4/3] overflow-hidden">
         <motion.img
           src={award.url}
-          className="w-full h-full object-cover opacity-30 group-hover:opacity-90 transition-all duration-[1.6s] ease-out"
-          initial={{ scale: 1.08 }}
-          whileHover={{ scale: 1.02 }}
+          className="w-full h-full object-cover"
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.6 }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-white via-white/80 to-white/30" />
       </div>
 
-      {/* Content */}
-      <div className="relative z-10 p-8 flex flex-col justify-between h-full">
+      {/* Info */}
+      <div className="p-5 space-y-3">
 
         <div className="flex justify-between items-center text-xs text-black/40">
           <span>{award.id}</span>
-          <Maximize2 size={16} className="opacity-60 group-hover:opacity-100 transition" />
+          <Maximize2 size={15} />
         </div>
 
-        <div className="space-y-3">
-          <div className="text-xs font-medium text-[#D97706]">
-            {award.outlet}
-          </div>
-
-          <h3 className="text-2xl font-semibold text-black leading-tight">
-            {award.title}
-          </h3>
-
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            whileHover={{ opacity: 1, y: 0 }}
-            className="text-sm text-black/60 leading-snug"
-          >
-            {award.desc}
-          </motion.p>
+        <div className="text-xs font-medium text-[#D97706]">
+          {award.outlet}
         </div>
 
-        <div className="flex justify-between items-center pt-6 border-t border-black/5 text-xs">
+        <h3 className="text-lg font-semibold text-black leading-tight">
+          {award.title}
+        </h3>
+
+        <p className="text-sm text-black/60 line-clamp-2">
+          {award.desc}
+        </p>
+
+        <div className="flex justify-between items-center pt-4 border-t border-black/5 text-xs">
           <span className="text-black/40">{award.date}</span>
-          <motion.span
-            whileHover={{ x: 4 }}
-            className="flex items-center gap-1 text-black font-medium"
-          >
+          <span className="flex items-center gap-1 text-black font-medium">
             Verify <ChevronRight size={14} className="text-[#FFD700]" />
-          </motion.span>
+          </span>
         </div>
 
       </div>

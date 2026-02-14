@@ -1,7 +1,6 @@
 'use client'
 
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
-import { ExternalLink, Globe } from 'lucide-react'
 import { useRef } from 'react'
 
 export default function LatestRelease() {
@@ -63,14 +62,14 @@ export default function LatestRelease() {
           </p>
         </motion.div>
 
-        {/* VIDEO BLOCK */}
+        {/* COMPACT VIDEO THUMBNAIL */}
         <motion.div
           style={{ scale: scaleSoft }}
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.9, ease: "easeOut" }}
-          className="relative w-full aspect-video rounded-2xl overflow-hidden border border-black/5 shadow-[0_30px_80px_-25px_rgba(0,0,0,0.15)] bg-white"
+          className="relative mx-auto w-full max-w-3xl aspect-video rounded-xl overflow-hidden border border-black/5 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.15)] bg-white"
         >
           <iframe
             className="absolute inset-0 w-full h-full"
@@ -89,7 +88,7 @@ export default function LatestRelease() {
           />
         </motion.div>
 
-        {/* CLEAN META STRIP (No floating card) */}
+        {/* META STRIP */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -97,39 +96,17 @@ export default function LatestRelease() {
           viewport={{ once: true }}
           className="mt-8 flex flex-wrap justify-center gap-8 text-xs text-black/60 font-medium tracking-wide"
         >
-          <div>Resolution · <span className="text-black font-semibold">4K UHD</span></div>
-          <div>Client · <span className="text-black font-semibold">Financial Express</span></div>
-          <div>Duration · <span className="text-[#D97706] font-semibold">02:44</span></div>
+          <div>
+            Resolution · <span className="text-black font-semibold">4K UHD</span>
+          </div>
+          <div>
+            Client · <span className="text-black font-semibold">Financial Express</span>
+          </div>
+          <div>
+            Duration · <span className="text-[#D97706] font-semibold">02:44</span>
+          </div>
         </motion.div>
 
-        {/* CTA */}
-        <div className="mt-16 flex flex-col md:flex-row items-center justify-center gap-6">
-
-          <motion.button
-            whileHover={{ y: -2 }}
-            whileTap={{ scale: 0.96 }}
-            className="flex items-center gap-2 text-black text-xs font-semibold tracking-wide transition-all duration-300 hover:opacity-70"
-          >
-            <Globe size={14} />
-            Official Website
-          </motion.button>
-
-          <motion.button
-            whileHover={{ scale: 1.04 }}
-            whileTap={{ scale: 0.97 }}
-            transition={{ type: "spring", stiffness: 400, damping: 18 }}
-            className="px-7 py-3 bg-black text-white text-xs font-bold tracking-widest rounded-lg shadow-md hover:shadow-[0_15px_40px_-15px_rgba(0,0,0,0.4)] transition-all duration-300 flex items-center gap-2"
-          >
-            Watch Full Film
-            <motion.span
-              animate={{ x: [0, 3, 0] }}
-              transition={{ duration: 1.6, repeat: Infinity }}
-            >
-              <ExternalLink size={14} strokeWidth={3} />
-            </motion.span>
-          </motion.button>
-
-        </div>
       </div>
     </section>
   )

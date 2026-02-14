@@ -64,28 +64,37 @@ export default function BeeTeamYellowStackedHero() {
 
           {/* Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
-            <motion.button
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.97 }}
-              transition={{ type: "spring", stiffness: 400, damping: 20 }}
-              className="px-6 py-3 bg-[#FFD700] text-black text-xs font-bold tracking-widest rounded-lg shadow-md hover:shadow-[0_8px_30px_-8px_rgba(255,215,0,0.6)] transition-all duration-300 flex items-center gap-2"
-            >
-              Contact
-              <motion.span
-                animate={{ y: [0, 3, 0] }}
-                transition={{ duration: 1.6, repeat: Infinity }}
-              >
-                <ArrowDown size={14} strokeWidth={3} />
-              </motion.span>
-            </motion.button>
+<motion.button
+  onClick={() => {
+    document.getElementById("contact")?.scrollIntoView({
+      behavior: "smooth"
+    });
+  }}
+  whileHover={{ scale: 1.04 }}
+  whileTap={{ scale: 0.97 }}
+  transition={{ type: "spring", stiffness: 400, damping: 20 }}
+  className="px-6 py-3 bg-[#FFD700] text-black text-xs font-bold tracking-widest rounded-lg shadow-md hover:shadow-[0_8px_30px_-8px_rgba(255,215,0,0.6)] transition-all duration-300 flex items-center gap-2"
+>
+  Contact
+  <motion.span
+    animate={{ y: [0, 3, 0] }}
+    transition={{ duration: 1.6, repeat: Infinity }}
+  >
+    <ArrowDown size={14} strokeWidth={3} />
+  </motion.span>
+</motion.button>
 
-            <motion.button
-              whileHover={{ opacity: 0.7 }}
-              className="flex items-center gap-2 text-black text-xs font-semibold tracking-wide transition-all duration-300"
-            >
-              View Work
-              <ExternalLink size={14} />
-            </motion.button>
+
+            <a href="/works" target="_blank" rel="noopener noreferrer">
+  <motion.button
+    whileHover={{ opacity: 0.7 }}
+    className="flex items-center gap-2 text-black text-xs font-semibold tracking-wide transition-all duration-300"
+  >
+    View Work
+    <ExternalLink size={14} />
+  </motion.button>
+</a>
+
           </div>
         </motion.div>
 

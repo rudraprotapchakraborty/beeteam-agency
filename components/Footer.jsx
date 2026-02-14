@@ -8,7 +8,8 @@ import {
   Youtube,
   ArrowUp,
   ArrowRight,
-  Globe
+  Globe,
+  Phone
 } from 'lucide-react'
 
 export default function CompactFooter() {
@@ -18,9 +19,21 @@ export default function CompactFooter() {
   }
 
   const socialLinks = [
-    { icon: <Facebook size={16} />, href: "https://www.facebook.com/beeteam" },
-    { icon: <Instagram size={16} />, href: "https://www.instagram.com/beeteam26" },
-    { icon: <Youtube size={16} />, href: "https://www.youtube.com/@BeeTeamltd" }
+    {
+      name: "Instagram",
+      icon: <Instagram size={16} />,
+      href: "https://www.instagram.com/beeteam26"
+    },
+    {
+      name: "Facebook",
+      icon: <Facebook size={16} />,
+      href: "https://www.facebook.com/beeteam"
+    },
+    {
+      name: "YouTube",
+      icon: <Youtube size={16} />,
+      href: "https://www.youtube.com/@BeeTeamltd"
+    }
   ]
 
   return (
@@ -57,7 +70,8 @@ export default function CompactFooter() {
           </div>
 
           {/* CTA */}
-          <motion.button
+          <motion.a
+            href="tel:+8801400872857"
             whileHover={{ y: -4 }}
             whileTap={{ scale: 0.98 }}
             transition={{ type: "spring", stiffness: 300 }}
@@ -68,12 +82,12 @@ export default function CompactFooter() {
               size={16}
               className="group-hover:translate-x-1 transition-transform"
             />
-          </motion.button>
+          </motion.a>
 
         </div>
 
         {/* NAV GRID */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 py-14 border-y border-black/5">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 py-14 border-y border-black/5">
 
           {/* Navigation */}
           <div className="space-y-5">
@@ -82,15 +96,21 @@ export default function CompactFooter() {
             </h4>
 
             <div className="flex flex-col gap-3 text-sm">
-              {['Home', 'Works', 'Process'].map((link) => (
-                <motion.a
-                  key={link}
-                  whileHover={{ x: 4 }}
-                  className="text-black/70 hover:text-black transition-colors cursor-pointer"
-                >
-                  {link}
-                </motion.a>
-              ))}
+              <motion.a
+                href="/"
+                whileHover={{ x: 4 }}
+                className="text-black/70 hover:text-black transition-colors"
+              >
+                Home
+              </motion.a>
+
+              <motion.a
+                href="/works"
+                whileHover={{ x: 4 }}
+                className="text-black/70 hover:text-black transition-colors"
+              >
+                Works
+              </motion.a>
             </div>
           </div>
 
@@ -106,33 +126,46 @@ export default function CompactFooter() {
                   key={i}
                   href={s.href}
                   target="_blank"
+                  rel="noopener noreferrer"
                   whileHover={{ x: 4 }}
                   className="text-black/70 hover:text-black transition-colors"
                 >
-                  Platform {i + 1}
+                  {s.name}
                 </motion.a>
               ))}
             </div>
           </div>
 
-          {/* Location */}
-          <div className="col-span-2 space-y-6">
+          {/* Contact / Location */}
+          <div className="space-y-6">
             <h4 className="text-xs font-semibold text-black/40 tracking-wide">
-              Location
+              Contact
             </h4>
 
-            <div className="flex items-center gap-3 text-black text-lg font-semibold">
-              <Globe size={18} className="text-[#FFD700]" />
-              Dhaka, Bangladesh
+            <div className="flex items-start gap-3 text-black text-sm leading-relaxed">
+              <Globe size={18} className="text-[#FFD700] mt-1" />
+              <div>
+                Shop no -24, 480, Sarker,<br />
+                R E F Tower, Gawair, Dakshinkhan,<br />
+                Dhaka, 1230, Bangladesh
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3 text-black text-sm font-medium">
+              <Phone size={16} className="text-[#FFD700]" />
+              <a href="tel:+8801400872857">
+                +880 1400 87 2857
+              </a>
             </div>
 
             {/* Social Icons */}
-            <div className="flex gap-4">
+            <div className="flex gap-4 pt-2">
               {socialLinks.map((s, i) => (
                 <motion.a
                   key={i}
                   href={s.href}
                   target="_blank"
+                  rel="noopener noreferrer"
                   whileHover={{ y: -4 }}
                   whileTap={{ scale: 0.95 }}
                   className="w-10 h-10 flex items-center justify-center border border-black/10 rounded-lg bg-white hover:bg-[#FFD700] transition-all duration-300 shadow-sm"
