@@ -9,7 +9,7 @@ import {
   useSpring,
   AnimatePresence,
 } from "framer-motion";
-import { ArrowUpRight, Activity, MapPin } from "lucide-react";
+import { ArrowUpRight, MapPin, Globe } from "lucide-react";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -20,37 +20,39 @@ export default function MaterialExpressiveNavbar() {
   const { scrollY } = useScroll();
   const [hoveredLink, setHoveredLink] = useState(null);
 
-  // Physics Config for smooth morphing
+  // Physics Config for fluid motion
   const fluidSpring = {
     type: "spring",
-    stiffness: 300,
+    stiffness: 260,
     damping: 30,
     mass: 0.8,
   };
-  const hoverSpring = { type: "spring", stiffness: 500, damping: 30 };
 
-  // 1. Structural Morphing
-  const navWidth = useTransform(scrollY, [0, 80], ["100%", "94%"]);
-  const navTop = useTransform(scrollY, [0, 80], ["0px", "24px"]);
-  const navRadius = useTransform(scrollY, [0, 80], ["0px", "12px"]);
+  // 1. Structural Morphing: Transitions to a floating pill on scroll
+  const navWidth = useTransform(scrollY, [0, 80], ["100%", "90%"]);
+  const navTop = useTransform(scrollY, [0, 80], ["0px", "20px"]);
+  const navRadius = useTransform(scrollY, [0, 80], ["0px", "100px"]); // Full pill radius
 
-  // 2. High Contrast Palette
+  // 2. Soft UI Palette
   const navBg = useTransform(
     scrollY,
     [0, 80],
-    ["rgba(255, 255, 255, 1)", "rgba(255, 255, 255, 1)"],
+    ["rgba(255, 255, 255, 0.8)", "rgba(255, 255, 255, 0.9)"]
   );
 
   const navShadow = useTransform(
     scrollY,
     [0, 80],
-    ["0px 0px 0px rgba(0,0,0,0)", "20px 20px 0px rgba(0,0,0,1)"],
+    [
+      "0px 0px 0px rgba(0,0,0,0)",
+      "0px 20px 40px rgba(0,0,0,0.05)" // Soft shadow instead of hard brutalist
+    ]
   );
 
   const borderOpacity = useTransform(
     scrollY,
     [0, 80],
-    ["rgba(0,0,0,1)", "rgba(0,0,0,1)"],
+    ["rgba(0,0,0,0)", "rgba(0,0,0,0.05)"] // Subtle border
   );
 
   return (
@@ -61,17 +63,17 @@ export default function MaterialExpressiveNavbar() {
         borderRadius: useSpring(navRadius, fluidSpring),
         backgroundColor: navBg,
         boxShadow: navShadow,
-        borderWidth: "2px",
+        borderWidth: "1px",
         borderColor: borderOpacity,
       }}
-      className="fixed left-1/2 -translate-x-1/2 z-[1000] flex items-center justify-between px-6 py-4 md:px-12 overflow-hidden border-black selection:bg-black selection:text-white"
+      className="fixed left-1/2 -translate-x-1/2 z-[1000] flex items-center justify-between px-8 py-3 backdrop-blur-xl selection:bg-[#FFD700] selection:text-black"
     >
-      {/* LEFT: BRAND & STATUS */}
-      <div className="flex items-center gap-8">
+      {/* LEFT: BRAND & LOCATION */}
+      <div className="flex items-center gap-6">
         <motion.div
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="relative h-10 w-28 cursor-pointer"
+          className="relative h-8 w-24 cursor-pointer"
         >
           <Image
             src="/beeteam_full_logo.png"
@@ -81,76 +83,72 @@ export default function MaterialExpressiveNavbar() {
             priority
           />
         </motion.div>
+
+        {/* Subtle Location Pill */}
+        <motion.div 
+          style={{ opacity: useTransform(scrollY, [0, 50], [1, 0]) }}
+          className="hidden xl:flex items-center gap-2 pl-6 border-l border-black/5"
+        >
+          <MapPin size={12} className="text-[#FFD700]" />
+          <span className="text-[9px] font-black uppercase tracking-widest text-black/40">
+            Dhaka, BD
+          </span>
+        </motion.div>
       </div>
 
-      {/* CENTER: NAV LINKS - Solid Typography */}
-      <nav className="hidden md:flex items-center gap-2 relative">
+      {/* CENTER: NAV LINKS - Pill Hover */}
+      <nav className="hidden md:flex items-center gap-1 bg-black/5 p-1 rounded-full">
         {navLinks.map((link) => (
           <motion.a
             key={link.name}
             href={link.href}
             onMouseEnter={() => setHoveredLink(link.name)}
             onMouseLeave={() => setHoveredLink(null)}
-            className="px-6 py-2 text-[11px] font-black uppercase tracking-widest text-black relative z-10 transition-colors"
+            className="px-6 py-2 text-[10px] font-black uppercase tracking-widest text-black relative z-10 transition-colors"
           >
-            {link.name}
+            <span className={hoveredLink === link.name ? "text-white" : "text-black"}>
+              {link.name}
+            </span>
             <AnimatePresence>
               {hoveredLink === link.name && (
                 <motion.span
-                  layoutId="nav-hover-bg"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
+                  layoutId="nav-pill-bg"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
                   transition={{ duration: 0.2 }}
-                  className="absolute inset-0 bg-black rounded-none -z-10"
+                  className="absolute inset-0 bg-black rounded-full -z-10"
                 />
               )}
             </AnimatePresence>
-            <motion.span
-              className="absolute inset-0 text-white flex items-center justify-center -z-0 opacity-0 group-hover:opacity-100"
-              animate={{ opacity: hoveredLink === link.name ? 1 : 0 }}
-            >
-              {link.name}
-            </motion.span>
           </motion.a>
         ))}
       </nav>
 
-      {/* RIGHT: ACTION CTA */}
-      <div className="flex items-center gap-6">
-        <motion.div
-          style={{ opacity: useTransform(scrollY, [0, 50], [1, 0]) }}
-          className="hidden xl:flex items-center gap-3 pr-6 border-r-2 border-black"
-        >
-          <MapPin size={16} strokeWidth={3} className="text-red-600" />
-          <div className="text-left">
-            <p className="text-[10px] font-black text-black uppercase leading-none">
-              Shop no -24, 480, Sarker, R E F Tower, Gawair, dakshinkhan
-            </p>
-            <p className="text-[12px] font-black text-black uppercase tracking-tighter">
-              Dhaka, Bangladesh
-            </p>
-          </div>
-        </motion.div>
-
-        {/* UPDATED BUTTON */}
+      {/* RIGHT: ACTION CTA - Yellow Theme */}
+      <div className="flex items-center gap-4">
         <motion.a
           href="https://www.imdb.com/title/tt39394821"
           target="_blank"
           rel="noopener noreferrer"
-          whileHover={{ x: 5, y: -5 }}
+          whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
-          className="group relative flex items-center gap-3 bg-[#FFD700] text-black border-2 border-black px-8 py-3 rounded-none overflow-hidden shadow-[4px_4px_0px_#000] hover:shadow-none transition-all cursor-pointer"
+          className="group relative flex items-center gap-2 bg-[#FFD700] text-black px-6 py-2.5 rounded-full overflow-hidden shadow-lg shadow-amber-200/50 transition-all cursor-pointer"
         >
-          <span className="relative z-10 text-[11px] font-black uppercase tracking-[0.2em]">
+          <span className="relative z-10 text-[10px] font-black uppercase tracking-[0.2em]">
             IMDb
           </span>
           <ArrowUpRight
-            size={18}
+            size={14}
             strokeWidth={3}
-            className="relative z-10 group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform"
+            className="group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform"
           />
         </motion.a>
+        
+        {/* Globe Icon Micro-interaction */}
+        <div className="p-2 bg-black/5 rounded-full hover:bg-[#FFD700]/20 transition-colors cursor-pointer">
+          <Globe size={16} className="text-black/60" />
+        </div>
       </div>
     </motion.header>
   );

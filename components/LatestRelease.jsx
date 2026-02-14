@@ -1,116 +1,134 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { Play, Maximize, Share2, Layers } from 'lucide-react'
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
+import { ExternalLink, Globe } from 'lucide-react'
+import { useRef } from 'react'
 
 export default function LatestRelease() {
+  const containerRef = useRef(null)
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  })
+
+  const smooth = useSpring(scrollYProgress, {
+    stiffness: 120,
+    damping: 25,
+    mass: 0.5
+  })
+
+  const yParallax = useTransform(smooth, [0, 1], [60, -60])
+  const scaleSoft = useTransform(smooth, [0, 1], [0.98, 1.02])
+
   return (
     <section
+      ref={containerRef}
       id="latest-release"
-      className="bg-[#F9F9F9] py-32 relative overflow-hidden selection:bg-black selection:text-[#FFD700]"
+      className="relative bg-[#fafafa] py-24 overflow-hidden"
     >
-      {/* 1. DECORATIVE BACKGROUND ACCENT */}
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-zinc-200 to-transparent" />
-      <div className="absolute -right-20 top-40 opacity-[0.03] pointer-events-none select-none">
-        <h2 className="text-[30vw] font-black leading-none">BEE</h2>
+      {/* Ambient Light */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-[15%] right-[5%] w-[35%] h-[35%] bg-[#FFD700]/10 blur-[140px]" />
+        <div className="absolute bottom-[5%] left-[10%] w-[30%] h-[30%] bg-yellow-100/30 blur-[120px]" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
+      <div className="max-w-6xl mx-auto px-6 relative z-10">
 
-        {/* 2. HEADER BLOCK: THE "STUNNING" TYPOGRAPHY */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-20">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="max-w-2xl"
-          >
-            <div className="flex items-center gap-3 mb-4">
-              <span className="w-8 h-[2px] bg-[#FFD700]" />
-              <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-zinc-400">
-                Production House // Studio 2026
-              </span>
-            </div>
-            
-            <h2 className="text-7xl md:text-9xl font-black uppercase tracking-tighter leading-[0.85] text-black">
-              Latest <br />
-              <span className="text-[#FFD700]">Release.</span>
-            </h2>
-          </motion.div>
-
-          <motion.div 
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            className="mt-8 md:mt-0 md:text-right"
-          >
-            <p className="text-zinc-400 font-mono text-[10px] uppercase tracking-widest leading-loose">
-              Project: Narrative_04<br />
-              Client: Financial_Express<br />
-              Status: Live_Public
-            </p>
-          </motion.div>
-        </div>
-
-        {/* 3. THE "FLOATING GLASS" PLAYER */}
+        {/* HEADER */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.98 }}
-          whileInView={{ opacity: 1, scale: 1 }}
+          style={{ y: yParallax }}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="relative"
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="text-center mb-14"
         >
-          {/* Top Control Bar */}
-          <div className="flex items-center justify-between px-6 py-4 bg-black rounded-t-xl border-x border-t border-black">
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-[#FFD700]" />
-              <span className="text-white font-mono text-[9px] uppercase tracking-[0.2em]">bt_player_v2.0</span>
-            </div>
-            <div className="flex gap-4">
-              <Layers size={14} className="text-zinc-500" />
-              <Share2 size={14} className="text-zinc-500" />
-            </div>
-          </div>
+          <h2 className="text-4xl md:text-6xl font-extrabold text-black tracking-tight leading-[1.05] mb-4">
+            LATEST{" "}
+            <span className="text-[#FFD700] relative">
+              RELEASE
+              <motion.span
+                className="absolute left-0 -bottom-1 h-[2px] w-full bg-[#FFD700]"
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                transition={{ duration: 0.6 }}
+                style={{ originX: 0 }}
+              />
+            </span>
+          </h2>
 
-          {/* Main Video Container */}
-          <div className="relative w-full aspect-video bg-white shadow-[0_50px_100px_-20px_rgba(0,0,0,0.15)] group overflow-hidden border-x border-b border-zinc-200">
-            <iframe
-              className="absolute inset-0 w-full h-full z-10"
-              src="https://www.youtube.com/embed/ErRnSJQ9nhg?rel=0&modestbranding=1"
-              title="Official Trailer"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-            
-            {/* Subtle Overlay Pattern */}
-            <div className="absolute inset-0 pointer-events-none z-20 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/graphy.png')]" />
-          </div>
-
-          {/* Floating Action Button (Lower Right) */}
-          <div className="absolute -bottom-8 -right-8 hidden lg:block z-30">
-            <motion.div 
-              whileHover={{ scale: 1.1, rotate: 5 }}
-              whileTap={{ scale: 0.9 }}
-              className="w-24 h-24 bg-[#FFD700] rounded-full flex items-center justify-center shadow-xl cursor-pointer"
-            >
-              <Play fill="black" size={32} className="ml-1 text-black" />
-            </motion.div>
-          </div>
+          <p className="text-xs text-black/50 font-medium tracking-wide">
+            Production House · Studio 2026
+          </p>
         </motion.div>
 
-        {/* 4. TECHNICAL FOOTNOTES */}
-        <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 border-t border-zinc-200 pt-8">
-          {[
-            { label: 'Director', value: 'BEE_TEAM_CORE' },
-            { label: 'Duration', value: '02:44' },
-            { label: 'Resolution', value: '4K_UHD' },
-            { label: 'Bitrate', value: '50_MBPS' }
-          ].map((stat, i) => (
-            <div key={i}>
-              <p className="text-[10px] text-zinc-400 uppercase font-black tracking-widest mb-1">{stat.label}</p>
-              <p className="text-sm text-black font-bold font-mono">{stat.value}</p>
-            </div>
-          ))}
+        {/* VIDEO BLOCK */}
+        <motion.div
+          style={{ scale: scaleSoft }}
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.9, ease: "easeOut" }}
+          className="relative w-full aspect-video rounded-2xl overflow-hidden border border-black/5 shadow-[0_30px_80px_-25px_rgba(0,0,0,0.15)] bg-white"
+        >
+          <iframe
+            className="absolute inset-0 w-full h-full"
+            src="https://www.youtube.com/embed/ErRnSJQ9nhg?rel=0&modestbranding=1"
+            title="Official Trailer"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+
+          {/* Soft Fade Overlay */}
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent pointer-events-none"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 1 }}
+          />
+        </motion.div>
+
+        {/* CLEAN META STRIP (No floating card) */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          viewport={{ once: true }}
+          className="mt-8 flex flex-wrap justify-center gap-8 text-xs text-black/60 font-medium tracking-wide"
+        >
+          <div>Resolution · <span className="text-black font-semibold">4K UHD</span></div>
+          <div>Client · <span className="text-black font-semibold">Financial Express</span></div>
+          <div>Duration · <span className="text-[#D97706] font-semibold">02:44</span></div>
+        </motion.div>
+
+        {/* CTA */}
+        <div className="mt-16 flex flex-col md:flex-row items-center justify-center gap-6">
+
+          <motion.button
+            whileHover={{ y: -2 }}
+            whileTap={{ scale: 0.96 }}
+            className="flex items-center gap-2 text-black text-xs font-semibold tracking-wide transition-all duration-300 hover:opacity-70"
+          >
+            <Globe size={14} />
+            Official Website
+          </motion.button>
+
+          <motion.button
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.97 }}
+            transition={{ type: "spring", stiffness: 400, damping: 18 }}
+            className="px-7 py-3 bg-black text-white text-xs font-bold tracking-widest rounded-lg shadow-md hover:shadow-[0_15px_40px_-15px_rgba(0,0,0,0.4)] transition-all duration-300 flex items-center gap-2"
+          >
+            Watch Full Film
+            <motion.span
+              animate={{ x: [0, 3, 0] }}
+              transition={{ duration: 1.6, repeat: Infinity }}
+            >
+              <ExternalLink size={14} strokeWidth={3} />
+            </motion.span>
+          </motion.button>
+
         </div>
       </div>
     </section>

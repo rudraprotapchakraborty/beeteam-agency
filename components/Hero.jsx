@@ -1,191 +1,123 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useSpring,
-  AnimatePresence,
-} from "framer-motion";
-import { useRef } from "react";
+import React, { useRef } from "react";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { ArrowDown, ExternalLink } from "lucide-react";
 
-export default function BeeTeamProfessionalHero() {
+export default function BeeTeamYellowStackedHero() {
   const containerRef = useRef(null);
-  const [hasOpened, setHasOpened] = useState(false);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start start", "end end"],
+    offset: ["start start", "end start"],
   });
 
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 40,
+    stiffness: 120,
     damping: 25,
+    mass: 0.4,
   });
 
-  // Lock curtains open after initial scroll
-  useEffect(() => {
-    const unsubscribe = scrollYProgress.onChange((latest) => {
-      if (latest > 0.25) setHasOpened(true);
-    });
-    return () => unsubscribe();
-  }, [scrollYProgress]);
-
-  // --- MOTION MAPPINGS ---
-  const leftCurtainX = useTransform(smoothProgress, [0, 0.25], ["0%", "-100%"]);
-  const rightCurtainX = useTransform(smoothProgress, [0, 0.25], ["0%", "100%"]);
-  const introOpacity = useTransform(smoothProgress, [0.2, 0.3], [1, 0]);
-
-  const bgTextY = useTransform(smoothProgress, [0.2, 1], ["0%", "20%"]);
-  const mainStageY = useTransform(smoothProgress, [0.2, 1], ["0%", "-10%"]);
-  const imageScale = useTransform(smoothProgress, [0.2, 0.6], [1, 1.05]);
-
-  // Smooth Scroll Handler
-  const scrollToContact = () => {
-    const footer = document.querySelector("#contact");
-    if (footer) {
-      footer.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+  const yParallax = useTransform(smoothProgress, [0, 1], [0, -80]);
+  const heroScale = useTransform(smoothProgress, [0, 0.6], [1, 1.04]);
+  const heroRotate = useTransform(smoothProgress, [0, 1], [0, -1]);
 
   return (
     <section
-      id="hero"
       ref={containerRef}
-      className="relative h-[200vh] bg-white overflow-clip selection:bg-black selection:text-white"
+      className="relative min-h-[120vh] bg-[#fafafa] overflow-hidden font-sans pb-24"
     >
-      {/* 1. TECHNICAL HUD GRID */}
-      <div
-        className="fixed inset-0 pointer-events-none z-[10] opacity-[0.03]"
-        style={{
-          backgroundImage: `linear-gradient(#000 1.5px, transparent 1.5px), linear-gradient(90deg, #000 1.5px, transparent 1.5px)`,
-          backgroundSize: "40px 40px",
-        }}
-      />
+      {/* Soft Ambient Light */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <div className="absolute top-[-15%] left-[15%] w-[40%] h-[40%] bg-[#FFD700]/10 blur-[140px]" />
+        <div className="absolute bottom-[-10%] right-[10%] w-[35%] h-[35%] bg-yellow-200/20 blur-[120px]" />
+      </div>
 
-      <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
-        {/* 2. OPENING SEQUENCE */}
-        <AnimatePresence>
-          {!hasOpened && (
-            <motion.div
-              exit={{
-                opacity: 0,
-                transition: { duration: 0.8, ease: "easeInOut" },
-              }}
-              style={{ opacity: introOpacity }}
-              className="absolute inset-0 z-[150] pointer-events-none flex"
-            >
-              <motion.div
-                style={{ x: leftCurtainX }}
-                className="h-full w-1/2 bg-black border-r border-white/10"
-              />
-              <motion.div
-                style={{ x: rightCurtainX }}
-                className="h-full w-1/2 bg-black border-l border-white/10"
-              />
+      <div className="relative z-10 flex flex-col items-center pt-20 px-6">
 
-              <motion.div
-                style={{ opacity: introOpacity }}
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[151] flex flex-col items-center gap-8"
-              >
-                <div className="relative w-20 h-20 md:w-28 md:h-28">
-                  <img
-                    src="/favicon.ico"
-                    alt="Logo"
-                    className="w-full h-full object-contain"
-                  />
-                  <div className="absolute inset-0 bg-[#FFD700]/20 blur-2xl rounded-full -z-10" />
-                </div>
-                <div className="flex flex-col items-center gap-2">
-                  <div className="w-12 h-[2px] bg-[#FFD700]" />
-                  <span className="text-white text-[10px] tracking-[1.2em] font-black uppercase">
-                    Initiating
-                  </span>
-                </div>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* 3. BACKGROUND GHOST TEXT */}
+        {/* HEADER */}
         <motion.div
-          style={{ y: bgTextY }}
-          className="absolute inset-0 flex items-center justify-center select-none z-0"
+          style={{ y: yParallax }}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="text-center max-w-3xl mb-14"
         >
-          <h2 className="text-[25vw] font-black text-black/[0.06] leading-none uppercase tracking-tighter">
-            EST.2026
-          </h2>
-        </motion.div>
-
-        {/* 4. MAIN CONTENT STAGE */}
-        <motion.div
-          style={{ y: mainStageY }}
-          className="relative z-20 w-full max-w-[1600px] grid grid-cols-1 lg:grid-cols-12 gap-12 items-center px-8"
-        >
-          {/* Visual Asset Container */}
-          <div className="lg:col-span-7 relative">
-            <motion.div
-              style={{ scale: imageScale }}
-              className="relative overflow-hidden border-[10px] border-black shadow-[30px_30px_0px_rgba(0,0,0,0.1)]"
-            >
-              <img
-                src="/hero2.jpg"
-                className="w-full aspect-video object-cover"
-                alt="Feature"
+          <h1 className="text-4xl md:text-6xl font-extrabold text-black tracking-tight leading-[1.05] mb-4">
+            BEETEAM{" "}
+            <span className="text-[#FFD700] relative">
+              STUDIOS
+              <motion.span
+                layoutId="underline"
+                className="absolute left-0 -bottom-1 h-[2px] w-full bg-[#FFD700]"
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                style={{ originX: 0 }}
               />
-            </motion.div>
+            </span>
+          </h1>
 
-            {/* Decorative Corners */}
-            <div className="absolute -top-4 -left-4 w-12 h-12 border-t-4 border-l-4 border-[#FFD700] pointer-events-none" />
-            <div className="absolute -bottom-4 -right-4 w-12 h-12 border-b-4 border-r-4 border-black pointer-events-none" />
-          </div>
+          <p className="text-sm md:text-base text-black/60 font-medium max-w-xl mx-auto leading-relaxed">
+            Engineering cinematic authority for high-performance global brands.
+          </p>
 
-          {/* Editorial Copy Block */}
-          <div className="lg:col-span-5 flex flex-col items-start space-y-8">
-            <div className="flex items-center gap-4">
-              <div className="bg-black text-white px-3 py-1 text-[10px] font-black uppercase tracking-widest">
-                Global_Directive
-              </div>
-              <div className="h-1 w-12 bg-[#FFD700]" />
-            </div>
-            <div className="inline-block">
-              {/* TOP BLOCK */}
-              <div className="bg-[#FFD700] border-4 border-black px-8 py-4">
-                <span className="block text-black text-6xl xl:text-[80px] font-black tracking-tight leading-none">
-                  BEETEAM
-                </span>
-              </div>
-
-              {/* STUDIOS WITH TOP + BOTTOM BAR */}
-              <div className="mt-2 border-y-4 border-black py-2">
-                <span className="block text-black text-5xl xl:text-[80px] font-extrabold tracking-[0.35em] leading-none text-center">
-                  STUDIOS
-                </span>
-              </div>
-            </div>
-
-            <p className="text-xl text-black font-bold leading-tight max-w-sm uppercase tracking-tight">
-              Engineering cinematic authority for the world’s most{" "}
-              <span className="text-[#D97706]">aggressive brands</span>.
-            </p>
-
-            {/* UPDATED CTA BUTTON */}
+          {/* Buttons */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
             <motion.button
-              onClick={scrollToContact}
-              whileHover={{ x: 10, backgroundColor: "#FFD700", color: "#000" }}
-              className="group flex items-center gap-6 px-10 py-6 border-4 border-black text-[12px] font-black uppercase tracking-[0.4em] transition-all duration-300 shadow-[8px_8px_0px_#000] hover:shadow-none"
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ type: "spring", stiffness: 400, damping: 20 }}
+              className="px-6 py-3 bg-[#FFD700] text-black text-xs font-bold tracking-widest rounded-lg shadow-md hover:shadow-[0_8px_30px_-8px_rgba(255,215,0,0.6)] transition-all duration-300 flex items-center gap-2"
             >
-              Contact{" "}
-              <ArrowDown
-                size={18}
-                strokeWidth={4}
-                className="group-hover:translate-y-1 transition-transform"
-              />
+              Contact
+              <motion.span
+                animate={{ y: [0, 3, 0] }}
+                transition={{ duration: 1.6, repeat: Infinity }}
+              >
+                <ArrowDown size={14} strokeWidth={3} />
+              </motion.span>
+            </motion.button>
+
+            <motion.button
+              whileHover={{ opacity: 0.7 }}
+              className="flex items-center gap-2 text-black text-xs font-semibold tracking-wide transition-all duration-300"
+            >
+              View Work
+              <ExternalLink size={14} />
             </motion.button>
           </div>
         </motion.div>
+
+        {/* HERO VISUAL */}
+        <div className="relative w-full max-w-5xl">
+          <motion.div
+            style={{
+              scale: heroScale,
+              rotate: heroRotate,
+            }}
+            className="relative w-full aspect-video rounded-3xl overflow-hidden border border-black/5 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.15)]"
+            whileHover={{ scale: 1.02 }}
+            transition={{ type: "spring", stiffness: 120 }}
+          >
+            <motion.img
+              src="/hero2.jpg"
+              alt="Beeteam Featured Visual"
+              className="w-full h-full object-cover"
+              initial={{ scale: 1.08 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 1.2, ease: "easeOut" }}
+            />
+
+            {/* Subtle overlay fade */}
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1 }}
+            />
+          </motion.div>
+        </div>
       </div>
     </section>
   );

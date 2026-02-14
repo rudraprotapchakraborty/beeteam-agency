@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-, "components/Hero.jsx", "lib/newsData.js"  ],
+, "components/Hero.jsx", "lib/newsData.js", "components/Navbar.jsx"  ],
   "exclude": ["node_modules"]
 }

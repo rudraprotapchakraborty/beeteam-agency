@@ -1,25 +1,25 @@
 'use client'
 
-import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Fingerprint, X, Maximize2, ShieldCheck, Database, ChevronRight, Scale, CheckCircle2, Award } from 'lucide-react'
+import React, { useState, useRef } from 'react'
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
+import { X, Maximize2, ShieldCheck, ChevronRight } from 'lucide-react'
+
+/* ---------------- DATA ---------------- */
 
 const awards = [
   {
     url: "https://i.ibb.co/s9X5JxM4/Whats-App-Image-2026-01-26-at-4-32-53-PM.jpg",
     title: "Certificate of Achievement",
     outlet: "FIPRESCI Bangladesh",
-    desc: "A prestigious recognition for the film 'The University of Chankharpul'. Presented during the 24th Dhaka International Film Festival.",
-    tag: "OFFICIAL SELECTION",
-    date: "JAN 10-18, 2026",
+    desc: "Recognized during the 24th Dhaka International Film Festival for the film 'The University of Chankharpul'.",
+    date: "JAN 10–18, 2026",
     id: "CERT-001"
   },
   {
     url: "https://i.ibb.co/NnNMzSqc/Whats-App-Image-2026-01-26-at-3-15-54-PM.jpg",
-    title: "FIPRESCI Bangladesh Award",
+    title: "Bangladesh Panorama Winner",
     outlet: "Dhaka International Film Festival",
-    desc: "Winner of the Bangladesh Panorama: Full Length Section 2026. A testament to Beeteam's production excellence.",
-    tag: "PLATINUM WINNER",
+    desc: "Awarded in the Full Length Section 2026 for cinematic production excellence.",
     date: "JAN 2026",
     id: "WIN-992"
   },
@@ -27,8 +27,7 @@ const awards = [
     url: "https://i.ibb.co/B2NzKP5h/Whats-App-Image-2026-01-26-at-3-12-17-PM.jpg",
     title: "National Film Certification",
     outlet: "Government of Bangladesh",
-    desc: "Officially granted the 'U' rating for unrestricted public exhibition. Registered under the Film Certification Act of 2023.",
-    tag: "CERTIFIED BY BOARD",
+    desc: "Granted unrestricted public exhibition status under the Film Certification Act 2023.",
     date: "JAN 18, 2026",
     id: "GOV-882"
   },
@@ -36,114 +35,106 @@ const awards = [
     url: "https://i.ibb.co/m5kNgc8w/Whats-App-Image-2026-01-26-at-3-21-45-PM.jpg",
     title: "International Critics Laurels",
     outlet: "FIPRESCI International",
-    desc: "Recognized in the Bangladesh Panorama: Full Length Section. Awarded for cinematic contribution to the 24th DIFF.",
-    tag: "CRITICS CHOICE",
+    desc: "Recognized for cinematic contribution to the 24th DIFF Bangladesh Panorama.",
     date: "JAN 2026",
     id: "INT-441"
   }
 ]
 
+/* ---------------- COMPONENT ---------------- */
+
 export default function HallOfFame() {
   const [selectedImage, setSelectedImage] = useState(null)
+  const containerRef = useRef(null)
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  })
+
+  const ySoft = useTransform(scrollYProgress, [0, 1], [0, -60])
 
   return (
-    <section id='certification' className="bg-white py-32 overflow-hidden relative selection:bg-black selection:text-[#D4AF37]">
-      
-      {/* Editorial Grid Background */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
-           style={{ backgroundImage: `linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)`, backgroundSize: '100px 100px' }} />
+    <section
+      id="certification"
+      ref={containerRef}
+      className="relative bg-[#fafafa] py-24 overflow-hidden"
+    >
+      {/* Ambient Glow */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-[10%] left-[5%] w-[35%] h-[35%] bg-[#FFD700]/10 blur-[140px]" />
+      </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        
-        {/* Header: High-Authority Registry */}
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-24 gap-12 border-b-[6px] border-black pb-16">
-          <div className="space-y-6">
-            <motion.div 
-              initial={{ opacity: 0, y: 10 }} 
-              whileInView={{ opacity: 1, y: 0 }} 
-              className="flex items-center gap-3"
-            >
-              <Database className="text-black" size={18} />
-              <span className="text-[10px] font-black uppercase tracking-[0.6em] text-black/40">Legal_Archive_Sector_04</span>
-            </motion.div>
-            
-            <h2 className="text-[clamp(3.5rem,8vw,8.5rem)] font-black text-black tracking-tighter leading-[0.8] uppercase">
-              Hall of <br /> <span className="text-white bg-black px-4 ml-[-0.5rem]">Fame.</span>
-            </h2>
-          </div>
 
-          <motion.div 
-            initial={{ opacity: 0, x: 20 }} 
-            whileInView={{ opacity: 1, x: 0 }} 
-            className="flex flex-col lg:items-end gap-6 bg-zinc-50 border-2 border-black p-8 shadow-[12px_12px_0px_#000]"
-          >
-            <Fingerprint size={56} strokeWidth={1.5} className="text-black" />
-            <div className="text-right space-y-2">
-                <div className="flex items-center justify-end gap-2 text-green-600">
-                  <CheckCircle2 size={12} />
-                  <span className="text-[9px] font-black uppercase tracking-[0.2em]">Authentication: Valid</span>
-                </div>
-                <p className="text-black text-[11px] font-bold max-w-[220px] leading-tight uppercase tracking-tight">
-                  Verified cinematic credentials and legal exhibition permits for the 2026 cycle.
-                </p>
-            </div>
-          </motion.div>
-        </div>
+        {/* HEADER */}
+        <motion.div
+          style={{ y: ySoft }}
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.05] text-black mb-4">
+            HALL OF <span className="text-[#FFD700]">FAME</span>
+          </h2>
 
-        {/* 2X2 Registry Grid - High Contrast */}
+          <p className="text-xs text-black/50 font-medium tracking-wide max-w-xl mx-auto">
+            Verified cinematic certifications and international recognitions for the 2026 cycle.
+          </p>
+        </motion.div>
+
+        {/* GRID */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {awards.map((award, i) => (
-            <AwardVaultCard key={i} award={award} index={i} onOpen={() => setSelectedImage(award.url)} />
+            <AwardCard
+              key={award.id}
+              award={award}
+              index={i}
+              onOpen={() => setSelectedImage(award.url)}
+            />
           ))}
         </div>
 
-        {/* Professional Compliance Footer */}
-        <div className="mt-32 flex flex-col md:flex-row justify-between items-center gap-12 pt-12 border-t-2 border-black/5">
-          <div className="flex items-center gap-20">
-            <div className="space-y-1">
-              <span className="text-[9px] font-black uppercase text-black/30 tracking-widest">Serial Number</span>
-              <p className="text-xl font-black tracking-tighter uppercase text-black">BT-CERT-GLOBAL-26</p>
-            </div>
-            <div className="space-y-1">
-              <span className="text-[9px] font-black uppercase text-red-600 tracking-widest">Compliance</span>
-              <div className="flex items-center gap-2 text-black">
-                <ShieldCheck size={18} />
-                <p className="text-xl font-black tracking-tighter uppercase">Unrestricted</p>
-              </div>
-            </div>
+        {/* FOOTER STRIP */}
+        <div className="mt-20 pt-10 border-t border-black/5 flex flex-col md:flex-row justify-between items-center gap-8 text-sm">
+          <div>
+            <div className="text-black/40 text-xs">Registry ID</div>
+            <div className="font-semibold text-black">BT-CERT-GLOBAL-26</div>
           </div>
 
-          <div className="flex items-center gap-4 max-w-xs opacity-40">
-             <Scale size={32} strokeWidth={1} />
-             <p className="text-[9px] font-bold uppercase leading-tight tracking-tight">
-               Authorized for global exhibition under the Film Certification Act. Beeteam Intellectual Property Reserved.
-             </p>
+          <div className="flex items-center gap-3 text-black">
+            <ShieldCheck size={18} className="text-[#FFD700]" />
+            <span className="font-medium">Unrestricted Global Exhibition</span>
           </div>
         </div>
       </div>
 
-      {/* Lightbox: Clean Gallery Mode */}
+      {/* LIGHTBOX */}
       <AnimatePresence>
         {selectedImage && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[1000] bg-white/95 backdrop-blur-xl flex items-center justify-center p-6"
+            className="fixed inset-0 z-[1000] bg-white/95 backdrop-blur-xl flex items-center justify-center p-8"
+            onClick={() => setSelectedImage(null)}
           >
             <motion.button
-              whileHover={{ rotate: 90, scale: 1.1 }}
+              whileHover={{ rotate: 90 }}
               className="absolute top-8 right-8 text-black"
-              onClick={() => setSelectedImage(null)}
             >
-              <X size={48} strokeWidth={2} />
+              <X size={36} />
             </motion.button>
+
             <motion.img
-              initial={{ scale: 0.9, y: 20 }}
+              initial={{ scale: 0.92, y: 30 }}
               animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.9, y: 20 }}
+              exit={{ scale: 0.92, y: 30 }}
+              transition={{ type: "spring", stiffness: 120 }}
               src={selectedImage}
-              className="max-w-full max-h-[85vh] object-contain shadow-[0_40px_100px_rgba(0,0,0,0.15)] border-[12px] border-black"
+              className="max-w-full max-h-[85vh] object-contain rounded-2xl shadow-[0_40px_120px_-30px_rgba(0,0,0,0.25)]"
               onClick={(e) => e.stopPropagation()}
             />
           </motion.div>
@@ -153,57 +144,65 @@ export default function HallOfFame() {
   )
 }
 
-function AwardVaultCard({ award, index, onOpen }) {
+/* ---------------- CARD ---------------- */
+
+function AwardCard({ award, index, onOpen }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ delay: index * 0.1 }}
+      transition={{ delay: index * 0.08 }}
       onClick={onOpen}
-      className="group relative h-[480px] bg-white border-2 border-black flex flex-col justify-end p-10 cursor-pointer overflow-hidden transition-all duration-500 hover:shadow-[20px_20px_0px_rgba(0,0,0,1)]"
+      className="group relative h-[460px] bg-white rounded-2xl border border-black/5 overflow-hidden cursor-pointer transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_30px_80px_-25px_rgba(0,0,0,0.15)]"
     >
-      {/* Background Certificate - Vivid & Clear */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
-        {/* White fade out to prevent text interference */}
-        <div className="absolute inset-0 bg-gradient-to-t from-white via-white/70 to-white/20 z-10" />
-        <motion.img 
-          src={award.url} 
-          className="w-full h-full object-cover scale-110 group-hover:scale-125 transition-transform duration-[2s] ease-out" 
+      {/* Image */}
+      <div className="absolute inset-0">
+        <motion.img
+          src={award.url}
+          className="w-full h-full object-cover opacity-30 group-hover:opacity-90 transition-all duration-[1.6s] ease-out"
+          initial={{ scale: 1.08 }}
+          whileHover={{ scale: 1.02 }}
         />
+        <div className="absolute inset-0 bg-gradient-to-t from-white via-white/80 to-white/30" />
       </div>
 
-      {/* Floating HUD Elements */}
-      <div className="absolute top-8 right-8 z-20">
-        <div className="w-12 h-12 bg-white border-2 border-black flex items-center justify-center text-black group-hover:bg-black group-hover:text-white transition-all duration-300">
-          <Maximize2 size={20} />
+      {/* Content */}
+      <div className="relative z-10 p-8 flex flex-col justify-between h-full">
+
+        <div className="flex justify-between items-center text-xs text-black/40">
+          <span>{award.id}</span>
+          <Maximize2 size={16} className="opacity-60 group-hover:opacity-100 transition" />
         </div>
-      </div>
 
-      <div className="relative z-20 space-y-6">
         <div className="space-y-3">
-            <span className="text-[10px] font-black text-black/30 tracking-[0.4em] uppercase">{award.id}</span>
-            <div className="px-5 py-1.5 bg-black text-white text-[9px] font-black uppercase tracking-[0.2em] w-fit group-hover:bg-[#D4AF37] group-hover:text-black transition-colors duration-300">
-                {award.tag}
-            </div>
-        </div>
-        
-        <div className="space-y-2">
-          <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-[#D4AF37]">{award.outlet}</h4>
-          <h3 className="text-4xl lg:text-5xl font-black leading-[0.85] tracking-tighter uppercase text-black">
+          <div className="text-xs font-medium text-[#D97706]">
+            {award.outlet}
+          </div>
+
+          <h3 className="text-2xl font-semibold text-black leading-tight">
             {award.title}
           </h3>
-          <p className="text-black font-bold text-xs max-w-sm leading-snug uppercase tracking-tight opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
+
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            whileHover={{ opacity: 1, y: 0 }}
+            className="text-sm text-black/60 leading-snug"
+          >
             {award.desc}
-          </p>
+          </motion.p>
         </div>
 
-        <div className="flex justify-between items-center pt-6 border-t border-black/10">
-            <span className="text-[10px] font-black text-black/40 tracking-widest uppercase">{award.date}</span>
-            <div className="flex items-center gap-2 text-black font-black text-[10px] uppercase tracking-widest group-hover:gap-4 transition-all">
-              Verify Document <ChevronRight size={14} className="text-[#D4AF37]" strokeWidth={3} />
-            </div>
+        <div className="flex justify-between items-center pt-6 border-t border-black/5 text-xs">
+          <span className="text-black/40">{award.date}</span>
+          <motion.span
+            whileHover={{ x: 4 }}
+            className="flex items-center gap-1 text-black font-medium"
+          >
+            Verify <ChevronRight size={14} className="text-[#FFD700]" />
+          </motion.span>
         </div>
+
       </div>
     </motion.div>
   )

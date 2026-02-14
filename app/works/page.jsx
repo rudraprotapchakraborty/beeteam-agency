@@ -1,94 +1,98 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Play, X, Maximize2, Zap, ChevronRight, Activity, Sparkles, ArrowUpRight } from 'lucide-react'
+import { Play, X, ArrowUpRight } from 'lucide-react'
+
+/* ---------------- DATA ---------------- */
 
 const projects = [
-  { type: 'embed', id: "VpOd1qnnJHw", title: "Brand Narrative", category: "Film", tags: ["4K", "Cinematic"] },
-  { type: 'embed', id: "nvwHhE5el6o", title: "Corporate Vision", category: "TVC", tags: ["Commercial"] },
-  { type: 'embed', id: "UqMWgsWH7RU", title: "Dynamic Motion", category: "OVC", tags: ["Graphics"] },
-  { type: 'embed', id: "por5d5Nelog", title: "Product Story", category: "Ads", tags: ["Macro"] },
-  { type: 'embed', id: "2LJWoKDKiqc", title: "Cinematic Journey", category: "Documentary", tags: ["Original"] },
-  { type: 'embed', id: "QTgY29dOPnQ", title: "Music Visual", category: "Music Video", tags: ["Art"] },
+  { id: "VpOd1qnnJHw", title: "Brand Narrative", category: "Film" },
+  { id: "nvwHhE5el6o", title: "Corporate Vision", category: "TVC" },
+  { id: "UqMWgsWH7RU", title: "Dynamic Motion", category: "OVC" },
+  { id: "por5d5Nelog", title: "Product Story", category: "Ads" },
+  { id: "2LJWoKDKiqc", title: "Cinematic Journey", category: "Documentary" },
+  { id: "QTgY29dOPnQ", title: "Music Visual", category: "Music Video" },
 ]
+
+/* ---------------- COMPONENT ---------------- */
 
 export default function Works() {
   const [selectedProject, setSelectedProject] = useState(null)
+  const containerRef = useRef(null)
 
   return (
-    <section id='works' className="py-24 bg-white text-black overflow-hidden relative selection:bg-black selection:text-white">
-      
-      {/* Background: Clean Technical Canvas */}
-      <div className="absolute inset-0 opacity-[0.05] pointer-events-none" 
-           style={{ backgroundImage: `linear-gradient(#000 1.2px, transparent 1.2px), linear-gradient(90deg, #000 1.2px, transparent 1.2px)`, backgroundSize: '80px 80px' }} />
+    <section
+      id="works"
+      ref={containerRef}
+      className="relative py-24 bg-[#fafafa] overflow-hidden"
+    >
 
-      <div className="max-w-[1600px] mx-auto px-6 relative z-10">
-        
-        {/* Header: High-Definition Editorial */}
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-20 gap-8">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }} 
-            whileInView={{ opacity: 1, y: 0 }} 
-            viewport={{ once: true }}
-          >
-            <div className="flex items-center gap-3 mb-4">
-              <Sparkles size={20} className="text-black" fill="black" />
-              <span className="text-[11px] font-black uppercase tracking-[0.6em] text-black">Precision_Optics_2026</span>
-            </div>
-            <h2 className="text-[clamp(3.5rem,9vw,8.5rem)] font-black uppercase tracking-tighter leading-[0.8] text-black">
-              Our <br /> <span className="underline decoration-4 underline-offset-8 decoration-black">Works.</span>
-            </h2>
-          </motion.div>
+      {/* Ambient Glow */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-[5%] right-[5%] w-[35%] h-[35%] bg-[#FFD700]/10 blur-[140px]" />
+      </div>
 
-          <div className="p-8 border-l-4 border-black bg-black text-white max-w-sm">
-              <div className="flex items-center gap-2 mb-3">
-                 <Activity size={16} className="text-[#00FF00]" />
-                 <span className="text-[9px] font-black uppercase tracking-widest">Feed: Full Spectrum</span>
-              </div>
-              <p className="text-[11px] font-bold uppercase leading-tight tracking-tight opacity-80">
-                Showcasing ultra-high-definition narrative assets. All color matrices calibrated to rec.709 industry standards.
-              </p>
-          </div>
-        </div>
+      <div className="max-w-[1300px] mx-auto px-6 relative z-10">
 
-        {/* Bento Grid: Sharp Definition */}
-        <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        {/* HEADER */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.05] text-black mb-4">
+            OUR <span className="text-[#FFD700]">WORKS</span>
+          </h2>
+
+          <p className="text-sm text-black/50 max-w-xl mx-auto">
+            A curated selection of cinematic narratives and high-impact visual storytelling.
+          </p>
+        </motion.div>
+
+        {/* GRID */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {projects.map((item, i) => (
-            <ProjectCard 
-              key={i} 
-              item={item} 
-              index={i} 
-              onClick={() => setSelectedProject(item)} 
+            <ProjectCard
+              key={i}
+              item={item}
+              index={i}
+              onClick={() => setSelectedProject(item)}
             />
           ))}
         </div>
+
       </div>
 
-      {/* Lightbox: Cinema Mode */}
+      {/* LIGHTBOX */}
       <AnimatePresence>
         {selectedProject && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[1000] flex items-center justify-center bg-white/95 backdrop-blur-md p-4"
+            className="fixed inset-0 z-[1000] flex items-center justify-center bg-white/95 backdrop-blur-xl p-8"
+            onClick={() => setSelectedProject(null)}
           >
             <motion.button
-              onClick={() => setSelectedProject(null)}
-              className="absolute top-6 right-6 text-black hover:scale-110 transition-transform z-[1010]"
+              whileHover={{ rotate: 90 }}
+              className="absolute top-8 right-8 text-black"
             >
-              <X size={44} strokeWidth={2.5} />
+              <X size={36} />
             </motion.button>
 
-            <motion.div 
-              initial={{ scale: 0.98, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.98, opacity: 0 }}
-              className="relative w-full max-w-6xl aspect-video overflow-hidden border-[16px] border-black shadow-2xl bg-black"
+            <motion.div
+              initial={{ scale: 0.92, y: 30 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.92, y: 30 }}
+              transition={{ type: "spring", stiffness: 120 }}
+              className="relative w-full max-w-6xl aspect-video rounded-2xl overflow-hidden shadow-[0_40px_120px_-30px_rgba(0,0,0,0.25)] bg-black"
+              onClick={(e) => e.stopPropagation()}
             >
               <iframe
-                src={`https://www.youtube.com/embed/${selectedProject.id}?autoplay=1&rel=0&modestbranding=1&color=white`}
+                src={`https://www.youtube.com/embed/${selectedProject.id}?autoplay=1&rel=0&modestbranding=1`}
                 className="w-full h-full"
                 allow="autoplay; encrypted-media"
                 allowFullScreen
@@ -97,76 +101,69 @@ export default function Works() {
           </motion.div>
         )}
       </AnimatePresence>
+
     </section>
   )
 }
 
-function ProjectCard({ item, index, onClick }) {
-  const isLarge = index === 0
+/* ---------------- CARD ---------------- */
 
+function ProjectCard({ item, index, onClick }) {
   return (
     <motion.div
       onClick={onClick}
-      initial={{ opacity: 0, scale: 0.98 }}
-      whileInView={{ opacity: 1, scale: 1 }}
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ delay: index * 0.05 }}
-      className={`group relative bg-black overflow-hidden cursor-pointer border-2 border-black/5 transition-all duration-500 hover:border-black
-        ${isLarge ? 'md:col-span-4 md:row-span-2 h-[640px]' : 'md:col-span-2 h-[310px]'}`}
+      transition={{ delay: index * 0.08 }}
+      className="group relative h-[360px] bg-white rounded-2xl overflow-hidden border border-black/5 cursor-pointer transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_30px_80px_-25px_rgba(0,0,0,0.15)]"
     >
-      {/* Video Viewport - Sharp & High Contrast */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
+
+      {/* Background Preview */}
+      <div className="absolute inset-0">
         <iframe
-          className="w-full h-full scale-[1.8] group-hover:scale-[1.5] transition-transform duration-[2s] ease-out pointer-events-none"
+          className="w-full h-full scale-[1.6] opacity-80 group-hover:scale-[1.5] transition-transform duration-[2s] ease-out pointer-events-none"
           src={`https://www.youtube.com/embed/${item.id}?controls=0&rel=0&mute=1&playlist=${item.id}&loop=1&autoplay=1&modestbranding=1`}
         />
-        {/* Subtle Vignette Overlay - No Grayscale */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 z-10 group-hover:from-black/40 transition-all duration-500" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
       </div>
 
-      {/* Content Layer: Professional Minimalist */}
-      <div className="absolute inset-0 flex flex-col justify-between p-8 z-20 text-white pointer-events-none">
-        <div className="flex justify-between items-start">
-          <div className="flex flex-col gap-2">
-            <span className="text-[10px] font-black tracking-[0.4em] uppercase text-white/60">
-              PRJ_VOD_0{index + 1}
-            </span>
-            <div className="px-3 py-1 bg-white text-black text-[9px] font-black uppercase tracking-widest w-fit">
-              {item.category}
-            </div>
-          </div>
-          
-          <div className="w-10 h-10 bg-white text-black flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-            <ArrowUpRight size={20} strokeWidth={3} />
-          </div>
+      {/* Content */}
+      <div className="absolute inset-0 flex flex-col justify-between p-6 text-white z-10">
+
+        <div className="flex justify-between items-start text-xs text-white/60">
+          <span>{item.category}</span>
+
+          <motion.div
+            whileHover={{ x: 4 }}
+            className="opacity-0 group-hover:opacity-100 transition"
+          >
+            <ArrowUpRight size={18} />
+          </motion.div>
         </div>
 
         <div className="space-y-4">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 border-2 border-white flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-300">
-              <Play fill="currentColor" size={18} className="translate-x-0.5" />
-            </div>
-            <div className="flex flex-col">
-               {item.tags?.map(tag => (
-                <span key={tag} className="text-[9px] font-bold uppercase tracking-widest text-white/50">{tag}</span>
-              ))}
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 border border-white/20 rounded-lg flex items-center justify-center bg-white/10 backdrop-blur-sm group-hover:bg-[#FFD700] group-hover:text-black transition-all duration-300">
+              <Play size={14} fill="currentColor" />
             </div>
           </div>
-          
-          <h4 className={`font-black uppercase tracking-tighter leading-[0.85] transition-all duration-500
-            ${isLarge ? 'text-5xl md:text-8xl' : 'text-3xl'}`}>
+
+          <h4 className="text-2xl font-semibold leading-tight group-hover:text-[#FFD700] transition-colors">
             {item.title}
           </h4>
         </div>
+
       </div>
-      
-      {/* Hover Line Detail */}
-      <motion.div 
-        className="absolute bottom-0 left-0 h-1 bg-white z-30"
+
+      {/* Bottom Accent Line */}
+      <motion.div
+        className="absolute bottom-0 left-0 h-[2px] bg-[#FFD700]"
         initial={{ width: 0 }}
         whileHover={{ width: '100%' }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.4 }}
       />
+
     </motion.div>
   )
 }

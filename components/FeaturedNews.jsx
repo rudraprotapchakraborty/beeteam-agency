@@ -1,16 +1,14 @@
 'use client'
 
 import React, { useState, useEffect, useRef } from 'react'
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import {
   Loader2,
-  Zap,
   Globe,
-  ArrowUpRight,
-  Award,
-  ChevronRight
+  ChevronRight,
+  ChevronLeft,
+  ExternalLink
 } from 'lucide-react'
-
 import { newsData } from '@/lib/newsData'
 
 const ITEMS_PER_PAGE = 4
@@ -23,127 +21,83 @@ export default function FeaturedNews() {
   const start = (page - 1) * ITEMS_PER_PAGE
   const paginatedNews = newsData.slice(start, start + ITEMS_PER_PAGE)
 
-  const { scrollYProgress } = useScroll({
-    target: container,
-    offset: ['start end', 'end start']
-  })
-
-  const springProgress = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30
-  })
-
-  const progressWidth = useTransform(springProgress, [0, 1], ['0%', '100%'])
-
   return (
     <section
       id="news"
       ref={container}
-      className="bg-white py-24 overflow-hidden relative selection:bg-black selection:text-[#D4AF37]"
+      className="relative bg-[#fafafa] py-24 overflow-hidden"
     >
-      {/* Progress Bar */}
-      <div className="fixed top-0 left-0 w-full h-[6px] bg-black/5 z-[100]">
-        <motion.div style={{ width: progressWidth }} className="h-full bg-black" />
+      {/* Ambient light */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-[10%] right-[10%] w-[35%] h-[35%] bg-[#FFD700]/5 blur-[140px]" />
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
 
-        {/* Header */}
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-20 gap-10">
-          <div className="flex-1">
-            <div className="flex items-center gap-2 mb-4">
-              <Award size={18} />
-              <span className="text-xs font-black uppercase tracking-[0.4em]">
-                Media Verification Portal
-              </span>
-            </div>
+        {/* HEADER */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-6xl font-extrabold text-black tracking-tight leading-[1.05] mb-4">
+            GLOBAL <span className="text-[#FFD700]">PRESS</span> INTELLIGENCE
+          </h2>
 
-            <h2 className="text-[clamp(3rem,7vw,8rem)] font-black tracking-tight leading-[0.9] uppercase">
-              Global <span className="text-[#D4AF37]">Press</span><br />
-              Intelligence.
-            </h2>
-          </div>
+          <p className="text-xs text-black/50 font-medium tracking-wide">
+            Archived Media Logs · University of Chankarphul
+          </p>
+        </motion.div>
+
+        {/* GRID */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <AnimatePresence mode="wait">
+            {paginatedNews.map((news, index) => (
+              <PressCard key={news.href} news={news} index={index + start} />
+            ))}
+          </AnimatePresence>
         </div>
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-t-2 border-l-2 border-black">
-          {paginatedNews.map((news, index) => (
-            <PressCard key={news.href} news={news} index={index + start} />
-          ))}
-        </div>
+        {/* CLEAN PAGINATION */}
+        <div className="flex justify-center items-center gap-6 mt-16 text-sm">
 
-{/* Pagination */}
-<div className="flex justify-center mt-16">
-  <div className="flex items-center gap-6 text-sm font-black uppercase tracking-widest">
+          <motion.button
+            whileTap={{ scale: 0.9 }}
+            onClick={() => setPage(p => Math.max(1, p - 1))}
+            disabled={page === 1}
+            className="opacity-60 hover:opacity-100 transition"
+          >
+            <ChevronLeft size={20} />
+          </motion.button>
 
-    {/* Prev */}
-    <button
-      onClick={() => setPage(p => Math.max(1, p - 1))}
-      disabled={page === 1}
-      className={`transition-colors ${
-        page === 1
-          ? 'text-black/30 cursor-not-allowed'
-          : 'text-black hover:text-black/50'
-      }`}
-    >
-      Prev
-    </button>
-
-    {/* Page Numbers */}
-    {[...Array(totalPages)].map((_, i) => (
-      <button
-        key={i}
-        onClick={() => setPage(i + 1)}
-        className={`transition-colors ${
-          page === i + 1
-            ? 'text-[#D4AF37]'
-            : 'text-black hover:text-black/50'
-        }`}
-      >
-        {i + 1}
-      </button>
-    ))}
-
-    {/* Next */}
-    <button
-      onClick={() => setPage(p => Math.min(totalPages, p + 1))}
-      disabled={page === totalPages}
-      className={`flex items-center gap-1 transition-colors ${
-        page === totalPages
-          ? 'text-black/30 cursor-not-allowed'
-          : 'text-black hover:text-black/50'
-      }`}
-    >
-      Next <ChevronRight size={14} />
-    </button>
-
-  </div>
-</div>
-
-
-
-        {/* Footer CTA */}
-        <div className="mt-24 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center bg-black p-12 lg:p-20">
-          <div className="space-y-6">
-            <h3 className="text-white text-5xl font-black uppercase leading-none">
-              The <span className="text-[#D4AF37]">Beeteam</span><br />
-              Sizzle Reel.
-            </h3>
-            <p className="text-white/60 text-lg font-medium">
-              Witness the visual storytelling that sparked international headlines.
-            </p>
+          <div className="flex items-center gap-3">
+            {[...Array(totalPages)].map((_, i) => (
+              <motion.button
+                key={i}
+                whileHover={{ y: -2 }}
+                onClick={() => setPage(i + 1)}
+                className={`text-xs font-semibold transition-all ${
+                  page === i + 1
+                    ? 'text-black'
+                    : 'text-black/40 hover:text-black'
+                }`}
+              >
+                {String(i + 1).padStart(2, '0')}
+              </motion.button>
+            ))}
           </div>
 
-          <div className="flex justify-center lg:justify-end">
-            <motion.a
-              href="https://web.facebook.com/share/v/18EPxb7XbD/"
-              target="_blank"
-              whileHover={{ scale: 1.05, backgroundColor: '#D4AF37' }}
-              className="bg-white text-black px-12 py-6 text-sm font-black uppercase tracking-[0.3em] flex items-center gap-4"
-            >
-              Watch Now <Zap size={18} />
-            </motion.a>
-          </div>
+          <motion.button
+            whileTap={{ scale: 0.9 }}
+            onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+            disabled={page === totalPages}
+            className="opacity-60 hover:opacity-100 transition"
+          >
+            <ChevronRight size={20} />
+          </motion.button>
+
         </div>
 
       </div>
@@ -170,55 +124,59 @@ function PressCard({ news, index }) {
     <motion.a
       href={news.href}
       target="_blank"
-      className="group relative h-[500px] bg-white border-r-2 border-b-2 border-black flex flex-col hover:bg-[#FFFDF5]"
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.6, delay: (index % 4) * 0.08 }}
+      className="group relative h-[480px] bg-white rounded-2xl overflow-hidden border border-black/5 hover:border-[#FFD700]/40 shadow-sm hover:shadow-[0_20px_60px_-20px_rgba(0,0,0,0.15)] transition-all duration-500 flex flex-col"
     >
+      {/* IMAGE */}
       <div className="relative h-56 overflow-hidden">
         {loading ? (
-          <div className="w-full h-full flex items-center justify-center border-b-2 border-black">
-            <Loader2 className="animate-spin" />
+          <div className="w-full h-full flex items-center justify-center bg-black/5">
+            <Loader2 className="animate-spin text-[#FFD700]" />
           </div>
         ) : (
           <motion.img
             src={thumbnail}
-            className="w-full h-full object-cover border-b-2 border-black"
-            initial={{ scale: 1.1 }}
+            className="w-full h-full object-cover"
+            initial={{ scale: 1.08 }}
             whileHover={{ scale: 1 }}
+            transition={{ duration: 0.8 }}
           />
         )}
-        <span className="absolute top-4 left-4 bg-black text-white px-3 py-1 text-[9px] font-black uppercase tracking-widest">
+
+        {/* Subtle category label (no pill) */}
+        <div className="absolute top-4 left-4 text-[9px] font-semibold uppercase tracking-wide text-black bg-white/80 px-2 py-1 rounded-md backdrop-blur-sm">
           {news.category}
-        </span>
+        </div>
       </div>
 
-      <div className="flex-1 p-8 flex flex-col justify-between">
-        <div>
-          <div className="flex items-center gap-2 text-black/50 mb-4">
-            <Globe size={14} />
-            <p className="text-[11px] font-black uppercase tracking-widest">
-              {news.outlet}
-            </p>
+      {/* CONTENT */}
+      <div className="flex-1 p-6 flex flex-col justify-between">
+
+        <div className="space-y-3">
+          <div className="flex items-center gap-2 text-black/50 text-[11px]">
+            <Globe size={13} className="text-[#FFD700]" />
+            {news.outlet}
           </div>
 
-          <h3 className="text-2xl font-black uppercase tracking-tighter leading-tight group-hover:text-[#D4AF37]">
+          <h3 className="text-lg font-semibold leading-snug text-black group-hover:text-[#D97706] transition-colors duration-300">
             {news.title}
           </h3>
         </div>
 
-        <div className="flex justify-between items-center mt-6">
-          <div className="flex gap-1">
-            {[...Array(3)].map((_, i) => (
-              <div key={i} className="w-1 h-4 bg-black" />
-            ))}
-          </div>
+        <div className="flex justify-between items-center pt-5 border-t border-black/5 text-xs text-black/40">
+          <span>REF_{index + 1}</span>
 
-          <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest group-hover:translate-x-2 transition-transform">
-            View Article <ArrowUpRight size={14} />
-          </div>
+          <motion.span
+            whileHover={{ x: 4 }}
+            className="flex items-center gap-1 font-medium text-black group-hover:text-[#D97706] transition"
+          >
+            Read <ExternalLink size={13} />
+          </motion.span>
         </div>
-      </div>
 
-      <div className="absolute top-4 right-4 text-[10px] font-black text-black/20 uppercase">
-        Log_0{index + 1}
       </div>
     </motion.a>
   )
