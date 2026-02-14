@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { motion } from 'framer-motion'
 import {
   Facebook,
@@ -11,15 +11,11 @@ import {
   Globe,
   Phone
 } from 'lucide-react'
+import { useLanguage } from '@/context/LanguageContext'
 
 export default function CompactFooter() {
 
-  const [language, setLanguage] = useState("en")
-
-  useEffect(() => {
-    const savedLang = localStorage.getItem("lang")
-    if (savedLang) setLanguage(savedLang)
-  }, [])
+  const { language } = useLanguage()
 
   const translations = {
     en: {
@@ -32,6 +28,10 @@ export default function CompactFooter() {
       works: "Works",
       social: "Social",
       contact: "Contact",
+      address: `Shop no -24, 480, Sarker,
+R E F Tower, Gawair,
+Dakshinkhan, Dhaka 1230`,
+      phone: "+880 1400 87 2857",
       copyright: "© 2026 Beeteam Lab. All rights reserved."
     },
     bn: {
@@ -44,6 +44,10 @@ export default function CompactFooter() {
       works: "কাজসমূহ",
       social: "সোশ্যাল",
       contact: "যোগাযোগ",
+      address: `শপ নং -২৪, ৪৮০, সরকার,
+আর ই এফ টাওয়ার, গাওয়াইর,
+দক্ষিণখান, ঢাকা ১২৩০`,
+      phone: "+৮৮০ ১৪০০ ৮৭ ২৮৫৭",
       copyright: "© ২০২৬ বিটিম ল্যাব। সর্বস্বত্ব সংরক্ষিত।"
     }
   }
@@ -56,17 +60,17 @@ export default function CompactFooter() {
 
   const socialLinks = [
     {
-      name: "Instagram",
+      name: language === "bn" ? "ইনস্টাগ্রাম" : "Instagram",
       icon: <Instagram size={16} />,
       href: "https://www.instagram.com/beeteam26"
     },
     {
-      name: "Facebook",
+      name: language === "bn" ? "ফেসবুক" : "Facebook",
       icon: <Facebook size={16} />,
       href: "https://www.facebook.com/beeteam"
     },
     {
-      name: "YouTube",
+      name: language === "bn" ? "ইউটিউব" : "YouTube",
       icon: <Youtube size={16} />,
       href: "https://www.youtube.com/@BeeTeamltd"
     }
@@ -125,30 +129,24 @@ export default function CompactFooter() {
         {/* GRID */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 py-10 border-y border-black/5 items-start">
 
+          {/* Navigation */}
           <div className="space-y-4">
             <h4 className="text-xs font-semibold text-black/40 tracking-wide">
               {t.navigation}
             </h4>
 
             <div className="flex flex-col gap-2 text-sm">
-              <motion.a
-                href="/"
-                whileHover={{ x: 4 }}
-                className="text-black/70 hover:text-black transition-colors"
-              >
+              <motion.a href="/" whileHover={{ x: 4 }} className="text-black/70 hover:text-black transition-colors">
                 {t.home}
               </motion.a>
 
-              <motion.a
-                href="/works"
-                whileHover={{ x: 4 }}
-                className="text-black/70 hover:text-black transition-colors"
-              >
+              <motion.a href="/works" whileHover={{ x: 4 }} className="text-black/70 hover:text-black transition-colors">
                 {t.works}
               </motion.a>
             </div>
           </div>
 
+          {/* Social */}
           <div className="space-y-4">
             <h4 className="text-xs font-semibold text-black/40 tracking-wide">
               {t.social}
@@ -170,24 +168,21 @@ export default function CompactFooter() {
             </div>
           </div>
 
+          {/* Contact */}
           <div className="space-y-4">
             <h4 className="text-xs font-semibold text-black/40 tracking-wide">
               {t.contact}
             </h4>
 
-            <div className="flex items-start gap-3 text-black text-sm leading-relaxed">
+            <div className="flex items-start gap-3 text-black text-sm leading-relaxed whitespace-pre-line">
               <Globe size={16} className="text-[#FFD700] mt-1" />
-              <div>
-                Shop no -24, 480, Sarker,<br />
-                R E F Tower, Gawair,<br />
-                Dakshinkhan, Dhaka 1230
-              </div>
+              <div>{t.address}</div>
             </div>
 
             <div className="flex items-center gap-3 text-black text-sm font-medium">
               <Phone size={15} className="text-[#FFD700]" />
               <a href="tel:+8801400872857">
-                +880 1400 87 2857
+                {t.phone}
               </a>
             </div>
 
@@ -208,6 +203,7 @@ export default function CompactFooter() {
             </div>
           </div>
 
+          {/* Map */}
           <div className="w-full h-[200px] rounded-xl overflow-hidden border border-black/10 shadow-sm">
             <iframe
               src="https://www.google.com/maps?q=REF+Tower+Gawair+Dakshinkhan+Dhaka&output=embed"
@@ -221,6 +217,7 @@ export default function CompactFooter() {
 
         </div>
 
+        {/* STATUS BAR */}
         <div className="flex justify-between items-center pt-6 text-sm">
 
           <div className="text-black/40">

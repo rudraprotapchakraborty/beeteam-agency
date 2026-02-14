@@ -1,18 +1,13 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef } from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { ArrowDown, ExternalLink } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function BeeTeamYellowStackedHero() {
   const containerRef = useRef(null);
-  const [language, setLanguage] = useState("en");
-
-  // Load language from localStorage
-  useEffect(() => {
-    const savedLang = localStorage.getItem("lang");
-    if (savedLang) setLanguage(savedLang);
-  }, []);
+  const { language } = useLanguage();
 
   const translations = {
     en: {
@@ -71,7 +66,7 @@ export default function BeeTeamYellowStackedHero() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="text-center max-w-3xl mb-14"
         >
-          {/* Translated Title */}
+          {/* Title */}
           <h1 className="text-4xl md:text-6xl font-extrabold text-black tracking-tight leading-[1.05] mb-4">
             {t.title1}{" "}
             <span className="text-[#FFD700] relative">

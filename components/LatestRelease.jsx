@@ -1,17 +1,12 @@
 'use client'
 
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
-import { useRef, useState, useEffect } from 'react'
+import { useRef } from 'react'
+import { useLanguage } from '@/context/LanguageContext'
 
 export default function LatestRelease() {
   const containerRef = useRef(null)
-  const [language, setLanguage] = useState("en")
-
-  // Load language from localStorage
-  useEffect(() => {
-    const savedLang = localStorage.getItem("lang")
-    if (savedLang) setLanguage(savedLang)
-  }, [])
+  const { language } = useLanguage()
 
   const translations = {
     en: {

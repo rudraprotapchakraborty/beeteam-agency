@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Loader2,
@@ -10,19 +10,14 @@ import {
   ExternalLink
 } from 'lucide-react'
 import { newsData } from '@/lib/newsData'
+import { useLanguage } from '@/context/LanguageContext'
 
 const ITEMS_PER_PAGE = 4
 
 export default function FeaturedNews() {
   const container = useRef(null)
   const [page, setPage] = useState(1)
-  const [language, setLanguage] = useState("en")
-
-  // Load language from localStorage
-  useEffect(() => {
-    const savedLang = localStorage.getItem("lang")
-    if (savedLang) setLanguage(savedLang)
-  }, [])
+  const { language } = useLanguage()
 
   const translations = {
     en: {
@@ -71,9 +66,7 @@ export default function FeaturedNews() {
         >
           <h2 className="text-4xl md:text-6xl font-extrabold text-black tracking-tight leading-[1.05] mb-4">
             {t.title1}{" "}
-            <span className="text-[#FFD700]">
-              {t.title2}
-            </span>{" "}
+            <span className="text-[#FFD700]">{t.title2}</span>{" "}
             {t.title3}
           </h2>
 
@@ -90,7 +83,6 @@ export default function FeaturedNews() {
                 key={news.href}
                 news={news}
                 index={index + start}
-                language={language}
                 readLabel={t.read}
                 refLabel={t.ref}
               />

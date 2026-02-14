@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import {
   motion,
@@ -10,25 +10,13 @@ import {
   AnimatePresence,
 } from "framer-motion";
 import { ArrowUpRight, MapPin } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function MaterialExpressiveNavbar() {
   const { scrollY } = useScroll();
+  const { language, changeLanguage } = useLanguage();
   const [hoveredLink, setHoveredLink] = useState(null);
-  const [language, setLanguage] = useState("en");
 
-  // Load saved language
-  useEffect(() => {
-    const savedLang = localStorage.getItem("lang");
-    if (savedLang) setLanguage(savedLang);
-  }, []);
-
-  // Toggle language
-  const changeLanguage = (lang) => {
-    setLanguage(lang);
-    localStorage.setItem("lang", lang);
-  };
-
-  // Translations
   const translations = {
     en: {
       home: "Home",

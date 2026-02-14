@@ -1,8 +1,9 @@
 'use client'
 
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef } from 'react'
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
 import { X, Maximize2, ShieldCheck, ChevronRight } from 'lucide-react'
+import { useLanguage } from '@/context/LanguageContext'
 
 const awards = [
   {
@@ -41,13 +42,8 @@ const awards = [
 
 export default function HallOfFame() {
   const [selectedImage, setSelectedImage] = useState(null)
-  const [language, setLanguage] = useState("en")
   const containerRef = useRef(null)
-
-  useEffect(() => {
-    const savedLang = localStorage.getItem("lang")
-    if (savedLang) setLanguage(savedLang)
-  }, [])
+  const { language } = useLanguage()
 
   const translations = {
     en: {

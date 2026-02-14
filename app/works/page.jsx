@@ -1,8 +1,9 @@
 'use client'
 
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Play, X, ArrowUpRight } from 'lucide-react'
+import { useLanguage } from '@/context/LanguageContext'
 
 /* ---------------- DATA ---------------- */
 
@@ -17,13 +18,8 @@ const projects = [
 
 export default function Works() {
   const [selectedProject, setSelectedProject] = useState(null)
-  const [language, setLanguage] = useState("en")
   const containerRef = useRef(null)
-
-  useEffect(() => {
-    const savedLang = localStorage.getItem("lang")
-    if (savedLang) setLanguage(savedLang)
-  }, [])
+  const { language } = useLanguage()
 
   const translations = {
     en: {
@@ -64,7 +60,6 @@ export default function Works() {
       ref={containerRef}
       className="relative py-24 bg-[#fafafa] overflow-hidden"
     >
-
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-[5%] right-[5%] w-[35%] h-[35%] bg-[#FFD700]/10 blur-[140px]" />
       </div>
@@ -155,7 +150,6 @@ function ProjectCard({ item, index, onClick, categoryLabel }) {
       transition={{ delay: index * 0.08 }}
       className="group relative h-[360px] bg-white rounded-2xl overflow-hidden border border-black/5 cursor-pointer transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_30px_80px_-25px_rgba(0,0,0,0.15)]"
     >
-
       <div className="absolute inset-0">
         <iframe
           className="w-full h-full scale-[1.6] opacity-80 group-hover:scale-[1.5] transition-transform duration-[2s] ease-out pointer-events-none"
@@ -197,7 +191,6 @@ function ProjectCard({ item, index, onClick, categoryLabel }) {
         whileHover={{ width: '100%' }}
         transition={{ duration: 0.4 }}
       />
-
     </motion.div>
   )
 }
