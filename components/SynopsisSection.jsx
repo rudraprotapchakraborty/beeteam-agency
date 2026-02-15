@@ -40,53 +40,60 @@ Day by day it becomes clear that, in this world, nobody climbs without stepping 
   const t = translations[language]
 
   return (
-    <section className="relative bg-black text-white py-28 overflow-hidden">
+    <section className="relative bg-black text-white py-20 md:py-24 overflow-hidden">
 
-      {/* Background Image */}
+      {/* Background */}
       <div className="absolute inset-0">
         <img
           src="/synopsis.jpg"
           alt="Synopsis Background"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover scale-105"
         />
-        <div className="absolute inset-0" />
+        <div className="absolute inset-0 bg-black/15 backdrop-blur-[2px]" />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6">
+      <div className="relative z-10 max-w-6xl mx-auto px-6">
 
-        <div className="grid md:grid-cols-2 gap-20 items-start">
+        <div className="grid lg:grid-cols-12 gap-10">
 
-          {/* LEFT SIDE TITLE */}
+          {/* LEFT COLUMN */}
           <motion.div
-            initial={{ opacity: 0, x: -60 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.9 }}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
             viewport={{ once: true }}
+            className="lg:col-span-4"
           >
-            <p className="text-sm text-white/60 mb-6">
+            <p className="text-xs tracking-[0.3em] uppercase text-white/50 mb-4">
               {t.presents}
             </p>
 
-            <h2 className="text-5xl md:text-6xl font-bold">
+            <h2 className="text-4xl md:text-5xl font-semibold leading-tight">
               {t.title}
             </h2>
+
+            <div className="mt-6 w-16 h-[2px] bg-[#FFD700]" />
           </motion.div>
 
-          {/* RIGHT SIDE TEXT */}
+          {/* RIGHT COLUMN */}
           <motion.div
-            initial={{ opacity: 0, x: 60 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9 }}
             viewport={{ once: true }}
-            className="text-[#FFD700] text-base md:text-lg leading-relaxed whitespace-pre-line"
+            className="lg:col-span-8"
           >
-            {t.text}
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8 backdrop-blur-md">
+              <p className="text-sm md:text-[15px] leading-relaxed text-white/85 whitespace-pre-line">
+                {t.text}
+              </p>
+            </div>
           </motion.div>
 
         </div>
 
         {/* Vertical Side Text */}
-        <div className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 rotate-90 origin-right text-white/20 tracking-[0.4em] text-xs">
+        <div className="hidden xl:block absolute right-6 top-1/2 -translate-y-1/2 rotate-90 origin-right text-white/10 tracking-[0.5em] text-xs select-none">
           {t.sideTitle}
         </div>
 
