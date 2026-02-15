@@ -23,12 +23,14 @@ export default function MaterialExpressiveNavbar() {
       works: "Works",
       location: "Dhaka, BD",
       imdb: "IMDb",
+      rate: "Rate The University of Chankharpul >",
     },
     bn: {
       home: "হোম",
       works: "কাজসমূহ",
       location: "ঢাকা, বাংলাদেশ",
       imdb: "আইএমডিবি",
+      rate: "ইউনিভার্সিটি অফ চানখারপুল রেট করুন >",
     },
   };
 
@@ -144,6 +146,18 @@ export default function MaterialExpressiveNavbar() {
 
       {/* RIGHT */}
       <div className="flex items-center gap-6">
+
+        {/* RATE TEXT (Outside IMDb Button) */}
+        <motion.span
+          initial={{ opacity: 0, x: -10 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.4 }}
+          className="hidden lg:block text-[10px] font-black uppercase tracking-[0.2em] text-black/60"
+        >
+          {t.rate}
+        </motion.span>
+
+        {/* IMDb Button */}
         <motion.a
           href="https://www.imdb.com/title/tt39394821"
           target="_blank"
