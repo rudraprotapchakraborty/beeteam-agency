@@ -66,7 +66,7 @@ export default function HallOfFame() {
     }
   }
 
-  const t = translations[language]
+  const t = translations[language] || translations.en
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -79,9 +79,9 @@ export default function HallOfFame() {
     <section
       id="certification"
       ref={containerRef}
-      className="relative bg-[#fafafa] py-20"
+      className="relative bg-[#fafafa] py-24"
     >
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-6">
 
         {/* HEADER */}
         <motion.div
@@ -90,19 +90,19 @@ export default function HallOfFame() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="text-center mb-14"
+          className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-extrabold text-black mb-4">
             {t.title1} <span className="text-[#FFD700]">{t.title2}</span>
           </h2>
 
-          <p className="text-xs text-black/50 font-medium max-w-lg mx-auto">
+          <p className="text-sm text-black/50 font-medium max-w-lg mx-auto">
             {t.subtitle}
           </p>
         </motion.div>
 
-        {/* GRID */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        {/* 3 COLUMN GRID */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {awards.map((award, i) => (
             <AwardCard
               key={award.id}
@@ -115,7 +115,7 @@ export default function HallOfFame() {
         </div>
 
         {/* FOOTER */}
-        <div className="mt-16 pt-8 border-t border-black/5 flex flex-col md:flex-row justify-between items-center gap-6 text-sm">
+        <div className="mt-20 pt-8 border-t border-black/5 flex flex-col md:flex-row justify-between items-center gap-6 text-sm">
           <div>
             <div className="text-black/40 text-xs">{t.registry}</div>
             <div className="font-semibold text-black">BT-CERT-GLOBAL-26</div>
@@ -144,11 +144,15 @@ export default function HallOfFame() {
               exit={{ scale: 0.95 }}
               transition={{ type: "spring", stiffness: 120 }}
               src={selectedImage}
+              alt="Award"
               className="max-w-full max-h-[85vh] object-contain rounded-xl shadow-[0_40px_120px_-30px_rgba(0,0,0,0.25)]"
               onClick={(e) => e.stopPropagation()}
             />
 
-            <button className="absolute top-8 right-8 text-black">
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="absolute top-8 right-8 text-black hover:rotate-90 transition"
+            >
               <X size={32} />
             </button>
           </motion.div>
@@ -168,18 +172,17 @@ function AwardCard({ award, index, onOpen, verifyLabel }) {
       viewport={{ once: true }}
       transition={{ delay: index * 0.08 }}
       onClick={onOpen}
-      className="group bg-white rounded-xl border border-black/5 overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-lg"
+      className="group bg-white rounded-xl border border-black/5 overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
     >
       <div className="relative aspect-[4/3] overflow-hidden">
         <motion.img
           src={award.url}
-          className="w-full h-full object-cover"
-          whileHover={{ scale: 1.05 }}
-          transition={{ duration: 0.6 }}
+          alt={award.title}
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
       </div>
 
-      <div className="p-5 space-y-3">
+      <div className="p-6 space-y-3">
 
         <div className="flex justify-between items-center text-xs text-black/40">
           <span>{award.id}</span>
@@ -201,7 +204,8 @@ function AwardCard({ award, index, onOpen, verifyLabel }) {
         <div className="flex justify-between items-center pt-4 border-t border-black/5 text-xs">
           <span className="text-black/40">{award.date}</span>
           <span className="flex items-center gap-1 text-black font-medium">
-            {verifyLabel} <ChevronRight size={14} className="text-[#FFD700]" />
+            {verifyLabel}
+            <ChevronRight size={14} className="text-[#FFD700]" />
           </span>
         </div>
 
