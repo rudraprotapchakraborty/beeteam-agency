@@ -64,7 +64,7 @@ export default function BeeTeamYellowStackedHero() {
   return (
     <section
       ref={containerRef}
-      className="relative min-h-[120vh] bg-[#fafafa] overflow-hidden font-sans pb-24"
+      className="relative min-h-[120vh] bg-[#fafafa] overflow-hidden font-sans"
     >
       <div className="relative z-10 flex flex-col items-center pt-20 px-6">
 
