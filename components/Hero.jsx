@@ -57,10 +57,6 @@ export default function BeeTeamYellowStackedHero() {
     mass: 0.4,
   });
 
-  const yParallax = useTransform(smoothProgress, [0, 1], [0, -80]);
-  const heroScale = useTransform(smoothProgress, [0, 0.6], [1, 1.04]);
-  const heroRotate = useTransform(smoothProgress, [0, 1], [0, -1]);
-
   return (
     <section
       ref={containerRef}
@@ -80,18 +76,39 @@ export default function BeeTeamYellowStackedHero() {
           <p className="text-sm md:text-base text-black/60 font-medium max-w-xl mx-auto leading-relaxed">
             {t.subtitle}
           </p>
-
+          {/* Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
-            <button className="px-6 py-3 bg-[#FFD700] text-black text-xs font-bold tracking-widest rounded-lg shadow-md">
-              {t.contact}
-            </button>
 
-            <a href="/works" target="_blank">
-              <button className="flex items-center gap-2 text-black text-xs font-semibold">
+            <motion.button
+              onClick={() => {
+                document.getElementById("contact")?.scrollIntoView({
+                  behavior: "smooth",
+                });
+              }}
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ type: "spring", stiffness: 400, damping: 20 }}
+              className="px-6 py-3 bg-[#FFD700] text-black text-xs font-bold tracking-widest rounded-lg shadow-md hover:shadow-[0_8px_30px_-8px_rgba(255,215,0,0.6)] transition-all duration-300 flex items-center gap-2"
+            >
+              {t.contact}
+              <motion.span
+                animate={{ y: [0, 3, 0] }}
+                transition={{ duration: 1.6, repeat: Infinity }}
+              >
+                <ArrowDown size={14} strokeWidth={3} />
+              </motion.span>
+            </motion.button>
+
+            <a href="/works" target="_blank" rel="noopener noreferrer">
+              <motion.button
+                whileHover={{ opacity: 0.7 }}
+                className="flex items-center gap-2 text-black text-xs font-semibold tracking-wide transition-all duration-300"
+              >
                 {t.viewWork}
                 <ExternalLink size={14} />
-              </button>
+              </motion.button>
             </a>
+
           </div>
         </motion.div>
 
