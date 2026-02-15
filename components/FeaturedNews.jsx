@@ -1,22 +1,12 @@
 'use client'
 
-import React, { useState, useRef, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import {
-  Loader2,
-  Globe,
-  ChevronRight,
-  ChevronLeft,
-  ExternalLink
-} from 'lucide-react'
+import React, { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
+import { Loader2, Globe, ExternalLink } from 'lucide-react'
 import { newsData } from '@/lib/newsData'
 import { useLanguage } from '@/context/LanguageContext'
 
-const ITEMS_PER_PAGE = 4
-
 export default function FeaturedNews() {
-  const container = useRef(null)
-  const [page, setPage] = useState(1)
   const { language } = useLanguage()
 
   const translations = {
@@ -40,21 +30,12 @@ export default function FeaturedNews() {
 
   const t = translations[language]
 
-  const totalPages = Math.ceil(newsData.length / ITEMS_PER_PAGE)
-  const start = (page - 1) * ITEMS_PER_PAGE
-  const paginatedNews = newsData.slice(start, start + ITEMS_PER_PAGE)
+  const pinnedNews = newsData.slice(0, 3)
+  const otherNews = newsData.slice(3)
 
   return (
-    <section
-      id="news"
-      ref={container}
-      className="relative bg-[#fafafa] py-24 overflow-hidden"
-    >
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-[10%] right-[10%] w-[35%] h-[35%] bg-[#FFD700]/5 blur-[140px]" />
-      </div>
-
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
+    <section className="bg-[#fafafa] py-24">
+      <div className="max-w-7xl mx-auto px-6">
 
         {/* HEADER */}
         <motion.div
@@ -75,58 +56,35 @@ export default function FeaturedNews() {
           </p>
         </motion.div>
 
-        {/* GRID */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <AnimatePresence mode="wait">
-            {paginatedNews.map((news, index) => (
-              <PressCard
+        {/* MAIN LAYOUT */}
+        <div className="grid lg:grid-cols-[3fr_1.2fr] gap-12 items-start">
+
+          {/* LEFT — 3 PINNED SIDE BY SIDE */}
+          <div className="grid md:grid-cols-3 gap-8">
+            {pinnedNews.map((news, index) => (
+              <NewsCard
                 key={news.href}
                 news={news}
-                index={index + start}
+                index={index}
+                readLabel={t.read}
+                refLabel={t.ref}
+                large
+              />
+            ))}
+          </div>
+
+          {/* RIGHT — SCROLLABLE COLUMN */}
+          <div className="h-[350px] overflow-y-auto pr-3 pl-6 border-l border-black/10 space-y-6">
+            {otherNews.map((news, index) => (
+              <NewsCard
+                key={news.href}
+                news={news}
+                index={index + 3}
                 readLabel={t.read}
                 refLabel={t.ref}
               />
             ))}
-          </AnimatePresence>
-        </div>
-
-        {/* PAGINATION */}
-        <div className="flex justify-center items-center gap-6 mt-16 text-sm">
-
-          <motion.button
-            whileTap={{ scale: 0.9 }}
-            onClick={() => setPage(p => Math.max(1, p - 1))}
-            disabled={page === 1}
-            className="opacity-60 hover:opacity-100 transition"
-          >
-            <ChevronLeft size={20} />
-          </motion.button>
-
-          <div className="flex items-center gap-3">
-            {[...Array(totalPages)].map((_, i) => (
-              <motion.button
-                key={i}
-                whileHover={{ y: -2 }}
-                onClick={() => setPage(i + 1)}
-                className={`text-xs font-semibold transition-all ${
-                  page === i + 1
-                    ? 'text-black'
-                    : 'text-black/40 hover:text-black'
-                }`}
-              >
-                {String(i + 1).padStart(2, '0')}
-              </motion.button>
-            ))}
           </div>
-
-          <motion.button
-            whileTap={{ scale: 0.9 }}
-            onClick={() => setPage(p => Math.min(totalPages, p + 1))}
-            disabled={page === totalPages}
-            className="opacity-60 hover:opacity-100 transition"
-          >
-            <ChevronRight size={20} />
-          </motion.button>
 
         </div>
 
@@ -135,77 +93,78 @@ export default function FeaturedNews() {
   )
 }
 
-/* ---------------- CARD ---------------- */
+/* ================= UNIVERSAL CARD ================= */
 
-function PressCard({ news, index, readLabel, refLabel }) {
+function NewsCard({ news, index, readLabel, refLabel, large }) {
   const [thumbnail, setThumbnail] = useState(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    let mounted = true
+
     fetch(`https://api.microlink.io?url=${encodeURIComponent(news.href)}&screenshot=true`)
       .then(res => res.json())
-      .then(data =>
-        setThumbnail(data?.data?.image?.url || data?.data?.screenshot?.url)
-      )
-      .finally(() => setLoading(false))
+      .then(data => {
+        if (!mounted) return
+        setThumbnail(
+          data?.data?.image?.url ||
+          data?.data?.screenshot?.url ||
+          null
+        )
+      })
+      .catch(() => {})
+      .finally(() => {
+        if (mounted) setLoading(false)
+      })
+
+    return () => { mounted = false }
   }, [news.href])
 
   return (
     <motion.a
       href={news.href}
       target="_blank"
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.6, delay: (index % 4) * 0.08 }}
-      className="group relative h-[480px] bg-white rounded-2xl overflow-hidden border border-black/5 hover:border-[#FFD700]/40 shadow-sm hover:shadow-[0_20px_60px_-20px_rgba(0,0,0,0.15)] transition-all duration-500 flex flex-col"
+      rel="noopener noreferrer"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className="group block bg-white rounded-2xl overflow-hidden border border-black/5 hover:border-[#FFD700]/40 shadow-sm hover:shadow-xl transition-all duration-500"
     >
       {/* IMAGE */}
-      <div className="relative h-56 overflow-hidden">
+      <div className={`relative overflow-hidden ${large ? "h-56" : "h-36"}`}>
         {loading ? (
           <div className="w-full h-full flex items-center justify-center bg-black/5">
             <Loader2 className="animate-spin text-[#FFD700]" />
           </div>
-        ) : (
-          <motion.img
+        ) : thumbnail ? (
+          <img
             src={thumbnail}
-            className="w-full h-full object-cover"
-            initial={{ scale: 1.08 }}
-            whileHover={{ scale: 1 }}
-            transition={{ duration: 0.8 }}
+            alt={news.title}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
           />
+        ) : (
+          <div className="w-full h-full bg-black/10" />
         )}
-
-        <div className="absolute top-4 left-4 text-[9px] font-semibold uppercase tracking-wide text-black bg-white/80 px-2 py-1 rounded-md backdrop-blur-sm">
-          {news.category}
-        </div>
       </div>
 
       {/* CONTENT */}
-      <div className="flex-1 p-6 flex flex-col justify-between">
-
-        <div className="space-y-3">
-          <div className="flex items-center gap-2 text-black/50 text-[11px]">
-            <Globe size={13} className="text-[#FFD700]" />
-            {news.outlet}
-          </div>
-
-          <h3 className="text-lg font-semibold leading-snug text-black group-hover:text-[#D97706] transition-colors duration-300">
-            {news.title}
-          </h3>
+      <div className="p-5 space-y-3">
+        <div className="flex items-center gap-2 text-xs text-black/50">
+          <Globe size={14} className="text-[#FFD700]" />
+          {news.outlet}
         </div>
 
-        <div className="flex justify-between items-center pt-5 border-t border-black/5 text-xs text-black/40">
+        <h3 className={`${large ? "text-lg" : "text-sm"} font-semibold leading-snug group-hover:text-[#D97706] transition`}>
+          {news.title}
+        </h3>
+
+        <div className="flex justify-between text-xs text-black/40 pt-3 border-t border-black/5">
           <span>{refLabel}_{index + 1}</span>
-
-          <motion.span
-            whileHover={{ x: 4 }}
-            className="flex items-center gap-1 font-medium text-black group-hover:text-[#D97706] transition"
-          >
-            {readLabel} <ExternalLink size={13} />
-          </motion.span>
+          <span className="flex items-center gap-1 font-medium">
+            {readLabel} <ExternalLink size={12} />
+          </span>
         </div>
-
       </div>
     </motion.a>
   )
