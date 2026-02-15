@@ -8,12 +8,12 @@ import { useLanguage } from '@/context/LanguageContext'
 /* ---------------- DATA ---------------- */
 
 const projects = [
-  { id: "VpOd1qnnJHw", title: "Brand Narrative", category: "film" },
-  { id: "nvwHhE5el6o", title: "Corporate Vision", category: "tvc" },
-  { id: "UqMWgsWH7RU", title: "Dynamic Motion", category: "ovc" },
-  { id: "por5d5Nelog", title: "Product Story", category: "ads" },
-  { id: "2LJWoKDKiqc", title: "Cinematic Journey", category: "doc" },
-  { id: "QTgY29dOPnQ", title: "Music Visual", category: "music" },
+  { id: "VpOd1qnnJHw", title: "", category: "" },
+  { id: "nvwHhE5el6o", title: "", category: "" },
+  { id: "UqMWgsWH7RU", title: "", category: "" },
+  { id: "por5d5Nelog", title: "", category: "" },
+  { id: "2LJWoKDKiqc", title: "", category: "" },
+  { id: "QTgY29dOPnQ", title: "", category: "" },
 ]
 
 export default function Works() {
