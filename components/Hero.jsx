@@ -122,35 +122,65 @@ export default function BeeTeamYellowStackedHero() {
 
           </div>
         </motion.div>
+{/* HERO IMAGE */}
+<div className="relative w-full max-w-6xl mx-auto">
+  <motion.div
+    style={{
+      scale: heroScale,
+      rotate: heroRotate,
+    }}
+    className="relative w-full rounded-3xl overflow-hidden border border-black/5 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.15)]"
+    whileHover={{ scale: 1.02 }}
+    transition={{ type: "spring", stiffness: 120 }}
+  >
+    {/* Background Image */}
+    <motion.img
+      src="/hero.jpg"
+      alt="Beeteam Featured Visual"
+      className="absolute inset-0 w-full h-full object-cover"
+      initial={{ scale: 1.05 }}
+      animate={{ scale: 1 }}
+      transition={{ duration: 1.2, ease: "easeOut" }}
+    />
 
-        {/* HERO IMAGE */}
-        <div className="relative w-full max-w-5xl">
-          <motion.div
-            style={{
-              scale: heroScale,
-              rotate: heroRotate,
-            }}
-            className="relative w-full aspect-video rounded-3xl overflow-hidden border border-black/5 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.15)]"
-            whileHover={{ scale: 1.02 }}
-            transition={{ type: "spring", stiffness: 120 }}
-          >
-            <motion.img
-              src="/hero2.jpg"
-              alt="Beeteam Featured Visual"
-              className="w-full h-full object-cover"
-              initial={{ scale: 1.08 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 1.2, ease: "easeOut" }}
-            />
+    {/* CONTENT — FULL WIDTH */}
+    <div className="relative z-10 px-8 md:px-20 py-16 md:py-24 text-white w-full">
 
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1 }}
-            />
-          </motion.div>
-        </div>
+      <p className="text-xs uppercase tracking-[0.25em] text-yellow-400 mb-5">
+        Bee Team Presents
+      </p>
+
+      <h2 className="text-4xl md:text-6xl font-bold mb-10 leading-tight drop-shadow-[0_2px_10px_rgba(0,0,0,0.4)]">
+        Director’s Vision
+      </h2>
+
+      <div className="space-y-6 text-sm md:text-base leading-relaxed drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]">
+
+        <p>
+          This film is not about student politics alone; it is about the marketplace of ambition in a third-world society. In a world where young people are asked to dream, they are also forced to gamble those dreams in exchange for influence and power. Our characters have no names because identity here is conditional, one is known by his position only. The horse becomes a satire of status. It symbolizes a shortcut, an absurd object that suddenly grants social legitimacy. Students laugh at it as a joke, then worship it as power.
+        </p>
+
+        <p>
+          To preserve the raw pulse of this world, the film is shot in real locations using a guerrilla documentary style. The camera behaves like a silent witness: observing, not staging. There is no artificial lighting, no beautification, no makeup to shield the characters from truth. Their tired eyes, dusty shirts, and restless movements belong not to actors but to the reality that millions of students live every day.
+        </p>
+
+        <p>
+          This approach allows the viewer to feel the humidity of student hostels, the chaos of campus rallies, the politics hidden in tea stalls. The film observes its characters without judgment. It doesn’t ask who is innocent or guilty, it asks what ambition does to innocence in the first place. It explores how deeply young people crave recognition, how cheaply it can be traded, and how tragedy becomes just another stepping stone to power.
+        </p>
+
+        <p className="text-yellow-400 font-semibold pt-4">
+          The film ends not with closure, but with a question:
+        </p>
+
+        <p className="text-yellow-400 font-semibold text-lg">
+          How much of ourselves are we willing to sacrifice to feel important?
+        </p>
+
+      </div>
+
+    </div>
+  </motion.div>
+</div>
 
       </div>
     </section>
