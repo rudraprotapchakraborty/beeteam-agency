@@ -3,6 +3,7 @@ import LatestRelease from '@/components/LatestRelease'
 import FeaturedNews from '@/components/FeaturedNews'
 import HallOfFame from '@/components/HallOfFame'  
 import FilmInfoSection from '@/components/FilmInfoSection'  
+import SynopsisSection from '@/components/SynopsisSection'  
 
 export default function Home() {
   return (
@@ -10,6 +11,7 @@ export default function Home() {
       <Hero />
       <LatestRelease />
       <FilmInfoSection />
+      <SynopsisSection />
       <FeaturedNews />
       <HallOfFame />
     </>
