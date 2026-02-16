@@ -14,15 +14,7 @@ const awards = [
     date: "JAN 10–18, 2026",
     id: "CERT-001"
   },
-  {
-    url: "https://i.ibb.co/NnNMzSqc/Whats-App-Image-2026-01-26-at-3-15-54-PM.jpg",
-    title: "Bangladesh Panorama Winner",
-    outlet: "Dhaka International Film Festival",
-    desc: "Awarded in the Full Length Section 2026 for cinematic production excellence.",
-    date: "JAN 2026",
-    id: "WIN-992"
-  },
-  {
+    {
     url: "https://i.ibb.co/B2NzKP5h/Whats-App-Image-2026-01-26-at-3-12-17-PM.jpg",
     title: "National Film Certification",
     outlet: "Government of Bangladesh",
@@ -31,13 +23,31 @@ const awards = [
     id: "GOV-882"
   },
   {
+    url: "https://i.ibb.co/NnNMzSqc/Whats-App-Image-2026-01-26-at-3-15-54-PM.jpg",
+    title: "Bangladesh Panorama Winner",
+    outlet: "Dhaka International Film Festival",
+    desc: "Awarded in the Full Length Section 2026 for cinematic production excellence.",
+    date: "JAN 2026",
+    id: "WIN-992"
+  },
+    {
+  url: "https://i.ibb.co/rR9gQW33/IMG-0134-1-2.jpg",
+  title: "Hiralal Sen Padak",
+  outlet: "Dhaka University Film Society",
+  desc: "Awarded by Dhaka University Film Society in recognition of outstanding contribution to cinema.",
+  date: "2026",
+  id: "DUFS-001"
+},
+
+  {
     url: "https://i.ibb.co/m5kNgc8w/Whats-App-Image-2026-01-26-at-3-21-45-PM.jpg",
     title: "International Critics Laurels",
     outlet: "FIPRESCI International",
     desc: "Recognized for cinematic contribution to the 24th DIFF Bangladesh Panorama.",
     date: "JAN 2026",
     id: "INT-441"
-  }
+  },
+
 ]
 
 export default function HallOfFame() {
@@ -101,7 +111,7 @@ export default function HallOfFame() {
           </p>
         </motion.div>
 
-        {/* 3 COLUMN GRID */}
+        {/* COLUMN GRID */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {awards.map((award, i) => (
             <AwardCard
@@ -113,6 +123,18 @@ export default function HallOfFame() {
             />
           ))}
         </div>
+        {/* <div className="flex flex-wrap justify-center gap-8">
+  {awards.map((award, i) => (
+    <div key={award.id} className="w-full sm:w-[48%] lg:w-[30%]">
+      <AwardCard
+        award={award}
+        index={i}
+        onOpen={() => setSelectedImage(award.url)}
+        verifyLabel={t.verify}
+      />
+    </div>
+  ))}
+</div> */}
 
         {/* FOOTER */}
         <div className="mt-20 pt-8 border-t border-black/5 flex flex-col md:flex-row justify-between items-center gap-6 text-sm">
