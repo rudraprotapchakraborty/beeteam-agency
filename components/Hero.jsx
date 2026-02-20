@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef } from "react";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion, useScroll } from "framer-motion";
 import { ArrowDown, ExternalLink } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 
@@ -35,9 +35,9 @@ export default function BeeTeamYellowStackedHero() {
       viewWork: "কাজ দেখুন",
       presents: "বি টিম উপস্থাপন করছে",
       directorTitle: "পরিচালকের দৃষ্টিভঙ্গি",
-      p1: `এই চলচ্চিত্র শুধু ছাত্র রাজনীতি নিয়ে নয়; এটি তৃতীয় বিশ্বের সমাজে উচ্চাকাঙ্ক্ষার বাজার সম্পর্কে। যেখানে তরুণদের স্বপ্ন দেখতে বলা হয়, সেখানে সেই স্বপ্নই প্রভাব ও ক্ষমতার বিনিময়ে বাজি রাখতে বাধ্য করা হয়। আমাদের চরিত্রদের কোনো নাম নেই, কারণ এখানে পরিচয় শর্তসাপেক্ষ; একজনকে তার অবস্থান দিয়েই চেনা হয়। ঘোড়াটি হয়ে ওঠে মর্যাদার ব্যঙ্গচিত্র। এটি একটি শর্টকাটের প্রতীক — এক অদ্ভুত বস্তু যা হঠাৎ সামাজিক বৈধতা এনে দেয়। প্রথমে ছাত্ররা এটিকে নিয়ে হাসে, পরে সেটিকেই ক্ষমতা হিসেবে পূজা করে।`,
-      p2: `এই জগতের কাঁচা স্পন্দন ধরে রাখতে চলচ্চিত্রটি বাস্তব লোকেশনে গেরিলা ডকুমেন্টারি শৈলীতে ধারণ করা হয়েছে। ক্যামেরা একজন নীরব সাক্ষীর মতো আচরণ করে — মঞ্চস্থ করে না, শুধু পর্যবেক্ষণ করে। এখানে কোনো কৃত্রিম আলো নেই, নেই সৌন্দর্য বাড়ানোর প্রচেষ্টা বা মেকআপের আড়াল। ক্লান্ত চোখ, ধুলো মাখা জামা, অস্থির চলাফেরা — এগুলো অভিনয় নয়, প্রতিদিন লক্ষ লক্ষ শিক্ষার্থীর বাস্তবতা।`,
-      p3: `এই পদ্ধতি দর্শককে ছাত্রাবাসের আর্দ্রতা, ক্যাম্পাস মিছিলের বিশৃঙ্খলা, চায়ের দোকানে লুকিয়ে থাকা রাজনীতির অনুভূতি দেয়। চলচ্চিত্রটি তার চরিত্রদের বিচার করে না। এটি জিজ্ঞাসা করে না কে নির্দোষ বা দোষী; বরং প্রশ্ন তোলে উচ্চাকাঙ্ক্ষা কিভাবে নিষ্পাপতাকে পরিবর্তন করে। এটি অনুসন্ধান করে তরুণরা স্বীকৃতি কত গভীরভাবে চায়, কত সহজে তা বিনিময় করা যায়, এবং কিভাবে ট্র্যাজেডি ক্ষমতার পথে আরেকটি সিঁড়ি হয়ে ওঠে।`,
+      p1: `এই চলচ্চিত্র শুধু ছাত্র রাজনীতি নিয়ে নয়; এটি তৃতীয় বিশ্বের সমাজে উচ্চাকাঙ্ক্ষার বাজার সম্পর্কে। এমন এক পৃথিবীতে যেখানে তরুণদের স্বপ্ন দেখতে বলা হয়, সেখানে সেই স্বপ্নগুলোই প্রভাব ও ক্ষমতার বিনিময়ে বাজি রাখতে বাধ্য করা হয়। আমাদের চরিত্রগুলোর কোনো নাম নেই, কারণ এখানে পরিচয় শর্তসাপেক্ষ—মানুষকে চেনা হয় তার অবস্থান দিয়ে। ঘোড়াটি হয়ে ওঠে মর্যাদার এক ব্যঙ্গচিত্র। এটি এক ধরনের শর্টকাটের প্রতীক—একটি অদ্ভুত বস্তু, যা হঠাৎ করেই সামাজিক বৈধতা এনে দেয়। ছাত্ররা প্রথমে এটিকে কৌতুক হিসেবে দেখে, তারপর ক্ষমতার প্রতীক হিসেবে পূজা করতে শুরু করে।`,
+      p2: `এই জগতের কাঁচা স্পন্দন অক্ষুণ্ণ রাখতে চলচ্চিত্রটি বাস্তব লোকেশনে গেরিলা ডকুমেন্টারি শৈলীতে ধারণ করা হয়েছে। ক্যামেরা এখানে নীরব সাক্ষীর মতো আচরণ করে—মঞ্চায়ন নয়, পর্যবেক্ষণ করে। কোনো কৃত্রিম আলো নেই, নেই সৌন্দর্যায়নের আয়োজন, নেই চরিত্রদের সত্য থেকে আড়াল করার জন্য মেকআপ। তাদের ক্লান্ত চোখ, ধুলোমাখা শার্ট, অস্থির চলাফেরা—এসব অভিনয়ের নয়; বরং সেই বাস্তবতার প্রতিচ্ছবি, যেখানে প্রতিদিন লক্ষ লক্ষ ছাত্র বেঁচে থাকে।`,
+      p3: `এই পদ্ধতি দর্শককে ছাত্রাবাসের আর্দ্রতা, ক্যাম্পাস মিছিলে বিশৃঙ্খলা, আর চায়ের দোকানের আড়ালে লুকিয়ে থাকা রাজনীতি অনুভব করতে দেয়। চলচ্চিত্রটি তার চরিত্রদের বিচার করে না। এটি জিজ্ঞেস করে না কে নির্দোষ, কে দোষী; বরং প্রশ্ন তোলে—উচ্চাকাঙ্ক্ষা প্রথমেই নিষ্পাপতাকে কীভাবে রূপান্তরিত করে। এটি অনুসন্ধান করে তরুণরা স্বীকৃতির জন্য কতটা গভীর আকাঙ্ক্ষা পোষণ করে, কত সহজে সেই আকাঙ্ক্ষা বিনিময় হয়ে যায়, এবং কীভাবে ট্র্যাজেডি কেবল ক্ষমতার পথে আরেকটি সোপান হয়ে ওঠে।`,
       endingLine: "চলচ্চিত্রটি সমাপ্তি নয়, বরং একটি প্রশ্ন দিয়ে শেষ হয়:",
       finalQuestion:
         "গুরুত্বপূর্ণ অনুভব করতে আমরা নিজেদের কতটুকু ত্যাগ করতে প্রস্তুত?",
@@ -46,108 +46,92 @@ export default function BeeTeamYellowStackedHero() {
 
   const t = translations[language];
 
-  const { scrollYProgress } = useScroll({
+  useScroll({
     target: containerRef,
     offset: ["start start", "end start"],
-  });
-
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 120,
-    damping: 25,
-    mass: 0.4,
   });
 
   return (
     <section
       ref={containerRef}
-      className="relative min-h-[120vh] bg-[#fafafa] overflow-hidden font-sans"
+      className="relative min-h-screen overflow-hidden font-sans mb-24"
     >
-      <div className="relative z-10 flex flex-col items-center pt-20 px-6">
+      <div className="absolute inset-0">
+        <img
+          src="/hero.jpg"
+          alt="Beeteam Background"
+          className="w-full h-full object-cover"
+        />
+      </div>
 
-        {/* HEADER */}
-        <motion.div className="text-center max-w-3xl mb-14">
-          <h1 className="text-4xl md:text-6xl font-extrabold text-black tracking-tight leading-[1.05] mb-4">
+      <div className="relative z-10 flex flex-col items-center pt-24 px-6 text-white">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+          className="text-center max-w-7xl w-full mb-10"
+        >
+          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight leading-tight mb-3">
             {t.title1}{" "}
-            <span className="text-[#FFD700] relative">
+            <span className="text-[#FFD700]">
               {t.title2}
             </span>
           </h1>
 
-          <p className="text-sm md:text-base text-black/60 font-medium max-w-xl mx-auto leading-relaxed">
+          <p className="text-base text-white/80 max-w-4xl mx-auto leading-normal">
             {t.subtitle}
           </p>
-          {/* Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
 
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-6">
             <motion.button
-              onClick={() => {
-                document.getElementById("contact")?.scrollIntoView({
-                  behavior: "smooth",
-                });
-              }}
               whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.97 }}
-              transition={{ type: "spring", stiffness: 400, damping: 20 }}
-              className="px-6 py-3 bg-[#FFD700] text-black text-xs font-bold tracking-widest rounded-lg shadow-md hover:shadow-[0_8px_30px_-8px_rgba(255,215,0,0.6)] transition-all duration-300 flex items-center gap-2"
+              className="px-6 py-3 bg-[#FFD700] text-black text-xs font-bold tracking-wide rounded-lg flex items-center gap-2"
             >
               {t.contact}
-              <motion.span
-                animate={{ y: [0, 3, 0] }}
-                transition={{ duration: 1.6, repeat: Infinity }}
-              >
-                <ArrowDown size={14} strokeWidth={3} />
-              </motion.span>
+              <ArrowDown size={14} strokeWidth={2} />
             </motion.button>
 
             <a href="/works" target="_blank" rel="noopener noreferrer">
               <motion.button
                 whileHover={{ opacity: 0.7 }}
-                className="flex items-center gap-2 text-black text-xs font-semibold tracking-wide transition-all duration-300"
+                className="flex items-center gap-2 text-white text-xs font-semibold tracking-wide"
               >
                 {t.viewWork}
                 <ExternalLink size={14} />
               </motion.button>
             </a>
-
           </div>
         </motion.div>
 
-        {/* HERO IMAGE */}
-        <div className="relative w-full max-w-6xl mx-auto scale-[0.8] origin-top">
-          <div className="relative w-full rounded-3xl overflow-hidden shadow-xl">
-            <img
-              src="/hero.jpg"
-              alt="Beeteam Featured Visual"
-              className="absolute inset-0 w-full h-full object-cover"
-            />
+        <motion.div
+          initial={{ opacity: 0, y: 60 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2 }}
+          className="max-w-7xl w-full"
+        >
+          <p className="text-xl font-semibold uppercase tracking-[0.25em] text-[#FFD700] mb-3">
+            {t.presents}
+          </p>
 
-            <div className="relative z-10 px-8 md:px-20 py-16 md:py-24 text-white w-full">
-              <p className="text-xs uppercase tracking-[0.25em] text-yellow-400 mb-5">
-                {t.presents}
-              </p>
+          <h2 className="text-4xl font-semibold md:text-5xl mb-6 leading-tight">
+            {t.directorTitle}
+          </h2>
 
-              <h2 className="text-4xl md:text-6xl font-bold mb-10 leading-tight">
-                {t.directorTitle}
-              </h2>
+          <div className="space-y-4 text-xl leading-normal text-white/90 mb-24">
+            <p>{t.p1}</p>
+            <p>{t.p2}</p>
+            <p>{t.p3}</p>
 
-              <div className="space-y-6 text-sm md:text-base leading-relaxed">
-                <p>{t.p1}</p>
-                <p>{t.p2}</p>
-                <p>{t.p3}</p>
+            <p className="text-[#FFD700] pt-3">
+              {t.endingLine}
+            </p>
 
-                <p className="text-yellow-400 font-semibold pt-4">
-                  {t.endingLine}
-                </p>
-
-                <p className="text-yellow-400 font-semibold text-lg">
-                  {t.finalQuestion}
-                </p>
-              </div>
-            </div>
-
+            <p className="text-[#FFD700] text-lg">
+              {t.finalQuestion}
+            </p>
           </div>
-        </div>
-
+        </motion.div>
       </div>
     </section>
   );

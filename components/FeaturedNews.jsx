@@ -30,8 +30,24 @@ export default function FeaturedNews() {
 
   const t = translations[language]
 
-  const pinnedNews = newsData.slice(0, 3)
-  const otherNews = newsData.slice(3)
+  /* PINNED OUTLETS */
+  const pinnedOutlets = [
+    "The Daily Star",
+    "The Statesman",
+    "Prothom Alo",
+    "The Financial Express"
+  ]
+
+  /* Keep pinned order EXACT */
+  const pinnedNews = pinnedOutlets
+    .map(outlet =>
+      newsData.find(news => news.outlet === outlet)
+    )
+    .filter(Boolean)
+
+  const otherNews = newsData.filter(
+    news => !pinnedOutlets.includes(news.outlet)
+  )
 
   return (
     <section className="bg-[#fafafa] py-24">
@@ -59,8 +75,8 @@ export default function FeaturedNews() {
         {/* MAIN LAYOUT */}
         <div className="grid lg:grid-cols-[3fr_1.2fr] gap-12 items-start">
 
-          {/* LEFT — 3 PINNED SIDE BY SIDE */}
-          <div className="grid md:grid-cols-3 gap-8">
+          {/* LEFT — 4 PINNED */}
+          <div className="grid md:grid-cols-4 gap-8">
             {pinnedNews.map((news, index) => (
               <NewsCard
                 key={news.href}
@@ -69,17 +85,18 @@ export default function FeaturedNews() {
                 readLabel={t.read}
                 refLabel={t.ref}
                 large
+                isFeatured
               />
             ))}
           </div>
 
           {/* RIGHT — SCROLLABLE COLUMN */}
-          <div className="h-[350px] overflow-y-auto pr-3 pl-6 border-l border-black/10 space-y-6">
+          <div className="h-[380px] overflow-y-auto pr-3 pl-6 border-l border-black/10 space-y-6">
             {otherNews.map((news, index) => (
               <NewsCard
                 key={news.href}
                 news={news}
-                index={index + 3}
+                index={index}
                 readLabel={t.read}
                 refLabel={t.ref}
               />
@@ -95,7 +112,7 @@ export default function FeaturedNews() {
 
 /* ================= UNIVERSAL CARD ================= */
 
-function NewsCard({ news, index, readLabel, refLabel, large }) {
+function NewsCard({ news, index, readLabel, refLabel, large, isFeatured }) {
   const [thumbnail, setThumbnail] = useState(null)
   const [loading, setLoading] = useState(true)
 
@@ -129,8 +146,16 @@ function NewsCard({ news, index, readLabel, refLabel, large }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
-      className="group block bg-white rounded-2xl overflow-hidden border border-black/5 hover:border-[#FFD700]/40 shadow-sm hover:shadow-xl transition-all duration-500"
+      className="group relative block bg-white rounded-2xl overflow-hidden border border-black/5 hover:border-[#FFD700]/40 shadow-sm hover:shadow-xl transition-all duration-500"
     >
+
+      {/* ⭐ FEATURED RIBBON */}
+      {isFeatured && (
+        <div className="absolute top-3 left-3 z-20 bg-[#FFD700] text-black text-[10px] font-bold px-3 py-1 rounded-full shadow-md tracking-wide">
+          FEATURED
+        </div>
+      )}
+
       {/* IMAGE */}
       <div className={`relative overflow-hidden ${large ? "h-56" : "h-36"}`}>
         {loading ? (
@@ -166,6 +191,7 @@ function NewsCard({ news, index, readLabel, refLabel, large }) {
           </span>
         </div>
       </div>
+
     </motion.a>
   )
 }

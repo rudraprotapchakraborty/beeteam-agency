@@ -1,7 +1,8 @@
 import './globals.css'
 import Navbar from '@/components/Navbar'
-import Footer from '@/components/Footer' 
+import Footer from '@/components/Footer'
 import { LanguageProvider } from '@/context/LanguageContext'
+import OpeningScene from '@/components/OpeningScene'
 
 export const metadata = {
   title: 'BeeTeam',
@@ -13,11 +14,14 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <LanguageProvider>
-        <Navbar />
-        {children}
-        <Footer />  
-</LanguageProvider>
 
+          <OpeningScene />
+
+          <Navbar />
+          {children}
+          <Footer />
+
+        </LanguageProvider>
       </body>
     </html>
   )

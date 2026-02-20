@@ -136,18 +136,6 @@ export default function HallOfFame() {
   ))}
 </div> */}
 
-        {/* FOOTER */}
-        <div className="mt-20 pt-8 border-t border-black/5 flex flex-col md:flex-row justify-between items-center gap-6 text-sm">
-          <div>
-            <div className="text-black/40 text-xs">{t.registry}</div>
-            <div className="font-semibold text-black">BT-CERT-GLOBAL-26</div>
-          </div>
-
-          <div className="flex items-center gap-2 text-black">
-            <ShieldCheck size={18} className="text-[#FFD700]" />
-            <span className="font-medium">{t.exhibition}</span>
-          </div>
-        </div>
       </div>
 
       {/* LIGHTBOX */}
