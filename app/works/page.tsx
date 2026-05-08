@@ -1,56 +1,68 @@
 'use client'
 
-import React, { useState, useRef } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Play, X, ArrowUpRight } from 'lucide-react'
+import { useRef, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { ArrowUpRight, Play, X } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 
-/* ---------------- DATA ---------------- */
+type Project = {
+  id: string
+  title: string
+  category: string
+}
 
-const projects = [
-  { id: "VpOd1qnnJHw", title: "", category: "" },
-  { id: "nvwHhE5el6o", title: "", category: "" },
-  { id: "UqMWgsWH7RU", title: "", category: "" },
-  { id: "por5d5Nelog", title: "", category: "" },
-  { id: "2LJWoKDKiqc", title: "", category: "" },
-  { id: "QTgY29dOPnQ", title: "", category: "" },
+const projects: Project[] = [
+  { id: 'VpOd1qnnJHw', title: '', category: '' },
+  { id: 'nvwHhE5el6o', title: '', category: '' },
+  { id: 'UqMWgsWH7RU', title: '', category: '' },
+  { id: 'por5d5Nelog', title: '', category: '' },
+  { id: '2LJWoKDKiqc', title: '', category: '' },
+  { id: 'QTgY29dOPnQ', title: '', category: '' },
 ]
 
+type Categories = {
+  film: string
+  tvc: string
+  ovc: string
+  ads: string
+  doc: string
+  music: string
+}
+
 export default function Works() {
-  const [selectedProject, setSelectedProject] = useState(null)
-  const containerRef = useRef(null)
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null)
+  const containerRef = useRef<HTMLElement | null>(null)
   const { language } = useLanguage()
 
   const translations = {
     en: {
-      title1: "OUR",
-      title2: "WORKS",
+      title1: 'OUR',
+      title2: 'WORKS',
       subtitle:
-        "A curated selection of cinematic narratives and high-impact visual storytelling.",
+        'A curated selection of cinematic narratives and high-impact visual storytelling.',
       categories: {
-        film: "Film",
-        tvc: "TVC",
-        ovc: "OVC",
-        ads: "Ads",
-        doc: "Documentary",
-        music: "Music Video"
-      }
+        film: 'Film',
+        tvc: 'TVC',
+        ovc: 'OVC',
+        ads: 'Ads',
+        doc: 'Documentary',
+        music: 'Music Video',
+      },
     },
     bn: {
-      title1: "আমাদের",
-      title2: "কাজসমূহ",
-      subtitle:
-        "সিনেমাটিক গল্প ও উচ্চ-প্রভাবশালী ভিজ্যুয়াল স্টোরিটেলিং-এর নির্বাচিত সংগ্রহ।",
+      title1: 'আমাদের',
+      title2: 'কাজসমূহ',
+      subtitle: 'সিনেমাটিক গল্প ও উচ্চ-প্রভাবশালী ভিজ্যুয়াল স্টোরিটেলিং-এর নির্বাচিত সংগ্রহ।',
       categories: {
-        film: "ফিল্ম",
-        tvc: "টিভিসি",
-        ovc: "ওভিসি",
-        ads: "বিজ্ঞাপন",
-        doc: "ডকুমেন্টারি",
-        music: "মিউজিক ভিডিও"
-      }
-    }
-  }
+        film: 'ফিল্ম',
+        tvc: 'টিভিসি',
+        ovc: 'ওভিসি',
+        ads: 'বিজ্ঞাপন',
+        doc: 'ডকুমেন্টারি',
+        music: 'মিউজিক ভিডিও',
+      },
+    },
+  } as const
 
   const t = translations[language]
 
@@ -65,8 +77,6 @@ export default function Works() {
       </div>
 
       <div className="max-w-[1300px] mx-auto px-6 relative z-10">
-
-        {/* HEADER */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -78,27 +88,22 @@ export default function Works() {
             {t.title1} <span className="text-[#FFD700]">{t.title2}</span>
           </h2>
 
-          <p className="text-sm text-black/50 max-w-xl mx-auto">
-            {t.subtitle}
-          </p>
+          <p className="text-sm text-black/50 max-w-xl mx-auto">{t.subtitle}</p>
         </motion.div>
 
-        {/* GRID */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {projects.map((item, i) => (
             <ProjectCard
-              key={i}
+              key={item.id}
               item={item}
               index={i}
               onClick={() => setSelectedProject(item)}
-              categoryLabel={t.categories[item.category]}
+              categoryLabel={t.categories[item.category as keyof Categories] ?? ''}
             />
           ))}
         </div>
-
       </div>
 
-      {/* LIGHTBOX */}
       <AnimatePresence>
         {selectedProject && (
           <motion.div
@@ -108,10 +113,7 @@ export default function Works() {
             className="fixed inset-0 z-[1000] flex items-center justify-center bg-white/95 backdrop-blur-xl p-8"
             onClick={() => setSelectedProject(null)}
           >
-            <motion.button
-              whileHover={{ rotate: 90 }}
-              className="absolute top-8 right-8 text-black"
-            >
+            <motion.button whileHover={{ rotate: 90 }} className="absolute top-8 right-8 text-black">
               <X size={36} />
             </motion.button>
 
@@ -119,7 +121,7 @@ export default function Works() {
               initial={{ scale: 0.92, y: 30 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.92, y: 30 }}
-              transition={{ type: "spring", stiffness: 120 }}
+              transition={{ type: 'spring', stiffness: 120 }}
               className="relative w-full max-w-6xl aspect-video rounded-2xl overflow-hidden shadow-[0_40px_120px_-30px_rgba(0,0,0,0.25)] bg-black"
               onClick={(e) => e.stopPropagation()}
             >
@@ -133,14 +135,18 @@ export default function Works() {
           </motion.div>
         )}
       </AnimatePresence>
-
     </section>
   )
 }
 
-/* ---------------- CARD ---------------- */
+type ProjectCardProps = {
+  item: Project
+  index: number
+  onClick: () => void
+  categoryLabel: string
+}
 
-function ProjectCard({ item, index, onClick, categoryLabel }) {
+function ProjectCard({ item, index, onClick, categoryLabel }: ProjectCardProps) {
   return (
     <motion.div
       onClick={onClick}
@@ -159,7 +165,6 @@ function ProjectCard({ item, index, onClick, categoryLabel }) {
       </div>
 
       <div className="absolute inset-0 flex flex-col justify-between p-6 text-white z-10">
-
         <div className="flex justify-between items-start text-xs text-white/60">
           <span>{categoryLabel}</span>
 
@@ -182,7 +187,6 @@ function ProjectCard({ item, index, onClick, categoryLabel }) {
             {item.title}
           </h4>
         </div>
-
       </div>
 
       <motion.div

@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(npm view next version)",
+      "PowerShell(npm view tailwindcss version)",
+      "PowerShell(npm view react version)",
+      "PowerShell(npm view eslint-config-next version)",
+      "PowerShell(npm view @tailwindcss/postcss version)",
+      "Bash(npm view *)",
+      "Bash(npm install *)",
+      "Bash(npm audit *)",
+      "Bash(npx tsc *)",
+      "Bash(node -e \"console.log\\(Object.keys\\(require\\('lucide-react'\\)\\).filter\\(k => /Face|Insta|Yout/i.test\\(k\\)\\)\\)\")",
+      "Bash(npx next *)",
+      "Bash(npx eslint *)"
+    ]
+  }
+}

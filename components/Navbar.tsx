@@ -1,74 +1,67 @@
-"use client";
+'use client'
 
-import { useState } from "react";
-import Image from "next/image";
+import { useState } from 'react'
+import Image from 'next/image'
 import {
+  AnimatePresence,
   motion,
   useScroll,
-  useTransform,
   useSpring,
-  AnimatePresence,
-} from "framer-motion";
-import { ArrowUpRight, MapPin } from "lucide-react";
-import { useLanguage } from "@/context/LanguageContext";
+  useTransform,
+} from 'framer-motion'
+import { ArrowUpRight, MapPin } from 'lucide-react'
+import { useLanguage } from '@/context/LanguageContext'
 
-export default function MaterialExpressiveNavbar() {
-  const { scrollY } = useScroll();
-  const { language, changeLanguage } = useLanguage();
-  const [hoveredLink, setHoveredLink] = useState(null);
+export default function Navbar() {
+  const { scrollY } = useScroll()
+  const { language, changeLanguage } = useLanguage()
+  const [hoveredLink, setHoveredLink] = useState<string | null>(null)
 
   const translations = {
     en: {
-      home: "Home",
-      works: "Works",
-      location: "Dhaka, BD",
-      imdb: "IMDb",
-      rate: "Rate The University of Chankharpul >",
+      home: 'Home',
+      works: 'Works',
+      location: 'Dhaka, BD',
+      imdb: 'IMDb',
+      rate: 'Rate The University of Chankharpul >',
     },
     bn: {
-      home: "হোম",
-      works: "কাজসমূহ",
-      location: "ঢাকা, বাংলাদেশ",
-      imdb: "আইএমডিবি",
-      rate: "ইউনিভার্সিটি অফ চানখারপুল রেট করুন >",
+      home: 'হোম',
+      works: 'কাজসমূহ',
+      location: 'ঢাকা, বাংলাদেশ',
+      imdb: 'আইএমডিবি',
+      rate: 'ইউনিভার্সিটি অফ চানখারপুল রেট করুন >',
     },
-  };
+  } as const
 
-  const t = translations[language];
+  const t = translations[language]
 
   const navLinks = [
-    { name: t.home, href: "/" },
-    { name: t.works, href: "/works" },
-  ];
+    { name: t.home, href: '/' },
+    { name: t.works, href: '/works' },
+  ]
 
-  const fluidSpring = {
-    type: "spring",
-    stiffness: 260,
-    damping: 30,
-    mass: 0.8,
-  };
+  const fluidSpring = { stiffness: 260, damping: 30, mass: 0.8 }
 
-  const navWidth = useTransform(scrollY, [0, 80], ["100%", "90%"]);
-  const navTop = useTransform(scrollY, [0, 80], ["0px", "20px"]);
-  const navRadius = useTransform(scrollY, [0, 80], ["0px", "100px"]);
-
+  const navWidth = useTransform(scrollY, [0, 80], ['100%', '90%'])
+  const navTop = useTransform(scrollY, [0, 80], ['0px', '20px'])
+  const navRadius = useTransform(scrollY, [0, 80], ['0px', '100px'])
   const navBg = useTransform(
     scrollY,
     [0, 80],
-    ["rgba(255, 255, 255, 0.8)", "rgba(255, 255, 255, 0.9)"]
-  );
-
+    ['rgba(255, 255, 255, 0.8)', 'rgba(255, 255, 255, 0.9)'],
+  )
   const navShadow = useTransform(
     scrollY,
     [0, 80],
-    ["0px 0px 0px rgba(0,0,0,0)", "0px 20px 40px rgba(0,0,0,0.05)"]
-  );
-
+    ['0px 0px 0px rgba(0,0,0,0)', '0px 20px 40px rgba(0,0,0,0.05)'],
+  )
   const borderOpacity = useTransform(
     scrollY,
     [0, 80],
-    ["rgba(0,0,0,0)", "rgba(0,0,0,0.05)"]
-  );
+    ['rgba(0,0,0,0)', 'rgba(0,0,0,0.05)'],
+  )
+  const locationOpacity = useTransform(scrollY, [0, 50], [1, 0])
 
   return (
     <motion.header
@@ -78,7 +71,7 @@ export default function MaterialExpressiveNavbar() {
         borderRadius: useSpring(navRadius, fluidSpring),
         backgroundColor: navBg,
         boxShadow: navShadow,
-        borderWidth: "1px",
+        borderWidth: '1px',
         borderColor: borderOpacity,
       }}
       className="fixed left-1/2 -translate-x-1/2 z-[1000] flex items-center justify-between px-8 py-3 backdrop-blur-xl"
@@ -94,13 +87,14 @@ export default function MaterialExpressiveNavbar() {
             src="/beeteam_full_logo.png"
             alt="Beeteam Logo"
             fill
+            sizes="96px"
             className="object-contain"
             priority
           />
         </motion.div>
 
         <motion.div
-          style={{ opacity: useTransform(scrollY, [0, 50], [1, 0]) }}
+          style={{ opacity: locationOpacity }}
           className="hidden xl:flex items-center gap-2 pl-6 border-l border-black/5"
         >
           <MapPin size={12} className="text-[#FFD700]" />
@@ -120,11 +114,7 @@ export default function MaterialExpressiveNavbar() {
             onMouseLeave={() => setHoveredLink(null)}
             className="px-6 py-2 text-[10px] font-black uppercase tracking-widest relative z-10"
           >
-            <span
-              className={
-                hoveredLink === link.name ? "text-white" : "text-black"
-              }
-            >
+            <span className={hoveredLink === link.name ? 'text-white' : 'text-black'}>
               {link.name}
             </span>
 
@@ -146,8 +136,6 @@ export default function MaterialExpressiveNavbar() {
 
       {/* RIGHT */}
       <div className="flex items-center gap-6">
-
-        {/* RATE TEXT (Outside IMDb Button) */}
         <motion.span
           initial={{ opacity: 0, x: -10 }}
           animate={{ opacity: 1, x: 0 }}
@@ -157,7 +145,6 @@ export default function MaterialExpressiveNavbar() {
           {t.rate}
         </motion.span>
 
-        {/* IMDb Button */}
         <motion.a
           href="https://www.imdb.com/title/tt39394821"
           target="_blank"
@@ -176,13 +163,10 @@ export default function MaterialExpressiveNavbar() {
           />
         </motion.a>
 
-        {/* LANGUAGE SWITCHER */}
         <div className="flex items-center text-[10px] font-black uppercase tracking-widest">
           <button
-            onClick={() => changeLanguage("en")}
-            className={`transition-colors ${
-              language === "en" ? "text-black" : "text-black/40"
-            }`}
+            onClick={() => changeLanguage('en')}
+            className={`transition-colors ${language === 'en' ? 'text-black' : 'text-black/40'}`}
           >
             EN
           </button>
@@ -190,15 +174,13 @@ export default function MaterialExpressiveNavbar() {
           <span className="mx-2 text-black/30">|</span>
 
           <button
-            onClick={() => changeLanguage("bn")}
-            className={`transition-colors ${
-              language === "bn" ? "text-black" : "text-black/40"
-            }`}
+            onClick={() => changeLanguage('bn')}
+            className={`transition-colors ${language === 'bn' ? 'text-black' : 'text-black/40'}`}
           >
             বাংলা
           </button>
         </div>
       </div>
     </motion.header>
-  );
+  )
 }
