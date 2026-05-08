@@ -2,7 +2,7 @@
 
 import { useRef, useState } from 'react'
 import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion'
-import { ChevronRight, Maximize2, X } from 'lucide-react'
+import { ChevronRight, Maximize2, Trophy, X } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 
 type Award = {
@@ -64,20 +64,26 @@ export default function HallOfFame() {
 
   const translations = {
     en: {
-      title1: 'HALL OF',
-      title2: 'FAME',
+      eyebrow: 'Hall of Fame · 07',
+      title1: 'Hall of',
+      title2: 'Fame',
       subtitle: 'Verified cinematic certifications and international recognitions for 2026.',
       registry: 'Registry ID',
       exhibition: 'Unrestricted Global Exhibition',
       verify: 'Verify',
+      total: 'Honors',
+      year: 'Year',
     },
     bn: {
+      eyebrow: 'গৌরবের দেয়াল · ০৭',
       title1: 'গৌরবের',
       title2: 'দেয়াল',
       subtitle: '২০২৬ সালের জন্য যাচাইকৃত চলচ্চিত্র সার্টিফিকেশন ও আন্তর্জাতিক স্বীকৃতি।',
       registry: 'রেজিস্ট্রি আইডি',
       exhibition: 'সীমাহীন বৈশ্বিক প্রদর্শনী',
       verify: 'যাচাই করুন',
+      total: 'সম্মাননা',
+      year: 'বছর',
     },
   } as const
 
@@ -91,23 +97,62 @@ export default function HallOfFame() {
   const ySoft = useTransform(scrollYProgress, [0, 1], [0, -40])
 
   return (
-    <section id="certification" ref={containerRef} className="relative bg-[#fafafa] py-24">
-      <div className="max-w-7xl mx-auto px-6">
+    <section id="certification" ref={containerRef} className="relative paper-tex py-24 md:py-32 overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute bottom-1/4 right-0 w-[500px] h-[500px] bg-[#FFD700]/10 blur-[180px]" />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        {/* HEADER */}
         <motion.div
           style={{ y: ySoft }}
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="text-center mb-16"
+          transition={{ duration: 0.8 }}
+          className="grid lg:grid-cols-12 gap-8 mb-16 items-end"
         >
-          <h2 className="text-4xl md:text-5xl font-extrabold text-black mb-4">
-            {t.title1} <span className="text-[#FFD700]">{t.title2}</span>
-          </h2>
-          <p className="text-sm text-black/50 font-medium max-w-lg mx-auto">{t.subtitle}</p>
+          <div className="lg:col-span-7">
+            <div className="flex items-center gap-3 mb-6">
+              <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#d4af37]">
+                /07
+              </span>
+              <span className="h-px w-12 bg-[#d4af37]/40" />
+              <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-black/50">
+                {t.eyebrow}
+              </span>
+            </div>
+            <h2 className="h-display text-[clamp(56px,10vw,160px)] text-black leading-[0.86]">
+              {t.title1}
+              <br />
+              <span className="text-[#d4af37]">{t.title2}</span>
+            </h2>
+          </div>
+
+          <div className="lg:col-span-4 lg:col-start-9 lg:pl-8 lg:border-l border-black/10 space-y-4">
+            <p className="text-sm text-black/65 leading-relaxed">{t.subtitle}</p>
+            <div className="flex gap-6 pt-2">
+              <div>
+                <div className="font-display text-4xl text-black flex items-center gap-2">
+                  <Trophy size={20} className="text-[#FFD700] fill-[#FFD700]" />
+                  {awards.length}
+                </div>
+                <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-black/40 mt-1">
+                  {t.total}
+                </div>
+              </div>
+              <div>
+                <div className="font-display text-4xl text-[#d97706]">26</div>
+                <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-black/40 mt-1">
+                  {t.year} · 2026
+                </div>
+              </div>
+            </div>
+          </div>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* AWARDS GRID — uniform */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {awards.map((award, i) => (
             <AwardCard
               key={award.id}
@@ -126,25 +171,38 @@ export default function HallOfFame() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[1000] bg-white/95 backdrop-blur-xl flex items-center justify-center p-8"
+            className="fixed inset-0 z-[1000] bg-black/95 backdrop-blur-xl flex items-center justify-center p-8"
             onClick={() => setSelectedImage(null)}
           >
-            <motion.img
-              initial={{ scale: 0.95 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.95 }}
+            <motion.div
+              initial={{ scale: 0.92, y: 30 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.92, y: 30 }}
               transition={{ type: 'spring', stiffness: 120 }}
-              src={selectedImage}
-              alt="Award"
-              className="max-w-full max-h-[85vh] object-contain rounded-xl shadow-[0_40px_120px_-30px_rgba(0,0,0,0.25)]"
+              className="relative"
               onClick={(e) => e.stopPropagation()}
-            />
+            >
+              <img
+                src={selectedImage}
+                alt="Award"
+                className="max-w-full max-h-[85vh] object-contain rounded-xl shadow-[0_60px_140px_-30px_rgba(0,0,0,0.6)]"
+              />
+              <span className="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-[#FFD700] z-10" />
+              <span className="absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-[#FFD700] z-10" />
+              <span className="absolute bottom-2 left-2 w-4 h-4 border-b-2 border-l-2 border-[#FFD700] z-10" />
+              <span className="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-[#FFD700] z-10" />
+            </motion.div>
+
             <button
               onClick={() => setSelectedImage(null)}
-              className="absolute top-8 right-8 text-black hover:rotate-90 transition"
+              className="absolute top-8 right-8 text-white hover:rotate-90 transition-transform"
             >
               <X size={32} />
             </button>
+
+            <div className="absolute bottom-8 left-8 font-mono text-[10px] uppercase tracking-[0.3em] text-white/60">
+              ESC · close
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -165,35 +223,56 @@ function AwardCard({ award, index, onOpen, verifyLabel }: AwardCardProps) {
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ delay: index * 0.08 }}
+      transition={{ delay: index * 0.06 }}
       onClick={onOpen}
-      className="group bg-white rounded-xl border border-black/5 overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
+      whileHover={{ y: -6 }}
+      className="group relative flex flex-col bg-white rounded-2xl border border-black/8 overflow-hidden cursor-pointer transition-all duration-500 hover:shadow-[0_30px_70px_-20px_rgba(0,0,0,0.2)] hover:border-[#FFD700] sheen"
     >
-      <div className="relative aspect-[4/3] overflow-hidden">
+      {/* Top tape */}
+      <div className="absolute top-3 left-3 right-3 z-10 flex justify-between items-center">
+        <span className="px-2.5 py-1 bg-[#FFD700] text-black font-mono text-[9px] uppercase tracking-[0.25em] rounded font-bold">
+          {award.id}
+        </span>
+      </div>
+
+      <div className="relative aspect-[4/3] overflow-hidden bg-black">
         <motion.img
           src={award.url}
           alt={award.title}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          className="w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-105"
         />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+
+        {/* Hover icon */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          whileHover={{ opacity: 1, scale: 1 }}
+          className="absolute bottom-3 right-3 w-9 h-9 rounded-full bg-[#FFD700] text-black opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center"
+        >
+          <Maximize2 size={14} strokeWidth={2.5} />
+        </motion.div>
       </div>
 
-      <div className="p-6 space-y-3">
-        <div className="flex justify-between items-center text-xs text-black/40">
-          <span>{award.id}</span>
-          <Maximize2 size={15} />
+      <div className="flex flex-col flex-1 p-5 space-y-3">
+        <div className="font-mono text-[9px] uppercase tracking-[0.3em] text-[#d97706]">
+          {award.outlet}
         </div>
 
-        <div className="text-xs font-medium text-[#D97706]">{award.outlet}</div>
+        <h3 className="text-base font-semibold text-black leading-tight group-hover:text-[#d97706] transition-colors">
+          {award.title}
+        </h3>
 
-        <h3 className="text-lg font-semibold text-black leading-tight">{award.title}</h3>
+        <p className="text-sm text-black/60 leading-relaxed line-clamp-3 flex-1">
+          {award.desc}
+        </p>
 
-        <p className="text-sm text-black/60 line-clamp-2">{award.desc}</p>
-
-        <div className="flex justify-between items-center pt-4 border-t border-black/5 text-xs">
-          <span className="text-black/40">{award.date}</span>
-          <span className="flex items-center gap-1 text-black font-medium">
+        <div className="flex justify-between items-center pt-3 border-t border-black/5">
+          <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-black/40">
+            {award.date}
+          </span>
+          <span className="flex items-center gap-1 font-mono text-[9px] uppercase tracking-[0.25em] text-black font-bold group-hover:text-[#d97706] transition-colors">
             {verifyLabel}
-            <ChevronRight size={14} className="text-[#FFD700]" />
+            <ChevronRight size={12} className="text-[#FFD700] group-hover:translate-x-1 transition-transform" />
           </span>
         </div>
       </div>

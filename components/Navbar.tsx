@@ -13,7 +13,7 @@ import { ArrowUpRight, MapPin } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 
 export default function Navbar() {
-  const { scrollY } = useScroll()
+  const { scrollY, scrollYProgress } = useScroll()
   const { language, changeLanguage } = useLanguage()
   const [hoveredLink, setHoveredLink] = useState<string | null>(null)
 
@@ -21,16 +21,18 @@ export default function Navbar() {
     en: {
       home: 'Home',
       works: 'Works',
-      location: 'Dhaka, BD',
+      location: 'Dhaka · BD',
       imdb: 'IMDb',
-      rate: 'Rate The University of Chankharpul >',
+      rate: 'Rate Chankharpul',
+      reel: 'Now Reeling',
     },
     bn: {
       home: 'হোম',
       works: 'কাজসমূহ',
-      location: 'ঢাকা, বাংলাদেশ',
+      location: 'ঢাকা · বাংলাদেশ',
       imdb: 'আইএমডিবি',
-      rate: 'ইউনিভার্সিটি অফ চানখারপুল রেট করুন >',
+      rate: 'চানখারপুল রেট করুন',
+      reel: 'এখন চলছে',
     },
   } as const
 
@@ -43,144 +45,175 @@ export default function Navbar() {
 
   const fluidSpring = { stiffness: 260, damping: 30, mass: 0.8 }
 
-  const navWidth = useTransform(scrollY, [0, 80], ['100%', '90%'])
-  const navTop = useTransform(scrollY, [0, 80], ['0px', '20px'])
-  const navRadius = useTransform(scrollY, [0, 80], ['0px', '100px'])
+  const navWidth = useTransform(scrollY, [0, 80], ['100%', '92%'])
+  const navTop = useTransform(scrollY, [0, 80], ['0px', '14px'])
+  const navRadius = useTransform(scrollY, [0, 80], ['0px', '999px'])
   const navBg = useTransform(
     scrollY,
     [0, 80],
-    ['rgba(255, 255, 255, 0.8)', 'rgba(255, 255, 255, 0.9)'],
+    ['rgba(250, 248, 243, 0.7)', 'rgba(250, 248, 243, 0.95)'],
   )
   const navShadow = useTransform(
     scrollY,
     [0, 80],
-    ['0px 0px 0px rgba(0,0,0,0)', '0px 20px 40px rgba(0,0,0,0.05)'],
+    ['0px 0px 0px rgba(0,0,0,0)', '0px 18px 50px -12px rgba(0,0,0,0.12)'],
   )
   const borderOpacity = useTransform(
     scrollY,
     [0, 80],
-    ['rgba(0,0,0,0)', 'rgba(0,0,0,0.05)'],
+    ['rgba(0,0,0,0)', 'rgba(10,10,10,0.06)'],
   )
   const locationOpacity = useTransform(scrollY, [0, 50], [1, 0])
+  const progressWidth = useTransform(scrollYProgress, [0, 1], ['0%', '100%'])
 
   return (
-    <motion.header
-      style={{
-        width: useSpring(navWidth, fluidSpring),
-        top: useSpring(navTop, fluidSpring),
-        borderRadius: useSpring(navRadius, fluidSpring),
-        backgroundColor: navBg,
-        boxShadow: navShadow,
-        borderWidth: '1px',
-        borderColor: borderOpacity,
-      }}
-      className="fixed left-1/2 -translate-x-1/2 z-[1000] flex items-center justify-between px-8 py-3 backdrop-blur-xl"
-    >
-      {/* LEFT */}
-      <div className="flex items-center gap-6">
-        <motion.div
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="relative h-8 w-24 cursor-pointer"
-        >
-          <Image
-            src="/beeteam_full_logo.png"
-            alt="Beeteam Logo"
-            fill
-            sizes="96px"
-            className="object-contain"
-            priority
-          />
-        </motion.div>
-
-        <motion.div
-          style={{ opacity: locationOpacity }}
-          className="hidden xl:flex items-center gap-2 pl-6 border-l border-black/5"
-        >
-          <MapPin size={12} className="text-[#FFD700]" />
-          <span className="text-[9px] font-black uppercase tracking-widest text-black/40">
-            {t.location}
-          </span>
-        </motion.div>
-      </div>
-
-      {/* CENTER NAV */}
-      <nav className="hidden md:flex items-center gap-1 bg-black/5 p-1 rounded-full">
-        {navLinks.map((link) => (
-          <motion.a
-            key={link.name}
-            href={link.href}
-            onMouseEnter={() => setHoveredLink(link.name)}
-            onMouseLeave={() => setHoveredLink(null)}
-            className="px-6 py-2 text-[10px] font-black uppercase tracking-widest relative z-10"
-          >
-            <span className={hoveredLink === link.name ? 'text-white' : 'text-black'}>
-              {link.name}
-            </span>
-
-            <AnimatePresence>
-              {hoveredLink === link.name && (
-                <motion.span
-                  layoutId="nav-pill-bg"
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.2 }}
-                  className="absolute inset-0 bg-black rounded-full -z-10"
-                />
-              )}
-            </AnimatePresence>
-          </motion.a>
-        ))}
-      </nav>
-
-      {/* RIGHT */}
-      <div className="flex items-center gap-6">
-        <motion.span
-          initial={{ opacity: 0, x: -10 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.4 }}
-          className="hidden lg:block text-[10px] font-black uppercase tracking-[0.2em] text-black/60"
-        >
-          {t.rate}
-        </motion.span>
-
-        <motion.a
-          href="https://www.imdb.com/title/tt39394821"
-          target="_blank"
-          rel="noopener noreferrer"
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          className="group relative flex items-center gap-2 bg-[#FFD700] text-black px-6 py-2.5 rounded-full overflow-hidden shadow-lg shadow-amber-200/50 transition-all"
-        >
-          <span className="relative z-10 text-[10px] font-black uppercase tracking-[0.2em]">
-            {t.imdb}
-          </span>
-          <ArrowUpRight
-            size={14}
-            strokeWidth={3}
-            className="group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform"
-          />
-        </motion.a>
-
-        <div className="flex items-center text-[10px] font-black uppercase tracking-widest">
-          <button
-            onClick={() => changeLanguage('en')}
-            className={`transition-colors ${language === 'en' ? 'text-black' : 'text-black/40'}`}
-          >
-            EN
-          </button>
-
-          <span className="mx-2 text-black/30">|</span>
-
-          <button
-            onClick={() => changeLanguage('bn')}
-            className={`transition-colors ${language === 'bn' ? 'text-black' : 'text-black/40'}`}
-          >
-            বাংলা
-          </button>
+    <>
+      {/* Top tape: timecode + reel ticker */}
+      <div className="fixed top-0 left-0 right-0 z-[1001] bg-[#0a0a0a] text-[#f4f1ea] text-[9px] font-mono uppercase tracking-[0.3em] py-1 px-6 flex justify-between items-center border-b border-[#FFD700]/20 pointer-events-none">
+        <div className="flex items-center gap-3">
+          <span className="dot-pulse" />
+          <span className="opacity-80">{t.reel}</span>
+          <span className="opacity-30">·</span>
+          <span className="opacity-60">The University of Chankharpul</span>
+        </div>
+        <div className="hidden md:flex items-center gap-3 opacity-60">
+          <span>24fps</span>
+          <span className="opacity-30">·</span>
+          <span>2.39:1</span>
+          <span className="opacity-30">·</span>
+          <span>DCP</span>
         </div>
       </div>
-    </motion.header>
+
+      <motion.header
+        style={{
+          width: useSpring(navWidth, fluidSpring),
+          top: useSpring(navTop, fluidSpring),
+          borderRadius: useSpring(navRadius, fluidSpring),
+          backgroundColor: navBg,
+          boxShadow: navShadow,
+          borderWidth: '1px',
+          borderColor: borderOpacity,
+        }}
+        className="fixed left-1/2 -translate-x-1/2 z-[1000] flex items-center justify-between px-6 lg:px-8 py-3 backdrop-blur-2xl mt-6"
+      >
+        {/* Scroll progress */}
+        <motion.div
+          style={{ width: progressWidth }}
+          className="absolute bottom-0 left-0 h-px bg-[#FFD700]"
+        />
+
+        {/* LEFT */}
+        <div className="flex items-center gap-5">
+          <motion.a
+            href="/"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="relative h-9 w-28 cursor-pointer group"
+          >
+            <Image
+              src="/beeteam_full_logo.png"
+              alt="Beeteam Logo"
+              fill
+              sizes="112px"
+              className="object-contain transition-transform duration-500 group-hover:rotate-[-2deg]"
+              priority
+            />
+          </motion.a>
+
+          <motion.div
+            style={{ opacity: locationOpacity }}
+            className="hidden xl:flex items-center gap-2 pl-5 border-l border-black/10"
+          >
+            <MapPin size={11} className="text-[#d4af37]" strokeWidth={2.5} />
+            <span className="font-mono text-[9px] font-medium uppercase tracking-[0.25em] text-black/55">
+              {t.location}
+            </span>
+          </motion.div>
+        </div>
+
+        {/* CENTER NAV */}
+        <nav className="hidden md:flex items-center gap-1 bg-black/[0.04] p-1 rounded-full border border-black/[0.04]">
+          {navLinks.map((link) => (
+            <motion.a
+              key={link.name}
+              href={link.href}
+              onMouseEnter={() => setHoveredLink(link.name)}
+              onMouseLeave={() => setHoveredLink(null)}
+              className="px-6 py-2 text-[10px] font-bold uppercase tracking-[0.22em] relative z-10"
+            >
+              <span
+                className={`relative z-10 transition-colors ${hoveredLink === link.name ? 'text-[#FFD700]' : 'text-black'}`}
+              >
+                {link.name}
+              </span>
+
+              <AnimatePresence>
+                {hoveredLink === link.name && (
+                  <motion.span
+                    layoutId="nav-pill-bg"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.25, ease: 'easeOut' }}
+                    className="absolute inset-0 bg-[#0a0a0a] rounded-full"
+                  />
+                )}
+              </AnimatePresence>
+            </motion.a>
+          ))}
+        </nav>
+
+        {/* RIGHT */}
+        <div className="flex items-center gap-5">
+          <motion.a
+            href="https://www.imdb.com/title/tt39394821"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden lg:flex items-center font-mono text-[9px] font-bold uppercase tracking-[0.25em] text-black/60 hover:text-black transition-colors"
+          >
+            <span className="opacity-40">·</span>
+            <span className="px-3">{t.rate}</span>
+            <span className="opacity-40">·</span>
+          </motion.a>
+
+          <motion.a
+            href="https://www.imdb.com/title/tt39394821"
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            className="group relative flex items-center gap-2 bg-[#FFD700] text-black px-5 py-2.5 rounded-full overflow-hidden shadow-[0_8px_24px_-8px_rgba(212,175,55,0.5)] sheen"
+          >
+            <span className="relative z-10 text-[10px] font-extrabold uppercase tracking-[0.22em]">
+              {t.imdb}
+            </span>
+            <ArrowUpRight
+              size={14}
+              strokeWidth={3}
+              className="relative z-10 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform"
+            />
+          </motion.a>
+
+          <div className="flex items-center font-mono text-[10px] font-bold uppercase tracking-[0.18em]">
+            <button
+              onClick={() => changeLanguage('en')}
+              className={`transition-colors ${language === 'en' ? 'text-black' : 'text-black/35 hover:text-black/60'}`}
+            >
+              EN
+            </button>
+
+            <span className="mx-2 text-black/25">/</span>
+
+            <button
+              onClick={() => changeLanguage('bn')}
+              className={`transition-colors ${language === 'bn' ? 'text-black' : 'text-black/35 hover:text-black/60'}`}
+            >
+              বাং
+            </button>
+          </div>
+        </div>
+      </motion.header>
+    </>
   )
 }

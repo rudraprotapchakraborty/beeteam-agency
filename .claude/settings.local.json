@@ -12,7 +12,8 @@
       "Bash(npx tsc *)",
       "Bash(node -e \"console.log\\(Object.keys\\(require\\('lucide-react'\\)\\).filter\\(k => /Face|Insta|Yout/i.test\\(k\\)\\)\\)\")",
       "Bash(npx next *)",
-      "Bash(npx eslint *)"
+      "Bash(npx eslint *)",
+      "Bash(dir D:\\\\programming\\\\beeteam)"
     ]
   }
 }
