@@ -11,7 +11,7 @@ export default function FeaturedNews() {
 
   const translations = {
     en: {
-      eyebrow: 'Press Wall · 06',
+      eyebrow: 'Press Wall · 07',
       title1: 'Global',
       title2: 'Press',
       title3: 'Intelligence',
@@ -24,7 +24,7 @@ export default function FeaturedNews() {
       live: 'Live',
     },
     bn: {
-      eyebrow: 'প্রেস ওয়াল · ০৬',
+      eyebrow: 'প্রেস ওয়াল · ০৭',
       title1: 'গ্লোবাল',
       title2: 'প্রেস',
       title3: 'ইন্টেলিজেন্স',
@@ -72,7 +72,7 @@ export default function FeaturedNews() {
           <div className="lg:col-span-7">
             <div className="flex items-center gap-3 mb-6">
               <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#d4af37]">
-                /06
+                /07
               </span>
               <span className="h-px w-12 bg-[#d4af37]/40" />
               <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-black/50">

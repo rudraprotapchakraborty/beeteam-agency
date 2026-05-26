@@ -13,7 +13,19 @@
       "Bash(node -e \"console.log\\(Object.keys\\(require\\('lucide-react'\\)\\).filter\\(k => /Face|Insta|Yout/i.test\\(k\\)\\)\\)\")",
       "Bash(npx next *)",
       "Bash(npx eslint *)",
-      "Bash(dir D:\\\\programming\\\\beeteam)"
+      "Bash(dir D:\\\\programming\\\\beeteam)",
+      "Bash(python -c \"import PyPDF2; r=PyPDF2.PdfReader\\(r'D:\\\\\\\\University-of-Chankharpur-trailer-press-release\\(1\\).pdf'\\); [print\\(p.extract_text\\(\\)\\) for p in r.pages]\")",
+      "Bash(pdftotext \"D:\\\\University-of-Chankharpur-trailer-press-release\\(1\\).pdf\" -)",
+      "Bash(pdftotext -layout \"D:\\\\University-of-Chankharpur-trailer-press-release\\(1\\).pdf\" \"D:\\\\press_release.txt\")",
+      "Read(//d//**)",
+      "Bash(pdftotext -raw \"D:\\\\University-of-Chankharpur-trailer-press-release\\(1\\).pdf\" \"D:\\\\press_release_raw.txt\")",
+      "PowerShell(python --version)",
+      "PowerShell(py --version)",
+      "Bash(cp \"D:\\\\University-of-Chankharpur-trailer-press-release\\(1\\).pdf\" \"D:\\\\programming\\\\beeteam\\\\public\\\\press-release.pdf\" && ls -la \"D:\\\\programming\\\\beeteam\\\\public\\\\press-release.pdf\")",
+      "Bash(npm run *)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(kill %1)",
+      "PowerShell(Get-NetTCPConnection -LocalPort 3000 -ErrorAction SilentlyContinue | Select-Object -First 3 OwningProcess; Get-Process -Id \\(Get-NetTCPConnection -LocalPort 3000 -ErrorAction SilentlyContinue\\).OwningProcess -ErrorAction SilentlyContinue | Select-Object Id, ProcessName | Format-Table)"
     ]
   }
 }

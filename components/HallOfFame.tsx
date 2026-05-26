@@ -64,7 +64,7 @@ export default function HallOfFame() {
 
   const translations = {
     en: {
-      eyebrow: 'Hall of Fame · 07',
+      eyebrow: 'Hall of Fame · 08',
       title1: 'Hall of',
       title2: 'Fame',
       subtitle: 'Verified cinematic certifications and international recognitions for 2026.',
@@ -75,7 +75,7 @@ export default function HallOfFame() {
       year: 'Year',
     },
     bn: {
-      eyebrow: 'গৌরবের দেয়াল · ০৭',
+      eyebrow: 'গৌরবের দেয়াল · ০৮',
       title1: 'গৌরবের',
       title2: 'দেয়াল',
       subtitle: '২০২৬ সালের জন্য যাচাইকৃত চলচ্চিত্র সার্টিফিকেশন ও আন্তর্জাতিক স্বীকৃতি।',
@@ -115,7 +115,7 @@ export default function HallOfFame() {
           <div className="lg:col-span-7">
             <div className="flex items-center gap-3 mb-6">
               <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#d4af37]">
-                /07
+                /08
               </span>
               <span className="h-px w-12 bg-[#d4af37]/40" />
               <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-black/50">
