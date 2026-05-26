@@ -18,7 +18,7 @@ export default function Footer() {
 
   const translations = {
     en: {
-      eyebrow: 'End Roll · 08',
+      eyebrow: 'End Roll · 09',
       title1: 'Create',
       title2: 'History.',
       subtitle: "Let's build cinematic narratives that define the next era.",
@@ -38,7 +38,7 @@ Dakshinkhan, Dhaka 1230`,
       thanks: 'A Bee Team Production',
     },
     bn: {
-      eyebrow: 'এন্ড রোল · ০৮',
+      eyebrow: 'এন্ড রোল · ০৯',
       title1: 'ইতিহাস',
       title2: 'গড়ুন।',
       subtitle: 'চলুন এমন সিনেমাটিক গল্প তৈরি করি যা পরবর্তী যুগকে সংজ্ঞায়িত করবে।',
@@ -82,7 +82,7 @@ Dakshinkhan, Dhaka 1230`,
   ]
 
   return (
-    <footer id="contact" className="relative bg-[#0a0a0a] text-white pt-20 overflow-hidden grain">
+    <footer id="contact" className="relative bg-[#0a0a0a] text-white pt-12 overflow-hidden grain">
       {/* End-roll marquee */}
       <div className="relative bg-[#FFD700] text-black overflow-hidden border-y border-black/20">
         <div className="marquee-track flex items-center py-3 whitespace-nowrap">
@@ -102,9 +102,9 @@ Dakshinkhan, Dhaka 1230`,
         <div className="absolute bottom-[10%] left-[10%] w-[40%] h-[40%] bg-[#FFD700]/15 blur-[180px]" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10 pt-24">
+      <div className="max-w-7xl mx-auto px-6 relative z-10 pt-14">
         {/* HERO CTA */}
-        <div className="grid lg:grid-cols-12 gap-10 mb-20 items-end">
+        <div className="grid lg:grid-cols-12 gap-8 mb-12 items-end">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -114,17 +114,15 @@ Dakshinkhan, Dhaka 1230`,
           >
             <div className="flex items-center gap-3 mb-6">
               <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#FFD700]">
-                /08
+                /09
               </span>
               <span className="h-px w-12 bg-[#FFD700]/40" />
               <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/50">
                 {t.eyebrow}
               </span>
             </div>
-            <h2 className="h-display text-[clamp(64px,12vw,200px)] leading-[0.86] text-white">
-              {t.title1}
-              <br />
-              <span className="text-[#FFD700]">{t.title2}</span>
+            <h2 className="h-display text-[clamp(48px,8vw,128px)] leading-[0.86] text-white whitespace-nowrap">
+              {t.title1} <span className="text-[#FFD700]">{t.title2}</span>
             </h2>
             <p className="text-base text-white/65 max-w-md mt-6">{t.subtitle}</p>
           </motion.div>
@@ -159,7 +157,7 @@ Dakshinkhan, Dhaka 1230`,
         </div>
 
         {/* GRID */}
-        <div className="grid grid-cols-2 md:grid-cols-12 gap-10 py-12 border-y border-white/10">
+        <div className="grid grid-cols-2 md:grid-cols-12 gap-8 py-8 border-y border-white/10">
           {/* Navigation */}
           <div className="md:col-span-2 space-y-5">
             <h4 className="font-mono text-[10px] font-medium text-white/40 uppercase tracking-[0.3em]">

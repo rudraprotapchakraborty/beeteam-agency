@@ -205,7 +205,7 @@ export default function Hero() {
       </div>
 
       {/* === DIRECTOR'S VISION === */}
-      <div className="relative bg-[#0a0a0a] text-white pt-24 pb-32 overflow-hidden">
+      <div className="relative bg-[#0a0a0a] text-white pt-14 pb-20 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none opacity-50">
           <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-[#FFD700]/10 rounded-full blur-[200px]" />
         </div>
@@ -217,7 +217,7 @@ export default function Hero() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="grid lg:grid-cols-12 gap-8 mb-16 items-end"
+            className="grid lg:grid-cols-12 gap-8 mb-10 items-end"
           >
             <div className="lg:col-span-7">
               <div className="flex items-center gap-3 mb-6">
@@ -256,7 +256,7 @@ export default function Hero() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.1 }}
-              className="lg:col-span-4 lg:col-start-1"
+              className="lg:col-span-4"
             >
               <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#FFD700] mb-3">
                 ¶ 01 — Ambition
@@ -271,7 +271,7 @@ export default function Hero() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="lg:col-span-4 lg:col-start-6"
+              className="lg:col-span-4"
             >
               <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#FFD700] mb-3">
                 ¶ 02 — Method
@@ -286,7 +286,7 @@ export default function Hero() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="lg:col-span-4 lg:col-start-9"
+              className="lg:col-span-4"
             >
               <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#FFD700] mb-3">
                 ¶ 03 — Truth
@@ -303,7 +303,7 @@ export default function Hero() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.9 }}
-            className="mt-24 pt-16 border-t border-white/10 grid lg:grid-cols-12 gap-8"
+            className="mt-14 pt-10 border-t border-white/10 grid lg:grid-cols-12 gap-8"
           >
             <div className="lg:col-span-2 font-mono text-[10px] uppercase tracking-[0.3em] text-white/40">
               Closing

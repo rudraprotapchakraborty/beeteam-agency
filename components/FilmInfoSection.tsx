@@ -10,7 +10,7 @@ export default function FilmInfoSection() {
   const translations = {
     en: {
       presents: 'Bee Team Presents',
-      eyebrow: 'Production File · 04',
+      eyebrow: 'Production File · 06',
       title: 'Film Information',
       creatorLabel: 'Producer · Writer · Director · Editor · Cinematographer',
       creator: 'M Haque',
@@ -34,7 +34,7 @@ export default function FilmInfoSection() {
     },
     bn: {
       presents: 'বি টিম উপস্থাপিত',
-      eyebrow: 'প্রোডাকশন ফাইল · ০৪',
+      eyebrow: 'প্রোডাকশন ফাইল · ০৬',
       title: 'ফিল্ম তথ্য',
       creatorLabel: 'প্রযোজক · চিত্রনাট্যকার · পরিচালক · সম্পাদক · চিত্রগ্রাহক',
       creator: 'এম হক',
@@ -61,7 +61,7 @@ export default function FilmInfoSection() {
   const t = translations[language]
 
   return (
-    <section className="relative bg-[#0a0a0a] text-white py-24 md:py-32 overflow-hidden grain">
+    <section className="relative bg-[#0a0a0a] text-white py-14 md:py-20 overflow-hidden grain">
       {/* Subtle background flares */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/2 right-0 w-[600px] h-[600px] -translate-y-1/2 bg-[#FFD700]/8 blur-[200px]" />
@@ -73,7 +73,7 @@ export default function FilmInfoSection() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-start">
           {/* LEFT — POSTER + STAMP */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -129,7 +129,7 @@ export default function FilmInfoSection() {
           >
             <div className="flex items-center gap-3 mb-6">
               <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#FFD700]">
-                /04
+                /06
               </span>
               <span className="h-px w-12 bg-[#FFD700]/40" />
               <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/50">
@@ -137,14 +137,14 @@ export default function FilmInfoSection() {
               </span>
             </div>
 
-            <h2 className="h-display text-[clamp(48px,8vw,120px)] text-white leading-[0.86] mb-10">
+            <h2 className="h-display text-[clamp(48px,8vw,120px)] text-white leading-[0.86] mb-6">
               {t.title.split(' ')[0]}
               <br />
               <span className="text-[#FFD700]">{t.title.split(' ').slice(1).join(' ')}</span>
             </h2>
 
             {/* Creator card — clapperboard inspired */}
-            <div className="mb-10 relative bg-gradient-to-br from-white/[0.04] to-white/[0.02] border border-white/10 rounded-xl overflow-hidden">
+            <div className="mb-6 relative bg-gradient-to-br from-white/[0.04] to-white/[0.02] border border-white/10 rounded-xl overflow-hidden">
               {/* Stripe header */}
               <div className="stripes-gold h-2 w-full opacity-90" />
               <div className="p-6 md:p-8 grid grid-cols-1 sm:grid-cols-[1fr_auto] items-center gap-4">

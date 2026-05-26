@@ -11,7 +11,7 @@ export default function FeaturedNews() {
 
   const translations = {
     en: {
-      eyebrow: 'Press Wall · 07',
+      eyebrow: 'Press Wall · 04',
       title1: 'Global',
       title2: 'Press',
       title3: 'Intelligence',
@@ -24,7 +24,7 @@ export default function FeaturedNews() {
       live: 'Live',
     },
     bn: {
-      eyebrow: 'প্রেস ওয়াল · ০৭',
+      eyebrow: 'প্রেস ওয়াল · ০৪',
       title1: 'গ্লোবাল',
       title2: 'প্রেস',
       title3: 'ইন্টেলিজেন্স',
@@ -54,7 +54,7 @@ export default function FeaturedNews() {
   const otherNews = newsData.filter((news) => !pinnedOutlets.includes(news.outlet))
 
   return (
-    <section className="relative paper-tex py-24 md:py-32 overflow-hidden">
+    <section className="relative paper-tex py-14 md:py-20 overflow-hidden">
       {/* Bg flares */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/3 left-0 w-[500px] h-[500px] bg-[#FFD700]/10 blur-[180px]" />
@@ -67,12 +67,12 @@ export default function FeaturedNews() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="grid lg:grid-cols-12 gap-8 mb-16 items-end"
+          className="grid lg:grid-cols-12 gap-8 mb-10 items-end"
         >
           <div className="lg:col-span-7">
             <div className="flex items-center gap-3 mb-6">
               <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#d4af37]">
-                /07
+                /04
               </span>
               <span className="h-px w-12 bg-[#d4af37]/40" />
               <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-black/50">
@@ -80,9 +80,9 @@ export default function FeaturedNews() {
               </span>
             </div>
             <h2 className="h-display text-[clamp(48px,9vw,140px)] text-black leading-[0.86]">
-              {t.title1}
+              {t.title1} <span className="text-[#d4af37]">{t.title2}</span>
               <br />
-              <span className="text-[#d4af37]">{t.title2}</span> <span>{t.title3}</span>
+              {t.title3}
             </h2>
           </div>
 
@@ -108,7 +108,7 @@ export default function FeaturedNews() {
         </motion.div>
 
         {/* CONTENT GRID */}
-        <div className="grid lg:grid-cols-[3fr_1.1fr] gap-10">
+        <div className="grid lg:grid-cols-[3fr_1.1fr] gap-8 items-start">
           {/* Pinned wall */}
           <div>
             <div className="flex items-center justify-between mb-6">
@@ -138,7 +138,7 @@ export default function FeaturedNews() {
           </div>
 
           {/* Live archive */}
-          <div>
+          <div className="flex flex-col">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-black/60">
                 <span className="dot-pulse" />
@@ -149,7 +149,7 @@ export default function FeaturedNews() {
               </div>
             </div>
 
-            <div className="relative h-[520px] overflow-y-auto pr-2 rounded-xl border border-black/10 bg-white/40 backdrop-blur-sm">
+            <div className="relative h-[301px] overflow-y-auto pr-2 rounded-xl border border-black/10 bg-white/40 backdrop-blur-sm">
               <div className="divide-y divide-black/5">
                 {otherNews.map((news, index) => (
                   <ArchiveRow

@@ -10,11 +10,11 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <PressRelease />
+      <FeaturedNews />
       <LatestRelease />
       <FilmInfoSection />
       <SynopsisSection />
-      <PressRelease />
-      <FeaturedNews />
       <HallOfFame />
     </>
   )

@@ -25,7 +25,8 @@
       "Bash(npm run *)",
       "mcp__Claude_Preview__preview_start",
       "Bash(kill %1)",
-      "PowerShell(Get-NetTCPConnection -LocalPort 3000 -ErrorAction SilentlyContinue | Select-Object -First 3 OwningProcess; Get-Process -Id \\(Get-NetTCPConnection -LocalPort 3000 -ErrorAction SilentlyContinue\\).OwningProcess -ErrorAction SilentlyContinue | Select-Object Id, ProcessName | Format-Table)"
+      "PowerShell(Get-NetTCPConnection -LocalPort 3000 -ErrorAction SilentlyContinue | Select-Object -First 3 OwningProcess; Get-Process -Id \\(Get-NetTCPConnection -LocalPort 3000 -ErrorAction SilentlyContinue\\).OwningProcess -ErrorAction SilentlyContinue | Select-Object Id, ProcessName | Format-Table)",
+      "PowerShell($conns = Get-NetTCPConnection -LocalPort 3000 -ErrorAction SilentlyContinue | Where-Object { $_.OwningProcess -ne 0 } | Select-Object -ExpandProperty OwningProcess -Unique; foreach \\($pid in $conns\\) { try { Stop-Process -Id $pid -Force -ErrorAction Stop; \"killed $pid\" } catch { \"skip $pid : $_\" } }; Start-Sleep 2; \\(Get-NetTCPConnection -LocalPort 3000 -ErrorAction SilentlyContinue | Where-Object { $_.OwningProcess -ne 0 } | Measure-Object\\).Count)"
     ]
   }
 }

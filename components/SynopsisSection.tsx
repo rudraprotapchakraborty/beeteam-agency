@@ -18,7 +18,7 @@ export default function SynopsisSection() {
 
   const translations = {
     en: {
-      eyebrow: 'Synopsis · 05',
+      eyebrow: 'Synopsis · 07',
       presents: 'Bee Team Presents',
       title: 'Synopsis',
       sideTitle: 'THE UNIVERSITY OF CHANKHARPUL',
@@ -30,7 +30,7 @@ export default function SynopsisSection() {
       ticker: 'BEST FILM · DIFF 2026 · BEST FILM · AMAR VASHA 2026 · BEST FILM · NATIONAL HONOR · BEE TEAM',
     },
     bn: {
-      eyebrow: 'সিনোপসিস · ০৫',
+      eyebrow: 'সিনোপসিস · ০৭',
       presents: 'বি টিম উপস্থাপন করছে',
       title: 'সিনোপসিস',
       sideTitle: 'দ্য ইউনিভার্সিটি অব চানখারপুল',
@@ -89,7 +89,7 @@ export default function SynopsisSection() {
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/30" />
       </motion.div>
 
-      <div className="relative z-10 py-24 md:py-32">
+      <div className="relative z-10 py-14 md:py-20">
         {/* Letterbox top/bottom */}
         <div className="absolute top-0 left-0 right-0 h-10 bg-black z-[1]" />
         <div className="absolute bottom-0 left-0 right-0 h-10 bg-black z-[1]" />
@@ -103,12 +103,12 @@ export default function SynopsisSection() {
           {/* Header */}
           <motion.div
             variants={fadeUp}
-            className="grid lg:grid-cols-12 gap-8 mb-12 items-end"
+            className="grid lg:grid-cols-12 gap-8 mb-8 items-end"
           >
             <div className="lg:col-span-7">
               <div className="flex items-center gap-3 mb-6">
                 <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#FFD700]">
-                  /05
+                  /07
                 </span>
                 <span className="h-px w-12 bg-[#FFD700]/50" />
                 <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/60">
@@ -130,10 +130,10 @@ export default function SynopsisSection() {
           </motion.div>
 
           {/* Body — quote-like layout */}
-          <div className="grid lg:grid-cols-12 gap-12 lg:gap-16">
+          <div className="grid lg:grid-cols-12 gap-8 lg:gap-10">
             <motion.div
               variants={fadeUp}
-              className="lg:col-span-7 space-y-8"
+              className="lg:col-span-7 space-y-5"
             >
               <p className="font-serif-d text-2xl md:text-3xl text-white leading-[1.3]">
                 <span className="text-[#FFD700] font-bold mr-2">"</span>

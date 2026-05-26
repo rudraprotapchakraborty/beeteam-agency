@@ -12,7 +12,7 @@ export default function LatestRelease() {
 
   const translations = {
     en: {
-      eyebrow: 'Now Screening · 03',
+      eyebrow: 'Now Screening · 05',
       title1: 'Latest',
       title2: 'Release',
       tagline: 'Production House · Studio 2026',
@@ -24,7 +24,7 @@ export default function LatestRelease() {
       caption: 'A satirical political drama by M Haque. Premiered at the 24th Dhaka International Film Festival.',
     },
     bn: {
-      eyebrow: 'এখন প্রদর্শিত · ০৩',
+      eyebrow: 'এখন প্রদর্শিত · ০৫',
       title1: 'সর্বশেষ',
       title2: 'প্রকাশনা',
       tagline: 'প্রোডাকশন হাউস · স্টুডিও ২০২৬',
@@ -53,7 +53,7 @@ export default function LatestRelease() {
     <section
       ref={containerRef}
       id="latest-release"
-      className="relative paper-tex pt-24 pb-32 overflow-hidden"
+      className="relative paper-tex pt-14 pb-20 overflow-hidden"
     >
       {/* Background flares */}
       <div className="absolute inset-0 pointer-events-none">
@@ -74,21 +74,20 @@ export default function LatestRelease() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="grid lg:grid-cols-12 gap-8 mb-16 items-end"
+          className="grid lg:grid-cols-12 gap-8 mb-10 items-end"
         >
           <div className="lg:col-span-7">
             <div className="flex items-center gap-3 mb-6">
               <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#d4af37]">
-                /03
+                /05
               </span>
               <span className="h-px w-12 bg-[#d4af37]/40" />
               <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-black/50">
                 {t.eyebrow}
               </span>
             </div>
-            <h2 className="h-display text-[clamp(56px,10vw,160px)] text-black leading-[0.86]">
-              {t.title1}
-              <br />
+            <h2 className="h-display text-[clamp(48px,8vw,128px)] text-black leading-[0.86] whitespace-nowrap">
+              {t.title1}{' '}
               <span className="text-[#d4af37] relative inline-block">
                 {t.title2}
                 <motion.span
@@ -114,7 +113,7 @@ export default function LatestRelease() {
         </motion.div>
 
         {/* Trailer + Poster */}
-        <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
+        <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-start">
           {/* TRAILER */}
           <motion.div
             style={{ scale: scaleSoft }}
@@ -160,8 +159,8 @@ export default function LatestRelease() {
               <span>{t.poster}</span>
               <span>27 × 40 IN</span>
             </div>
-            <div className="relative w-full rounded-2xl overflow-hidden border border-black/10 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.25)] bg-black group">
-              <div className="relative h-full min-h-[520px] md:min-h-[600px]">
+            <div className="relative w-full rounded-2xl overflow-hidden border border-black/10 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.25)] bg-black group h-full">
+              <div className="relative h-full min-h-[330px] md:min-h-[380px]">
                 <Image
                   src="/poster1.jpg"
                   alt="Official Poster"
@@ -186,7 +185,7 @@ export default function LatestRelease() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
-          className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-px bg-black/10 border border-black/10 rounded-xl overflow-hidden"
+          className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-px bg-black/10 border border-black/10 rounded-xl overflow-hidden"
         >
           <SpecCell label={t.resolution} value="4K UHD" mono />
           <SpecCell label={t.client} value="Financial Express" />

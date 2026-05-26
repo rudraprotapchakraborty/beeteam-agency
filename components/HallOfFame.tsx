@@ -2,7 +2,7 @@
 
 import { useRef, useState } from 'react'
 import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion'
-import { ChevronRight, Maximize2, Trophy, X } from 'lucide-react'
+import { ArrowUpRight, ChevronRight, Maximize2, Sparkles, Trophy, X } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 
 type Award = {
@@ -73,6 +73,10 @@ export default function HallOfFame() {
       verify: 'Verify',
       total: 'Honors',
       year: 'Year',
+      moreTitle: 'More to come',
+      moreSub: 'Festival circuit · 2026 onwards',
+      moreDesc: 'Additional honours, certifications and international invitations are being added as they arrive.',
+      rateOnImdb: 'Rate on IMDb',
     },
     bn: {
       eyebrow: 'গৌরবের দেয়াল · ০৮',
@@ -84,6 +88,10 @@ export default function HallOfFame() {
       verify: 'যাচাই করুন',
       total: 'সম্মাননা',
       year: 'বছর',
+      moreTitle: 'আরো আসছে',
+      moreSub: 'উৎসব সার্কিট · ২০২৬ থেকে',
+      moreDesc: 'নতুন সম্মাননা, সার্টিফিকেশন ও আন্তর্জাতিক আমন্ত্রণ পাওয়ার সাথে সাথে এখানে যুক্ত হবে।',
+      rateOnImdb: 'IMDb-তে রেট করুন',
     },
   } as const
 
@@ -97,7 +105,7 @@ export default function HallOfFame() {
   const ySoft = useTransform(scrollYProgress, [0, 1], [0, -40])
 
   return (
-    <section id="certification" ref={containerRef} className="relative paper-tex py-24 md:py-32 overflow-hidden">
+    <section id="certification" ref={containerRef} className="relative paper-tex py-14 md:py-20 overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute bottom-1/4 right-0 w-[500px] h-[500px] bg-[#FFD700]/10 blur-[180px]" />
       </div>
@@ -110,7 +118,7 @@ export default function HallOfFame() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="grid lg:grid-cols-12 gap-8 mb-16 items-end"
+          className="grid lg:grid-cols-12 gap-8 mb-10 items-end"
         >
           <div className="lg:col-span-7">
             <div className="flex items-center gap-3 mb-6">
@@ -122,10 +130,8 @@ export default function HallOfFame() {
                 {t.eyebrow}
               </span>
             </div>
-            <h2 className="h-display text-[clamp(56px,10vw,160px)] text-black leading-[0.86]">
-              {t.title1}
-              <br />
-              <span className="text-[#d4af37]">{t.title2}</span>
+            <h2 className="h-display text-[clamp(48px,8vw,128px)] text-black leading-[0.86] whitespace-nowrap">
+              {t.title1} <span className="text-[#d4af37]">{t.title2}</span>
             </h2>
           </div>
 
@@ -162,6 +168,52 @@ export default function HallOfFame() {
               verifyLabel={t.verify}
             />
           ))}
+
+          {/* Closing tile — fills the 6th grid cell with brand CTA */}
+          <motion.a
+            href="https://www.imdb.com/title/tt39394821"
+            target="_blank"
+            rel="noopener noreferrer"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: awards.length * 0.05 }}
+            whileHover={{ y: -4 }}
+            className="group relative flex flex-col bg-[#0a0a0a] text-white rounded-2xl overflow-hidden border border-[#FFD700]/30 shadow-[0_25px_60px_-20px_rgba(255,215,0,0.25)] sheen"
+          >
+            {/* Stripes header */}
+            <div className="stripes-gold h-2 w-full opacity-90" />
+
+            {/* Frame brackets */}
+            <span className="absolute top-3 left-3 w-3 h-3 border-t-2 border-l-2 border-[#FFD700]/70 z-10" />
+            <span className="absolute top-3 right-3 w-3 h-3 border-t-2 border-r-2 border-[#FFD700]/70 z-10" />
+            <span className="absolute bottom-3 left-3 w-3 h-3 border-b-2 border-l-2 border-[#FFD700]/70 z-10" />
+            <span className="absolute bottom-3 right-3 w-3 h-3 border-b-2 border-r-2 border-[#FFD700]/70 z-10" />
+
+            <div className="flex-1 flex flex-col items-center justify-center text-center px-6 py-10 gap-4">
+              <div className="w-12 h-12 rounded-full bg-[#FFD700]/15 flex items-center justify-center">
+                <Sparkles size={20} className="text-[#FFD700]" />
+              </div>
+              <div className="font-mono text-[9px] uppercase tracking-[0.3em] text-[#FFD700]">
+                {t.moreSub}
+              </div>
+              <div className="font-display text-3xl text-white leading-tight">
+                {t.moreTitle}
+              </div>
+              <p className="text-sm text-white/65 leading-relaxed max-w-[28ch]">
+                {t.moreDesc}
+              </p>
+            </div>
+
+            <div className="px-6 py-4 border-t border-white/10 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.25em] text-white/55 group-hover:text-[#FFD700] transition-colors">
+              <span>{t.rateOnImdb}</span>
+              <ArrowUpRight
+                size={14}
+                strokeWidth={2.5}
+                className="group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform"
+              />
+            </div>
+          </motion.a>
         </div>
       </div>
 
