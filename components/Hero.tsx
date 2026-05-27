@@ -34,7 +34,7 @@ export default function Hero() {
       finalQuestion: 'How much of ourselves are we willing to sacrifice to feel important?',
       scrollHint: 'Scroll to enter',
       featureBadge: 'Feature Film · 2026',
-      runtime: 'Runtime · 144 min',
+      runtime: 'Runtime · 134 min',
       shot: 'Shot on RED · 4K UHD',
     },
     bn: {

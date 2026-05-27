@@ -189,7 +189,7 @@ export default function LatestRelease() {
         >
           <SpecCell label={t.resolution} value="4K UHD" mono />
           <SpecCell label={t.client} value="Financial Express" />
-          <SpecCell label={t.duration} value="02:44" mono accent />
+          <SpecCell label={t.duration} value="02:14" mono accent />
           <SpecCell label="Format" value="DCP · MP4" mono />
         </motion.div>
       </div>
