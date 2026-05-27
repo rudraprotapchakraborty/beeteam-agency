@@ -17,11 +17,10 @@ export default function LatestRelease() {
       title2: 'Release',
       tagline: 'Production House · Studio 2026',
       resolution: 'Resolution',
-      client: 'Client',
       duration: 'Duration',
       trailer: 'Official Trailer',
       poster: 'Theatrical Poster',
-      caption: 'A satirical political drama by M Haque. Premiered at the 24th Dhaka International Film Festival.',
+      caption: 'A satirical political drama by Monirul Haque. Premiered at the 24th Dhaka International Film Festival.',
     },
     bn: {
       eyebrow: 'এখন প্রদর্শিত · ০৫',
@@ -29,11 +28,10 @@ export default function LatestRelease() {
       title2: 'প্রকাশনা',
       tagline: 'প্রোডাকশন হাউস · স্টুডিও ২০২৬',
       resolution: 'রেজোলিউশন',
-      client: 'ক্লায়েন্ট',
       duration: 'সময়কাল',
       trailer: 'অফিসিয়াল ট্রেলার',
       poster: 'থিয়েটার পোস্টার',
-      caption: 'এম হকের একটি ব্যঙ্গাত্মক রাজনৈতিক নাটক। ২৪তম ঢাকা আন্তর্জাতিক চলচ্চিত্র উৎসবে প্রিমিয়ার।',
+      caption: 'মনিরুল হকের একটি ব্যঙ্গাত্মক রাজনৈতিক নাটক। ২৪তম ঢাকা আন্তর্জাতিক চলচ্চিত্র উৎসবে প্রিমিয়ার।',
     },
   } as const
 
@@ -185,10 +183,9 @@ export default function LatestRelease() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
-          className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-px bg-black/10 border border-black/10 rounded-xl overflow-hidden"
+          className="mt-8 grid grid-cols-3 gap-px bg-black/10 border border-black/10 rounded-xl overflow-hidden"
         >
           <SpecCell label={t.resolution} value="4K UHD" mono />
-          <SpecCell label={t.client} value="Financial Express" />
           <SpecCell label={t.duration} value="02:14" mono accent />
           <SpecCell label="Format" value="DCP · MP4" mono />
         </motion.div>

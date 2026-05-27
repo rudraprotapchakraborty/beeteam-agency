@@ -90,17 +90,11 @@ export default function FeaturedNews() {
             <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-black/40 mb-3">
               {t.tagline}
             </div>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 gap-3">
               <div>
-                <div className="font-display text-4xl text-black">{newsData.length}</div>
+                <div className="font-display text-4xl text-black">100+</div>
                 <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-black/40 mt-1">
                   {t.total}
-                </div>
-              </div>
-              <div>
-                <div className="font-display text-4xl text-[#d97706]">{pinnedNews.length}</div>
-                <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-black/40 mt-1">
-                  {t.pinned}
                 </div>
               </div>
             </div>

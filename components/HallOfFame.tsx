@@ -147,12 +147,6 @@ export default function HallOfFame() {
                   {t.total}
                 </div>
               </div>
-              <div>
-                <div className="font-display text-4xl text-[#d97706]">26</div>
-                <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-black/40 mt-1">
-                  {t.year} · 2026
-                </div>
-              </div>
             </div>
           </div>
         </motion.div>
