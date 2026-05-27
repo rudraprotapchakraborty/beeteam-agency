@@ -121,15 +121,6 @@ export default function Navbar() {
             />
           </motion.a>
 
-          <motion.div
-            style={{ opacity: locationOpacity }}
-            className="hidden xl:flex items-center gap-2 pl-5 border-l border-black/10"
-          >
-            <MapPin size={11} className="text-[#d4af37]" strokeWidth={2.5} />
-            <span className="font-mono text-[9px] font-medium uppercase tracking-[0.25em] text-black/55">
-              {t.location}
-            </span>
-          </motion.div>
         </div>
 
         {/* CENTER NAV */}
