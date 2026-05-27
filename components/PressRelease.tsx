@@ -23,7 +23,7 @@ export default function PressRelease() {
       p3: 'Directed by Akash Haque (Monirul Haque Akash), the 134-minute feature has won praise at multiple national and international festivals — including the FIPRESCI Award for Best Full-Length Feature Film in the Bangladesh Panorama section of the 24th Dhaka International Film Festival (DIFF), plus the Hiralal Sen Award and Best Screenplay Award at Dhaka University Film Society’s "Amar Bhashar Cholochitro 1432".',
       p4: 'The world premiere was held at the National Museum during DIFF, where audience turnout was so large that reports describe viewers watching from the aisles. The film’s theme song "Sohomot Bhai" has gone viral across social media as a symbolic anthem of campus culture.',
       castLabel: 'Cast',
-      cast: 'Debdyuti Aich · Roki Khan · Babi Biswas · Abu Sayeed · Choyon · Jibon · Sohan · Ifad — and a fresh ensemble of new faces. In a special role: writer and poet Anwaruzzaman Azad.',
+      cast: 'Devodyuti Aich · Rocky Khan · Boby Biswas · Abu Sayeed · Chyan Mondal · Jibon · Sohan · Ifad — and a fresh ensemble of new faces. In a special role: writer and poet Akhtaruzzaman Azad.',
       productionLabel: 'Production',
       production: 'Bee Team Limited',
       distLabel: 'Distribution',
