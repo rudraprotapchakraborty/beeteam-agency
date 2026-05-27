@@ -16,7 +16,7 @@ type Award = {
 
 const awards: Award[] = [
   {
-    url: 'https://i.ibb.co/s9X5JxM4/Whats-App-Image-2026-01-26-at-4-32-53-PM.jpg',
+    url: 'https://i.ibb.co.com/hFnQSfsh/Whats-App-Image-2026-05-26-at-5-25-25-PM.jpg',
     title: 'Certificate of Achievement',
     outlet: 'FIPRESCI Bangladesh',
     desc: "Recognized during the 24th Dhaka International Film Festival for the film 'The University of Chankharpul'.",
@@ -24,7 +24,7 @@ const awards: Award[] = [
     id: 'CERT-001',
   },
   {
-    url: 'https://i.ibb.co/B2NzKP5h/Whats-App-Image-2026-01-26-at-3-12-17-PM.jpg',
+    url: 'https://i.ibb.co.com/bjh4YCq5/Whats-App-Image-2026-05-26-at-5-25-265-PM.jpg',
     title: 'National Film Certification',
     outlet: 'Government of Bangladesh',
     desc: 'Granted unrestricted public exhibition status under the Film Certification Act 2023.',
