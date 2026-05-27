@@ -76,17 +76,17 @@ export default function LatestRelease() {
         >
           <div className="lg:col-span-7">
             <div className="flex items-center gap-3 mb-6">
-              <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#d4af37]">
+              <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#FFD700]">
                 /05
               </span>
-              <span className="h-px w-12 bg-[#d4af37]/40" />
+              <span className="h-px w-12 bg-[#FFD700]/40" />
               <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-black/50">
                 {t.eyebrow}
               </span>
             </div>
             <h2 className="h-display text-[clamp(48px,8vw,128px)] text-black leading-[0.86] whitespace-nowrap">
               {t.title1}{' '}
-              <span className="text-[#d4af37] relative inline-block">
+              <span className="text-[#FFD700] relative inline-block">
                 {t.title2}
                 <motion.span
                   className="absolute left-0 -bottom-2 h-[3px] w-full bg-[#FFD700]"
@@ -209,7 +209,7 @@ function SpecCell({
     <div className="bg-[#faf8f3] p-5 flex flex-col gap-2">
       <div className="font-mono text-[9px] uppercase tracking-[0.3em] text-black/40">{label}</div>
       <div
-        className={`text-base font-semibold ${mono ? 'font-mono-d' : ''} ${accent ? 'text-[#d97706]' : 'text-black'}`}
+        className={`text-base font-semibold ${mono ? 'font-mono-d' : ''} ${accent ? 'text-[#FFD700]' : 'text-black'}`}
       >
         {value}
       </div>

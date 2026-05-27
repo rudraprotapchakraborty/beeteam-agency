@@ -1,4 +1,5 @@
 import Hero from '@/components/Hero'
+import DirectorVision from '@/components/DirectorVision'
 import LatestRelease from '@/components/LatestRelease'
 import FeaturedNews from '@/components/FeaturedNews'
 import HallOfFame from '@/components/HallOfFame'
@@ -14,6 +15,7 @@ export default function Home() {
       <FeaturedNews />
       <LatestRelease />
       <FilmInfoSection />
+      <DirectorVision />
       <SynopsisSection />
       <HallOfFame />
     </>

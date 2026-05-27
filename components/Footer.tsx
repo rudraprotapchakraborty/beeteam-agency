@@ -244,10 +244,30 @@ Dakshinkhan, Dhaka 1230`,
         </div>
 
         {/* STATUS BAR */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center pt-8 pb-6 gap-4">
+        <div className="flex flex-col md:flex-row justify-between items-center pt-8 pb-6 gap-4">
           <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/40">
             {t.copyright}
           </div>
+
+          {/* Powered by Creative Surf */}
+          <a
+            href="https://www.creativesurf.agency/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex items-center gap-2.5 opacity-80 hover:opacity-100 transition-opacity duration-300"
+          >
+            <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-white/50 group-hover:text-white transition-colors">
+              Powered by
+            </span>
+            <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-white/70 group-hover:text-white transition-colors">
+              Creative Surf
+            </span>
+            <img
+              src="https://www.creativesurf.agency/logo.png"
+              alt="Creative Surf Agency"
+              className="h-5 w-auto object-contain"
+            />
+          </a>
 
           <div className="flex items-center gap-6">
             <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#FFD700] hidden md:block">
@@ -266,13 +286,6 @@ Dakshinkhan, Dhaka 1230`,
               </span>
             </motion.button>
           </div>
-        </div>
-      </div>
-
-      {/* Mega watermark name */}
-      <div className="relative -mb-6 overflow-hidden pointer-events-none select-none">
-        <div className="font-display text-[20vw] leading-none text-white/[0.04] text-center tracking-tighter">
-          BEETEAM
         </div>
       </div>
 

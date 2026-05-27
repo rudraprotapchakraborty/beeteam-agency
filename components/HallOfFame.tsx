@@ -122,16 +122,16 @@ export default function HallOfFame() {
         >
           <div className="lg:col-span-7">
             <div className="flex items-center gap-3 mb-6">
-              <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#d4af37]">
+              <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#FFD700]">
                 /08
               </span>
-              <span className="h-px w-12 bg-[#d4af37]/40" />
+              <span className="h-px w-12 bg-[#FFD700]/40" />
               <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-black/50">
                 {t.eyebrow}
               </span>
             </div>
             <h2 className="h-display text-[clamp(48px,8vw,128px)] text-black leading-[0.86] whitespace-nowrap">
-              {t.title1} <span className="text-[#d4af37]">{t.title2}</span>
+              {t.title1} <span className="text-[#FFD700]">{t.title2}</span>
             </h2>
           </div>
 
@@ -300,11 +300,11 @@ function AwardCard({ award, index, onOpen, verifyLabel }: AwardCardProps) {
       </div>
 
       <div className="flex flex-col flex-1 p-5 space-y-3">
-        <div className="font-mono text-[9px] uppercase tracking-[0.3em] text-[#d97706]">
+        <div className="font-mono text-[9px] uppercase tracking-[0.3em] text-[#FFD700]">
           {award.outlet}
         </div>
 
-        <h3 className="text-base font-semibold text-black leading-tight group-hover:text-[#d97706] transition-colors">
+        <h3 className="text-base font-semibold text-black leading-tight group-hover:text-[#FFD700] transition-colors">
           {award.title}
         </h3>
 
@@ -316,7 +316,7 @@ function AwardCard({ award, index, onOpen, verifyLabel }: AwardCardProps) {
           <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-black/40">
             {award.date}
           </span>
-          <span className="flex items-center gap-1 font-mono text-[9px] uppercase tracking-[0.25em] text-black font-bold group-hover:text-[#d97706] transition-colors">
+          <span className="flex items-center gap-1 font-mono text-[9px] uppercase tracking-[0.25em] text-black font-bold group-hover:text-[#FFD700] transition-colors">
             {verifyLabel}
             <ChevronRight size={12} className="text-[#FFD700] group-hover:translate-x-1 transition-transform" />
           </span>

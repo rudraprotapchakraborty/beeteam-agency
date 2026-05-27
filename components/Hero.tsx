@@ -25,13 +25,6 @@ export default function Hero() {
       contact: 'Begin a film',
       viewWork: 'View Reel',
       presents: 'Bee Team Presents',
-      directorTitle: "Director's Vision",
-      directorSub: 'A Note from Monirul Haque · 2026',
-      p1: `This film is not about student politics alone; it is about the marketplace of ambition in a third-world society. In a world where young people are asked to dream, they are also forced to gamble those dreams in exchange for influence and power. Our characters have no names because identity here is conditional, one is known by his position only. The horse becomes a satire of status. It symbolizes a shortcut, an absurd object that suddenly grants social legitimacy. Students laugh at it as a joke, then worship it as power.`,
-      p2: `To preserve the raw pulse of this world, the film is shot in real locations using a guerrilla documentary style. The camera behaves like a silent witness: observing, not staging. There is no artificial lighting, no beautification, no makeup to shield the characters from truth. Their tired eyes, dusty shirts, and restless movements belong not to actors but to the reality that millions of students live every day.`,
-      p3: `This approach allows the viewer to feel the humidity of student hostels, the chaos of campus rallies, the politics hidden in tea stalls. The film observes its characters without judgment. It doesn't ask who is innocent or guilty, it asks what ambition does to innocence in the first place. It explores how deeply young people crave recognition, how cheaply it can be traded, and how tragedy becomes just another stepping stone to power.`,
-      endingLine: 'The film ends not with closure, but with a question:',
-      finalQuestion: 'How much of ourselves are we willing to sacrifice to feel important?',
       scrollHint: 'Scroll to enter',
       featureBadge: 'Feature Film · 2026',
       runtime: 'Runtime · 134 min',
@@ -44,13 +37,6 @@ export default function Hero() {
       contact: 'একটি ফিল্ম শুরু করুন',
       viewWork: 'রিল দেখুন',
       presents: 'বি টিম উপস্থাপন করছে',
-      directorTitle: 'পরিচালকের দৃষ্টিভঙ্গি',
-      directorSub: 'মনিরুল হকের একটি নোট · ২০২৬',
-      p1: `এই চলচ্চিত্র শুধু ছাত্র রাজনীতি নিয়ে নয়; এটি তৃতীয় বিশ্বের সমাজে উচ্চাকাঙ্ক্ষার বাজার সম্পর্কে। এমন এক পৃথিবীতে যেখানে তরুণদের স্বপ্ন দেখতে বলা হয়, সেখানে সেই স্বপ্নগুলোই প্রভাব ও ক্ষমতার বিনিময়ে বাজি রাখতে বাধ্য করা হয়। আমাদের চরিত্রগুলোর কোনো নাম নেই, কারণ এখানে পরিচয় শর্তসাপেক্ষ—মানুষকে চেনা হয় তার অবস্থান দিয়ে। ঘোড়াটি হয়ে ওঠে মর্যাদার এক ব্যঙ্গচিত্র। এটি এক ধরনের শর্টকাটের প্রতীক—একটি অদ্ভুত বস্তু, যা হঠাৎ করেই সামাজিক বৈধতা এনে দেয়। ছাত্ররা প্রথমে এটিকে কৌতুক হিসেবে দেখে, তারপর ক্ষমতার প্রতীক হিসেবে পূজা করতে শুরু করে।`,
-      p2: `এই জগতের কাঁচা স্পন্দন অক্ষুণ্ণ রাখতে চলচ্চিত্রটি বাস্তব লোকেশনে গেরিলা ডকুমেন্টারি শৈলীতে ধারণ করা হয়েছে। ক্যামেরা এখানে নীরব সাক্ষীর মতো আচরণ করে—মঞ্চায়ন নয়, পর্যবেক্ষণ করে। কোনো কৃত্রিম আলো নেই, নেই সৌন্দর্যায়নের আয়োজন, নেই চরিত্রদের সত্য থেকে আড়াল করার জন্য মেকআপ। তাদের ক্লান্ত চোখ, ধুলোমাখা শার্ট, অস্থির চলাফেরা—এসব অভিনয়ের নয়; বরং সেই বাস্তবতার প্রতিচ্ছবি, যেখানে প্রতিদিন লক্ষ লক্ষ ছাত্র বেঁচে থাকে।`,
-      p3: `এই পদ্ধতি দর্শককে ছাত্রাবাসের আর্দ্রতা, ক্যাম্পাস মিছিলে বিশৃঙ্খলা, আর চায়ের দোকানের আড়ালে লুকিয়ে থাকা রাজনীতি অনুভব করতে দেয়। চলচ্চিত্রটি তার চরিত্রদের বিচার করে না। এটি জিজ্ঞেস করে না কে নির্দোষ, কে দোষী; বরং প্রশ্ন তোলে—উচ্চাকাঙ্ক্ষা প্রথমেই নিষ্পাপতাকে কীভাবে রূপান্তরিত করে। এটি অনুসন্ধান করে তরুণরা স্বীকৃতির জন্য কতটা গভীর আকাঙ্ক্ষা পোষণ করে, কত সহজে সেই আকাঙ্ক্ষা বিনিময় হয়ে যায়, এবং কীভাবে ট্র্যাজেডি কেবল ক্ষমতার পথে আরেকটি সোপান হয়ে ওঠে।`,
-      endingLine: 'চলচ্চিত্রটি সমাপ্তি নয়, বরং একটি প্রশ্ন দিয়ে শেষ হয়:',
-      finalQuestion: 'গুরুত্বপূর্ণ অনুভব করতে আমরা নিজেদের কতটুকু ত্যাগ করতে প্রস্তুত?',
       scrollHint: 'প্রবেশ করতে স্ক্রল করুন',
       featureBadge: 'ফিচার ফিল্ম · ২০২৬',
       runtime: 'সময়কাল · ১৪৪ মিনিট',
@@ -106,220 +92,189 @@ export default function Hero() {
           DIRECTOR · MONIRUL HAQUE · 2026
         </div>
 
-        {/* Center content */}
+        {/* Center content: left branding + right news */}
         <motion.div
           style={{ y: titleY }}
-          className="relative z-20 h-full flex flex-col items-center justify-center text-white px-6"
+          className="relative z-20 h-full grid lg:grid-cols-2 gap-0"
         >
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="flex items-center gap-3 mb-8 px-4 py-2 rounded-full border border-white/15 bg-white/5 backdrop-blur-sm"
-          >
-            <Sparkles size={12} className="text-[#FFD700]" />
-            <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/80">
-              {t.presents}
-            </span>
-          </motion.div>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.5 }}
-            className="h-display text-[clamp(64px,14vw,210px)] text-white text-center"
-          >
-            <span className="block">{t.title1}</span>
-            <span className="block text-[#FFD700] -mt-[0.12em]">{t.title2}</span>
-          </motion.h1>
-
-          <motion.div
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ duration: 1, delay: 1, ease: 'easeOut' }}
-            style={{ originX: 0.5 }}
-            className="mt-2 h-px w-32 bg-gradient-to-r from-transparent via-[#FFD700] to-transparent"
-          />
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.9 }}
-            className="text-base md:text-lg text-white/75 max-w-2xl text-center mt-6 font-light tracking-wide"
-          >
-            {t.subtitle}
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.1 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10"
-          >
-            <motion.a
-              href="#contact"
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.97 }}
-              className="group relative px-7 py-3.5 bg-[#FFD700] text-black text-[11px] font-extrabold uppercase tracking-[0.22em] rounded-full flex items-center gap-2.5 shadow-[0_12px_40px_-12px_rgba(255,215,0,0.6)] sheen overflow-hidden"
+          {/* LEFT: Beeteam Studios branding */}
+          <div className="flex flex-col items-center justify-center text-white px-8 lg:px-10">
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.5 }}
+              className="h-display text-[clamp(80px,13vw,260px)] text-white text-center leading-[0.85] w-full"
             >
-              <span className="relative z-10">{t.contact}</span>
-              <ArrowDown size={14} strokeWidth={3} className="relative z-10 group-hover:translate-y-0.5 transition-transform" />
-            </motion.a>
+              <span className="block">{t.title1}</span>
+              <span className="block text-[#FFD700] -mt-[0.08em]">{t.title2}</span>
+            </motion.h1>
 
-            <motion.a
-              href="/works"
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.04 }}
-              className="group flex items-center gap-2.5 text-white text-[11px] font-extrabold uppercase tracking-[0.22em] px-7 py-3.5 rounded-full border border-white/20 hover:border-[#FFD700] hover:text-[#FFD700] transition-colors backdrop-blur-sm"
+            <motion.div
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 1, delay: 1, ease: 'easeOut' }}
+              style={{ originX: 0.5 }}
+              className="mt-4 h-px w-40 bg-gradient-to-r from-transparent via-[#FFD700] to-transparent"
+            />
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.9 }}
+              className="text-base text-white/70 max-w-xs text-center mt-5 font-light tracking-wide"
             >
-              <Film size={14} />
-              {t.viewWork}
-              <ExternalLink size={12} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-            </motion.a>
+              {t.subtitle}
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1.1 }}
+              className="flex flex-col sm:flex-row items-center gap-4 mt-8"
+            >
+              <motion.a
+                href="#contact"
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.97 }}
+                className="group relative px-7 py-3.5 bg-[#FFD700] text-black text-[11px] font-extrabold uppercase tracking-[0.22em] rounded-full flex items-center gap-2.5 shadow-[0_12px_40px_-12px_rgba(255,215,0,0.6)] sheen overflow-hidden"
+              >
+                <span className="relative z-10">{t.contact}</span>
+                <ArrowDown size={14} strokeWidth={3} className="relative z-10 group-hover:translate-y-0.5 transition-transform" />
+              </motion.a>
+
+              <motion.a
+                href="/works"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.04 }}
+                className="group flex items-center gap-2.5 text-white text-[11px] font-extrabold uppercase tracking-[0.22em] px-7 py-3.5 rounded-full border border-white/20 hover:border-[#FFD700] hover:text-[#FFD700] transition-colors backdrop-blur-sm"
+              >
+                <Film size={14} />
+                {t.viewWork}
+                <ExternalLink size={12} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </motion.a>
+            </motion.div>
+          </div>
+
+          {/* RIGHT: Featured news cards */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.9, delay: 0.8 }}
+            className="hidden lg:flex flex-col gap-3 border-l border-white/10 h-full px-8 py-14 justify-center"
+          >
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#FFD700] shrink-0">
+                <span className="w-1.5 h-1.5 rounded-full bg-black" />
+                <span className="font-mono text-[9px] uppercase tracking-[0.35em] text-black font-bold">Featured Coverage</span>
+              </div>
+              <span className="flex-1 h-px bg-white/10" />
+              <span className="font-mono text-[8px] uppercase tracking-[0.3em] text-white/25">Press · 2026</span>
+            </div>
+
+            {/* Three tall poster cards side by side */}
+            <div className="flex gap-3">
+              {[
+                {
+                  outlet: 'Daily Sun',
+                  headline: 'Political Satire Film "The University of Chankharpul" Unveils Trailer',
+                  href: 'https://www.daily-sun.com/entertainment/877071/political-satire-film-the-university-of-chankharpul-unveils-trailer',
+                  accent: '#e87c1e',
+                  thumb: '/news1.png',
+                },
+                {
+                  outlet: 'Dhaka Tribune',
+                  headline: 'Trailer of "The University of Chankharpul"',
+                  href: 'https://www.dhakatribune.com/showtime/411199/trailer-of-%E2%80%9Cthe-university-of-chankharpul%E2%80%9D',
+                  accent: '#1a6fa8',
+                  thumb: '/news2.png',
+                },
+                {
+                  outlet: 'The Daily Star',
+                  headline: '"Good Cinema Will Always Find Its Place" — Akash Haque',
+                  href: 'https://www.thedailystar.net/culture/tv-film/news/good-cinema-will-always-find-its-place-akash-haque-4184886',
+                  accent: '#1d7c4d',
+                  thumb: '/news3.png',
+                },
+              ].map((item, i) => (
+                <motion.a
+                  key={item.href}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 1.0 + i * 0.12 }}
+                  whileHover={{ scale: 1.03, y: -4 }}
+                  className="group relative flex-1 h-[460px] rounded-2xl overflow-hidden cursor-pointer transition-all duration-500"
+                  style={{
+                    border: `1.5px solid ${item.accent}60`,
+                    boxShadow: `0 0 0 0px ${item.accent}00, 0 8px 40px -8px rgba(0,0,0,0.8)`,
+                  }}
+                  whileHover={{
+                    scale: 1.03,
+                    y: -6,
+                    boxShadow: `0 0 24px 4px ${item.accent}55, 0 24px 60px -12px rgba(0,0,0,0.9)`,
+                    borderColor: item.accent,
+                  }}
+                >
+                  {/* Full poster image */}
+                  <img
+                    src={item.thumb}
+                    alt={item.outlet}
+                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+
+                  {/* Gradient overlays */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-transparent" />
+
+                  {/* Accent glow strip at top */}
+                  <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: `linear-gradient(90deg, transparent, ${item.accent}, transparent)` }} />
+
+                  {/* FEATURED ribbon */}
+                  <div className="absolute top-[18px] -right-[22px] z-20 rotate-45 bg-[#FFD700] px-8 py-[3px]">
+                    <span className="font-mono text-[7px] uppercase tracking-[0.25em] font-black text-black">Featured</span>
+                  </div>
+
+                  {/* Outlet badge — top */}
+                  <div className="absolute top-4 left-3 right-3 flex items-center justify-between z-10">
+                    <div
+                      className="px-2.5 py-1 rounded-md font-mono text-[8px] uppercase tracking-[0.3em] font-bold text-white shadow-lg"
+                      style={{ background: item.accent }}
+                    >
+                      {item.outlet}
+                    </div>
+                    <div
+                      className="w-6 h-6 rounded-full flex items-center justify-center font-mono text-[9px] font-bold text-white"
+                      style={{ background: `${item.accent}40`, border: `1px solid ${item.accent}80` }}
+                    >
+                      {i + 1}
+                    </div>
+                  </div>
+
+                  {/* Headline + link — bottom */}
+                  <div className="absolute bottom-0 left-0 right-0 p-4 z-10">
+                    <div className="w-6 h-[2px] mb-2 rounded-full" style={{ background: item.accent }} />
+                    <p className="text-[12px] text-white font-semibold leading-snug line-clamp-3 mb-2.5">
+                      {item.headline}
+                    </p>
+                    <div className="flex items-center gap-1.5">
+                      <span className="font-mono text-[8px] uppercase tracking-[0.25em] text-white/50 group-hover:text-white transition-colors">{item.outlet}</span>
+                      <ExternalLink size={8} className="text-white/40 group-hover:text-white transition-colors" />
+                    </div>
+                  </div>
+                </motion.a>
+              ))}
+            </div>
           </motion.div>
         </motion.div>
-
-        {/* Scroll hint bottom */}
-        <div className="absolute bottom-12 left-0 right-0 flex flex-col items-center gap-3 z-20 pointer-events-none">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.5 }}
-            className="font-mono text-[10px] uppercase tracking-[0.4em] text-white/50"
-          >
-            {t.scrollHint}
-          </motion.div>
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 1.6, repeat: Infinity }}
-            className="w-px h-12 bg-gradient-to-b from-[#FFD700] to-transparent"
-          />
-        </div>
 
         {/* Corner brackets */}
         <span className="absolute top-16 left-6 w-8 h-8 border-t border-l border-[#FFD700]/40 z-20" />
         <span className="absolute top-16 right-6 w-8 h-8 border-t border-r border-[#FFD700]/40 z-20" />
         <span className="absolute bottom-16 left-6 w-8 h-8 border-b border-l border-[#FFD700]/40 z-20" />
         <span className="absolute bottom-16 right-6 w-8 h-8 border-b border-r border-[#FFD700]/40 z-20" />
-      </div>
-
-      {/* === DIRECTOR'S VISION === */}
-      <div className="relative bg-[#0a0a0a] text-white pt-14 pb-20 overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none opacity-50">
-          <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-[#FFD700]/10 rounded-full blur-[200px]" />
-        </div>
-
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          {/* Section header */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="grid lg:grid-cols-12 gap-8 mb-10 items-end"
-          >
-            <div className="lg:col-span-7">
-              <div className="flex items-center gap-3 mb-6">
-                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#FFD700]">
-                  /02
-                </span>
-                <span className="h-px w-12 bg-[#FFD700]/40" />
-                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/50">
-                  {t.directorSub}
-                </span>
-              </div>
-              <h2 className="h-display text-[clamp(48px,8vw,120px)] leading-[0.86] text-white">
-                {t.directorTitle.split(' ')[0]}
-                <br />
-                <span className="text-[#FFD700]">{t.directorTitle.split(' ').slice(1).join(' ')}</span>
-              </h2>
-            </div>
-
-            <div className="lg:col-span-5 lg:pl-8 lg:border-l border-white/10">
-              <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/40 mb-3">
-                Note from the Director
-              </div>
-              <p className="font-serif-d italic text-xl md:text-2xl text-[#FFD700] leading-snug">
-                "Identity is conditional. Power is performance. The horse, then, is everything."
-              </p>
-              <div className="mt-4 font-mono text-[10px] uppercase tracking-[0.25em] text-white/40">
-                — MONIRUL HAQUE
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Body paragraphs - alternating columns */}
-          <div className="grid lg:grid-cols-12 gap-8">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.1 }}
-              className="lg:col-span-4"
-            >
-              <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#FFD700] mb-3">
-                ¶ 01 — Ambition
-              </div>
-              <p className="text-base text-white/85 leading-relaxed font-light">
-                {t.p1}
-              </p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="lg:col-span-4"
-            >
-              <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#FFD700] mb-3">
-                ¶ 02 — Method
-              </div>
-              <p className="text-base text-white/85 leading-relaxed font-light">
-                {t.p2}
-              </p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="lg:col-span-4"
-            >
-              <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#FFD700] mb-3">
-                ¶ 03 — Truth
-              </div>
-              <p className="text-base text-white/85 leading-relaxed font-light">
-                {t.p3}
-              </p>
-            </motion.div>
-          </div>
-
-          {/* Final question — pull quote */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.9 }}
-            className="mt-14 pt-10 border-t border-white/10 grid lg:grid-cols-12 gap-8"
-          >
-            <div className="lg:col-span-2 font-mono text-[10px] uppercase tracking-[0.3em] text-white/40">
-              Closing
-              <br />
-              Frame
-            </div>
-            <div className="lg:col-span-10">
-              <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-[#FFD700] mb-6">
-                ⟶ {t.endingLine}
-              </p>
-              <p className="font-serif-d italic text-3xl md:text-5xl lg:text-6xl text-white leading-[1.1] tracking-tight">
-                "{t.finalQuestion}"
-              </p>
-            </div>
-          </motion.div>
-        </div>
       </div>
     </section>
   )

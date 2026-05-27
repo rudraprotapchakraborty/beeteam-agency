@@ -71,16 +71,16 @@ export default function FeaturedNews() {
         >
           <div className="lg:col-span-7">
             <div className="flex items-center gap-3 mb-6">
-              <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#d4af37]">
+              <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#FFD700]">
                 /04
               </span>
-              <span className="h-px w-12 bg-[#d4af37]/40" />
+              <span className="h-px w-12 bg-[#FFD700]/40" />
               <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-black/50">
                 {t.eyebrow}
               </span>
             </div>
             <h2 className="h-display text-[clamp(48px,9vw,140px)] text-black leading-[0.86]">
-              {t.title1} <span className="text-[#d4af37]">{t.title2}</span>
+              {t.title1} <span className="text-[#FFD700]">{t.title2}</span>
               <br />
               {t.title3}
             </h2>
@@ -107,7 +107,7 @@ export default function FeaturedNews() {
           <div>
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-black/60">
-                <Newspaper size={12} className="text-[#d4af37]" />
+                <Newspaper size={12} className="text-[#FFD700]" />
                 {t.pinned}
               </div>
               <div className="flex-1 mx-4 h-px bg-black/10" />
@@ -138,7 +138,7 @@ export default function FeaturedNews() {
                 <span className="dot-pulse" />
                 {t.archive}
               </div>
-              <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#d97706]">
+              <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#FFD700]">
                 {t.live}
               </div>
             </div>
@@ -204,7 +204,7 @@ function NewsCard({ news, index, readLabel, refLabel, large, isFeatured }: NewsC
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.05 }}
       whileHover={{ y: -4 }}
-      className="group relative block bg-white rounded-xl overflow-hidden border border-black/8 hover:border-[#d4af37] shadow-sm hover:shadow-[0_25px_60px_-20px_rgba(0,0,0,0.2)] transition-all duration-500 sheen"
+      className="group relative block bg-white rounded-xl overflow-hidden border border-black/8 hover:border-[#FFD700] shadow-sm hover:shadow-[0_25px_60px_-20px_rgba(0,0,0,0.2)] transition-all duration-500 sheen"
     >
       {isFeatured && (
         <div className="absolute top-3 left-3 z-20 bg-[#FFD700] text-black text-[9px] font-extrabold px-2.5 py-1 rounded-full shadow font-mono uppercase tracking-[0.2em]">
@@ -237,18 +237,18 @@ function NewsCard({ news, index, readLabel, refLabel, large, isFeatured }: NewsC
 
       <div className="p-4 space-y-2.5">
         <div className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.25em] text-black/50">
-          <Globe size={11} className="text-[#d4af37]" />
+          <Globe size={11} className="text-[#FFD700]" />
           {news.outlet}
         </div>
 
         <h3
-          className={`${large ? 'text-base' : 'text-sm'} font-semibold leading-snug text-black group-hover:text-[#d97706] transition-colors`}
+          className={`${large ? 'text-base' : 'text-sm'} font-semibold leading-snug text-black group-hover:text-[#FFD700] transition-colors`}
         >
           {news.title}
         </h3>
 
         <div className="flex justify-end pt-2 border-t border-black/5 font-mono text-[9px] uppercase tracking-[0.25em] text-black/40">
-          <span className="flex items-center gap-1 group-hover:text-[#d97706] transition-colors">
+          <span className="flex items-center gap-1 group-hover:text-[#FFD700] transition-colors">
             {readLabel} <ExternalLink size={10} />
           </span>
         </div>
@@ -278,13 +278,13 @@ function ArchiveRow({
         <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-black/35 shrink-0">
           {refLabel}_{String(index + 1).padStart(2, '0')}
         </span>
-        <span className="text-sm font-medium text-black truncate group-hover:text-[#d97706] transition-colors">
+        <span className="text-sm font-medium text-black truncate group-hover:text-[#FFD700] transition-colors">
           {news.outlet}
         </span>
       </div>
       <ExternalLink
         size={12}
-        className="text-black/30 group-hover:text-[#d97706] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all shrink-0"
+        className="text-black/30 group-hover:text-[#FFD700] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all shrink-0"
       />
     </motion.a>
   )
