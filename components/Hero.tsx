@@ -205,7 +205,6 @@ export default function Hero() {
                   initial={{ opacity: 0, y: 24 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 1.0 + i * 0.12 }}
-                  whileHover={{ scale: 1.03, y: -4 }}
                   className="group relative flex-1 h-[460px] rounded-2xl overflow-hidden cursor-pointer transition-all duration-500"
                   style={{
                     border: `1.5px solid ${item.accent}60`,
@@ -269,6 +268,49 @@ export default function Hero() {
             </div>
           </motion.div>
         </motion.div>
+
+        {/* Mobile news strip — horizontal scroll pinned above letterbox */}
+        <div className="lg:hidden absolute bottom-14 left-0 right-0 z-20 px-4">
+          <div className="flex items-center gap-2 mb-2 px-1">
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#FFD700]">
+              <span className="w-1 h-1 rounded-full bg-black" />
+              <span className="font-mono text-[8px] uppercase tracking-[0.3em] text-black font-bold">Featured Coverage</span>
+            </div>
+            <span className="flex-1 h-px bg-white/10" />
+            <span className="font-mono text-[8px] text-white/25 uppercase tracking-widest">Press · 2026</span>
+          </div>
+          <div className="flex gap-2.5 overflow-x-auto pb-1 snap-x snap-mandatory" style={{ scrollbarWidth: 'none' }}>
+            {[
+              { outlet: 'Daily Sun', headline: 'Political Satire Film "The University of Chankharpul" Unveils Trailer', href: 'https://www.daily-sun.com/entertainment/877071/political-satire-film-the-university-of-chankharpul-unveils-trailer', accent: '#e87c1e', thumb: '/news1.png' },
+              { outlet: 'Dhaka Tribune', headline: 'Trailer of "The University of Chankharpul"', href: 'https://www.dhakatribune.com/showtime/411199/trailer-of-%E2%80%9Cthe-university-of-chankharpul%E2%80%9D', accent: '#1a6fa8', thumb: '/news2.png' },
+              { outlet: 'The Daily Star', headline: '"Good Cinema Will Always Find Its Place" — Akash Haque', href: 'https://www.thedailystar.net/culture/tv-film/news/good-cinema-will-always-find-its-place-akash-haque-4184886', accent: '#1d7c4d', thumb: '/news3.png' },
+            ].map((item, i) => (
+              <a
+                key={item.href}
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative shrink-0 w-[130px] h-[155px] rounded-xl overflow-hidden snap-start"
+                style={{ border: `1.5px solid ${item.accent}60` }}
+              >
+                <img src={item.thumb} alt={item.outlet} className="absolute inset-0 w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/30" />
+                <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: `linear-gradient(90deg, transparent, ${item.accent}, transparent)` }} />
+                <div className="absolute top-[14px] -right-[18px] rotate-45 bg-[#FFD700] px-6 py-[2px]">
+                  <span className="font-mono text-[6px] uppercase tracking-[0.2em] font-black text-black">Featured</span>
+                </div>
+                <div className="absolute top-2 left-2">
+                  <div className="px-1.5 py-0.5 rounded font-mono text-[7px] uppercase tracking-[0.2em] font-bold text-white" style={{ background: item.accent }}>
+                    {item.outlet.split(' ')[0]}
+                  </div>
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 p-2.5">
+                  <p className="text-[10px] text-white font-semibold leading-snug line-clamp-2">{item.headline}</p>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
 
         {/* Corner brackets */}
         <span className="absolute top-16 left-6 w-8 h-8 border-t border-l border-[#FFD700]/40 z-20" />
