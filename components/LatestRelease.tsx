@@ -20,7 +20,7 @@ export default function LatestRelease() {
       duration: 'Duration',
       trailer: 'Official Trailer',
       poster: 'Theatrical Poster',
-      caption: 'A satirical political drama by Monirul Haque. Premiered at the 24th Dhaka International Film Festival.',
+      caption: 'A satirical political drama by Monirul Haque Akash. Premiered at the 24th Dhaka International Film Festival.',
     },
     bn: {
       eyebrow: 'এখন প্রদর্শিত · ০৫',
@@ -31,7 +31,7 @@ export default function LatestRelease() {
       duration: 'সময়কাল',
       trailer: 'অফিসিয়াল ট্রেলার',
       poster: 'থিয়েটার পোস্টার',
-      caption: 'মনিরুল হকের একটি ব্যঙ্গাত্মক রাজনৈতিক নাটক। ২৪তম ঢাকা আন্তর্জাতিক চলচ্চিত্র উৎসবে প্রিমিয়ার।',
+      caption: 'মনিরুল হক আকাশের একটি ব্যঙ্গাত্মক রাজনৈতিক নাটক। ২৪তম ঢাকা আন্তর্জাতিক চলচ্চিত্র উৎসবে প্রিমিয়ার।',
     },
   } as const
 

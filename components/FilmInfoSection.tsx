@@ -13,7 +13,7 @@ export default function FilmInfoSection() {
       eyebrow: 'Production File · 06',
       title: 'Film Information',
       creatorLabel: 'Producer · Writer · Director · Editor · Cinematographer',
-      creator: 'Monirul Haque',
+      creator: 'Monirul Haque Akash',
       production: 'Production Company',
       genre: 'Genre',
       country: 'Country',
@@ -23,6 +23,7 @@ export default function FilmInfoSection() {
       duration: 'Duration',
       format: 'Available Format',
       executive: 'Executive Production',
+      digitalPartner: 'Digital Communications & Media Partner',
       genreValue: 'Political Drama · Satire',
       countryValue: 'Bangladesh',
       languageValue: 'Bengali',
@@ -37,7 +38,7 @@ export default function FilmInfoSection() {
       eyebrow: 'প্রোডাকশন ফাইল · ০৬',
       title: 'ফিল্ম তথ্য',
       creatorLabel: 'প্রযোজক · চিত্রনাট্যকার · পরিচালক · সম্পাদক · চিত্রগ্রাহক',
-      creator: 'মনিরুল হক',
+      creator: 'মনিরুল হক আকাশ',
       production: 'প্রযোজনা প্রতিষ্ঠান',
       genre: 'ধরন',
       country: 'দেশ',
@@ -47,6 +48,7 @@ export default function FilmInfoSection() {
       duration: 'সময়কাল',
       format: 'প্রাপ্য ফরম্যাট',
       executive: 'নির্বাহী প্রযোজনা',
+      digitalPartner: 'ডিজিটাল কমিউনিকেশনস ও মিডিয়া পার্টনার',
       genreValue: 'রাজনৈতিক নাটক · ব্যঙ্গ',
       countryValue: 'বাংলাদেশ',
       languageValue: 'বাংলা',
@@ -173,6 +175,7 @@ export default function FilmInfoSection() {
               <InfoRow label={t.duration} value={t.durationValue} accent />
               <InfoRow label={t.format} value="DCP · MP4 · MOV" mono />
               <InfoRow label={t.executive} value="HM Production & Multimedia" />
+              <InfoRow label={t.digitalPartner} value="Creative Surf" href="https://www.creativesurf.agency/" />
             </div>
           </motion.div>
         </div>
@@ -186,22 +189,27 @@ function InfoRow({
   value,
   mono,
   accent,
+  href,
 }: {
   label: string
   value: string
   mono?: boolean
   accent?: boolean
+  href?: string
 }) {
+  const valueClass = `text-base font-medium ${mono ? 'font-mono-d' : ''} ${accent ? 'text-[#FFD700]' : 'text-white'} group-hover:text-[#FFD700] transition-colors`
   return (
     <div className="flex flex-col py-4 border-b border-white/10 group">
       <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-white/40 mb-1.5">
         {label}
       </span>
-      <span
-        className={`text-base font-medium ${mono ? 'font-mono-d' : ''} ${accent ? 'text-[#FFD700]' : 'text-white'} group-hover:text-[#FFD700] transition-colors`}
-      >
-        {value}
-      </span>
+      {href ? (
+        <a href={href} target="_blank" rel="noopener noreferrer" className={`${valueClass} no-underline`}>
+          {value}
+        </a>
+      ) : (
+        <span className={valueClass}>{value}</span>
+      )}
     </div>
   )
 }

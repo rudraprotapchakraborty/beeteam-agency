@@ -89,7 +89,7 @@ export default function Hero() {
           T—00:00:08:24 · A1 · 24fps
         </div>
         <div className="hidden lg:flex absolute right-6 top-1/2 -translate-y-1/2 [writing-mode:vertical-rl] font-mono text-[10px] uppercase tracking-[0.4em] text-white/50 z-20">
-          DIRECTOR · MONIRUL HAQUE · 2026
+          DIRECTOR · MONIRUL HAQUE AKASH · 2026
         </div>
 
         {/* Center content: left branding + right news */}
