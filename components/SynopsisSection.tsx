@@ -136,7 +136,7 @@ export default function SynopsisSection() {
               className="lg:col-span-7 space-y-5"
             >
               <p className="font-serif-d text-2xl md:text-3xl text-white leading-[1.3]">
-                <span className="text-[#FFD700] font-bold mr-2">"</span>
+                <span className="text-[#FFD700] font-bold mr-2">&ldquo;</span>
                 {t.blurb}
               </p>
               <p className="text-lg text-white/70 leading-relaxed font-light">

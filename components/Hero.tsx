@@ -2,7 +2,7 @@
 
 import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { ArrowDown, ExternalLink, Film, Sparkles } from 'lucide-react'
+import { ArrowDown, ExternalLink, Film } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 
 export default function Hero() {
@@ -29,6 +29,7 @@ export default function Hero() {
       featureBadge: 'Feature Film · 2026',
       runtime: 'Runtime · 134 min',
       shot: 'Shot on RED · 4K UHD',
+      press: 'Press Coverage',
     },
     bn: {
       title1: 'বিটিম',
@@ -41,10 +42,63 @@ export default function Hero() {
       featureBadge: 'ফিচার ফিল্ম · ২০২৬',
       runtime: 'সময়কাল · ১৪৪ মিনিট',
       shot: 'RED-এ ধারণকৃত · 4K UHD',
+      press: 'প্রেস কভারেজ',
     },
   } as const
 
   const t = translations[language]
+
+  const pressCaptures = [
+    {
+      id: 'news-06',
+      outlet: 'The Daily Star',
+      title: "'The University of Chankharpul' to hit theatres this Friday",
+      pdf: '/press/news-06.pdf',
+      thumb: '/press/news-06.jpg',
+    },
+    {
+      id: 'news-05',
+      outlet: 'Prothom Alo',
+      title: "গণরুমের তিক্ত অভিজ্ঞতা থেকে সিনেমা, আজ থেকে হলে 'ইউনিভার্সিটি অব চানখারপুল'",
+      pdf: '/press/news-05.pdf',
+      thumb: '/press/news-05.jpg',
+    },
+    {
+      id: 'news-27',
+      outlet: 'BDNews24',
+      title: "ছাত্র রাজনীতির গল্প 'দ্য ইউনিভার্সিটি অব চানখাঁরপুল', অবশেষে হলে",
+      pdf: '/press/news-27.pdf',
+      thumb: '/press/news-27.jpg',
+    },
+    {
+      id: 'news-11',
+      outlet: 'Protidiner Bangladesh',
+      title: "প্রথম দিনেই দর্শকদের প্রশংসায় ভাসছে 'দ্য ইউনিভার্সিটি অব চানখারপুল'",
+      pdf: '/press/news-11.pdf',
+      thumb: '/press/news-11.jpg',
+    },
+    {
+      id: 'news-23',
+      outlet: 'Samakal',
+      title: 'ঈদের পর প্রেক্ষাগৃহে মুক্তি পেলো নতুন সিনেমা',
+      pdf: '/press/news-23.pdf',
+      thumb: '/press/news-23.jpg',
+    },
+    {
+      id: 'news-28',
+      outlet: 'Channel i',
+      title: "'সত্যিই, সিনেমা বানানোর চেয়ে মুক্তি দেয়া বেশি কঠিন'",
+      pdf: '/press/news-28.pdf',
+      thumb: '/press/news-28.jpg',
+    },
+    {
+      id: 'news-07',
+      outlet: 'Jagonews24',
+      title: "'ইউনিভার্সিটি অব চানখারপুল' কি বিশ্ববিদ্যালয়টিকে বিদ্রুপ করছে?",
+      pdf: '/press/news-07.pdf',
+      thumb: '/press/news-07.jpg',
+    },
+  ]
 
   return (
     <section
@@ -92,18 +146,18 @@ export default function Hero() {
           DIRECTOR · MONIRUL HAQUE AKASH · 2026
         </div>
 
-        {/* Center content: left branding + right news */}
+        {/* Center content: Beeteam Studios branding + press strip */}
         <motion.div
           style={{ y: titleY }}
-          className="relative z-20 h-full grid lg:grid-cols-2 gap-0"
+          className="relative z-20 h-full flex flex-col"
         >
-          {/* LEFT: Beeteam Studios branding */}
-          <div className="flex flex-col items-center justify-center text-white px-8 lg:px-10">
+          {/* Beeteam Studios branding */}
+          <div className="flex-1 flex flex-col items-center justify-center text-white px-8 lg:px-10 pt-16 pb-2">
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.5 }}
-              className="h-display text-[clamp(80px,13vw,260px)] text-white text-center leading-[0.85] w-full"
+              className="h-display text-[clamp(48px,7vw,148px)] text-white text-center leading-[0.85] w-full"
             >
               <span className="block">{t.title1}</span>
               <span className="block text-[#FFD700] -mt-[0.08em]">{t.title2}</span>
@@ -121,7 +175,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.9 }}
-              className="text-base text-white/70 max-w-xs text-center mt-5 font-light tracking-wide"
+              className="text-base text-white/70 max-w-xs text-center mt-3 font-light tracking-wide"
             >
               {t.subtitle}
             </motion.p>
@@ -130,7 +184,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 1.1 }}
-              className="flex flex-col sm:flex-row items-center gap-4 mt-8"
+              className="flex flex-col sm:flex-row items-center gap-4 mt-5"
             >
               <motion.a
                 href="#contact"
@@ -156,161 +210,70 @@ export default function Hero() {
             </motion.div>
           </div>
 
-          {/* RIGHT: Featured news cards */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.9, delay: 0.8 }}
-            className="hidden lg:flex flex-col gap-3 border-l border-white/10 h-full px-8 py-14 justify-center"
-          >
-            <div className="flex items-center gap-3">
-              <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#FFD700] shrink-0">
-                <span className="w-1.5 h-1.5 rounded-full bg-black" />
-                <span className="font-mono text-[9px] uppercase tracking-[0.35em] text-black font-bold">Featured Coverage</span>
+          {/* Press coverage strip — PDF captures */}
+          <div className="shrink-0 px-4 pb-6">
+            <div className="max-w-7xl mx-auto">
+              <div className="flex items-center gap-3 mb-2.5 px-1">
+                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#FFD700] shrink-0">
+                  <span className="w-1.5 h-1.5 rounded-full bg-black" />
+                  <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-black font-bold">
+                    {t.press}
+                  </span>
+                </div>
+                <span className="flex-1 h-px bg-white/15" />
+                <span className="font-mono text-[8px] uppercase tracking-[0.3em] text-white/30">
+                  PDF · 2026
+                </span>
               </div>
-              <span className="flex-1 h-px bg-white/10" />
-              <span className="font-mono text-[8px] uppercase tracking-[0.3em] text-white/25">Press · 2026</span>
-            </div>
 
-            {/* Three tall poster cards side by side */}
-            <div className="flex gap-3">
-              {[
-                {
-                  outlet: 'Daily Sun',
-                  headline: 'Political Satire Film "The University of Chankharpul" Unveils Trailer',
-                  href: 'https://www.daily-sun.com/entertainment/877071/political-satire-film-the-university-of-chankharpul-unveils-trailer',
-                  accent: '#e87c1e',
-                  thumb: '/news1.png',
-                },
-                {
-                  outlet: 'Dhaka Tribune',
-                  headline: 'Trailer of "The University of Chankharpul"',
-                  href: 'https://www.dhakatribune.com/showtime/411199/trailer-of-%E2%80%9Cthe-university-of-chankharpul%E2%80%9D',
-                  accent: '#1a6fa8',
-                  thumb: '/news2.png',
-                },
-                {
-                  outlet: 'The Daily Star',
-                  headline: '"Good Cinema Will Always Find Its Place" — Akash Haque',
-                  href: 'https://www.thedailystar.net/culture/tv-film/news/good-cinema-will-always-find-its-place-akash-haque-4184886',
-                  accent: '#1d7c4d',
-                  thumb: '/news3.png',
-                },
-              ].map((item, i) => (
-                <motion.a
-                  key={item.href}
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  initial={{ opacity: 0, y: 24 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 1.0 + i * 0.12 }}
-                  className="group relative flex-1 h-[460px] rounded-2xl overflow-hidden cursor-pointer transition-all duration-500"
-                  style={{
-                    border: `1.5px solid ${item.accent}60`,
-                    boxShadow: `0 0 0 0px ${item.accent}00, 0 8px 40px -8px rgba(0,0,0,0.8)`,
-                  }}
-                  whileHover={{
-                    scale: 1.03,
-                    y: -6,
-                    boxShadow: `0 0 24px 4px ${item.accent}55, 0 24px 60px -12px rgba(0,0,0,0.9)`,
-                    borderColor: item.accent,
-                  }}
-                >
-                  {/* Full poster image */}
-                  <img
-                    src={item.thumb}
-                    alt={item.outlet}
-                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                  />
-
-                  {/* Gradient overlays */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
-                  <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-transparent" />
-
-                  {/* Accent glow strip at top */}
-                  <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: `linear-gradient(90deg, transparent, ${item.accent}, transparent)` }} />
-
-                  {/* FEATURED ribbon */}
-                  <div className="absolute top-[18px] -right-[22px] z-20 rotate-45 bg-[#FFD700] px-8 py-[3px]">
-                    <span className="font-mono text-[7px] uppercase tracking-[0.25em] font-black text-black">Featured</span>
-                  </div>
-
-                  {/* Outlet badge — top */}
-                  <div className="absolute top-4 left-3 right-3 flex items-center justify-between z-10">
-                    <div
-                      className="px-2.5 py-1 rounded-md font-mono text-[8px] uppercase tracking-[0.3em] font-bold text-white shadow-lg"
-                      style={{ background: item.accent }}
-                    >
-                      {item.outlet}
-                    </div>
-                    <div
-                      className="w-6 h-6 rounded-full flex items-center justify-center font-mono text-[9px] font-bold text-white"
-                      style={{ background: `${item.accent}40`, border: `1px solid ${item.accent}80` }}
-                    >
-                      {i + 1}
-                    </div>
-                  </div>
-
-                  {/* Headline + link — bottom */}
-                  <div className="absolute bottom-0 left-0 right-0 p-4 z-10">
-                    <div className="w-6 h-[2px] mb-2 rounded-full" style={{ background: item.accent }} />
-                    <p className="text-[12px] text-white font-semibold leading-snug line-clamp-3 mb-2.5">
-                      {item.headline}
-                    </p>
-                    <div className="flex items-center gap-1.5">
-                      <span className="font-mono text-[8px] uppercase tracking-[0.25em] text-white/50 group-hover:text-white transition-colors">{item.outlet}</span>
-                      <ExternalLink size={8} className="text-white/40 group-hover:text-white transition-colors" />
-                    </div>
-                  </div>
-                </motion.a>
-              ))}
-            </div>
-          </motion.div>
-        </motion.div>
-
-        {/* Mobile news strip — horizontal scroll pinned above letterbox */}
-        <div className="lg:hidden absolute bottom-14 left-0 right-0 z-20 px-4">
-          <div className="flex items-center gap-2 mb-2 px-1">
-            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#FFD700]">
-              <span className="w-1 h-1 rounded-full bg-black" />
-              <span className="font-mono text-[8px] uppercase tracking-[0.3em] text-black font-bold">Featured Coverage</span>
-            </div>
-            <span className="flex-1 h-px bg-white/10" />
-            <span className="font-mono text-[8px] text-white/25 uppercase tracking-widest">Press · 2026</span>
-          </div>
-          <div className="flex gap-2.5 overflow-x-auto pb-1 snap-x snap-mandatory" style={{ scrollbarWidth: 'none' }}>
-            {[
-              { outlet: 'Daily Sun', headline: 'Political Satire Film "The University of Chankharpul" Unveils Trailer', href: 'https://www.daily-sun.com/entertainment/877071/political-satire-film-the-university-of-chankharpul-unveils-trailer', accent: '#e87c1e', thumb: '/news1.png' },
-              { outlet: 'Dhaka Tribune', headline: 'Trailer of "The University of Chankharpul"', href: 'https://www.dhakatribune.com/showtime/411199/trailer-of-%E2%80%9Cthe-university-of-chankharpul%E2%80%9D', accent: '#1a6fa8', thumb: '/news2.png' },
-              { outlet: 'The Daily Star', headline: '"Good Cinema Will Always Find Its Place" — Akash Haque', href: 'https://www.thedailystar.net/culture/tv-film/news/good-cinema-will-always-find-its-place-akash-haque-4184886', accent: '#1d7c4d', thumb: '/news3.png' },
-            ].map((item, i) => (
-              <a
-                key={item.href}
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative shrink-0 w-[130px] h-[155px] rounded-xl overflow-hidden snap-start"
-                style={{ border: `1.5px solid ${item.accent}60` }}
+              <div
+                className="flex gap-3 overflow-x-auto pb-2 snap-x xl:justify-center"
+                style={{ scrollbarWidth: 'none' }}
               >
-                <img src={item.thumb} alt={item.outlet} className="absolute inset-0 w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/30" />
-                <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: `linear-gradient(90deg, transparent, ${item.accent}, transparent)` }} />
-                <div className="absolute top-[14px] -right-[18px] rotate-45 bg-[#FFD700] px-6 py-[2px]">
-                  <span className="font-mono text-[6px] uppercase tracking-[0.2em] font-black text-black">Featured</span>
-                </div>
-                <div className="absolute top-2 left-2">
-                  <div className="px-1.5 py-0.5 rounded font-mono text-[7px] uppercase tracking-[0.2em] font-bold text-white" style={{ background: item.accent }}>
-                    {item.outlet.split(' ')[0]}
-                  </div>
-                </div>
-                <div className="absolute bottom-0 left-0 right-0 p-2.5">
-                  <p className="text-[10px] text-white font-semibold leading-snug line-clamp-2">{item.headline}</p>
-                </div>
-              </a>
-            ))}
+                {pressCaptures.map((item, i) => (
+                  <motion.a
+                    key={item.id}
+                    href={item.pdf}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.9 + i * 0.08 }}
+                    whileHover={{ y: -6, scale: 1.03 }}
+                    className="group shrink-0 w-[140px] snap-start"
+                  >
+                    <div className="relative h-[150px] rounded-xl overflow-hidden border border-white/15 group-hover:border-[#FFD700] bg-[#111] shadow-[0_12px_34px_-12px_rgba(0,0,0,0.85)] transition-colors">
+                      <img
+                        src={item.thumb}
+                        alt={item.outlet}
+                        className="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/10 to-black/40" />
+
+                      {/* Headline + open */}
+                      <div className="absolute bottom-0 left-0 right-0 p-2.5">
+                        <p className="text-[10px] leading-snug text-white font-semibold line-clamp-2">
+                          {item.title}
+                        </p>
+                        <div className="flex items-center gap-1 mt-1 text-white/55 group-hover:text-[#FFD700] transition-colors">
+                          <ExternalLink size={9} />
+                          <span className="font-mono text-[7px] uppercase tracking-[0.2em]">Open</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Outlet name below the card */}
+                    <div className="mt-2 flex justify-center">
+                      <span className="px-2.5 py-0.5 rounded bg-[#FFD700] text-black font-mono text-[8px] font-bold uppercase tracking-[0.18em] shadow">
+                        {item.outlet}
+                      </span>
+                    </div>
+                  </motion.a>
+                ))}
+              </div>
+            </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Corner brackets */}
         <span className="absolute top-16 left-6 w-8 h-8 border-t border-l border-[#FFD700]/40 z-20" />

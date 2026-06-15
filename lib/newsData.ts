@@ -4,9 +4,34 @@ export type NewsItem = {
   href: string
   category: string
   accent: string
+  featured?: boolean
 }
 
 export const newsData: NewsItem[] = [
+  {
+    outlet: 'Daily Sun',
+    title: 'Political Satire Film "The University of Chankharpul" Unveils Trailer',
+    href: 'https://www.daily-sun.com/entertainment/877071/political-satire-film-the-university-of-chankharpul-unveils-trailer',
+    category: 'PRESS',
+    accent: '#e87c1e',
+    featured: true,
+  },
+  {
+    outlet: 'Dhaka Tribune',
+    title: 'Trailer of "The University of Chankharpul"',
+    href: 'https://www.dhakatribune.com/showtime/411199/trailer-of-%E2%80%9Cthe-university-of-chankharpul%E2%80%9D',
+    category: 'PRESS',
+    accent: '#1a6fa8',
+    featured: true,
+  },
+  {
+    outlet: 'The Daily Star',
+    title: '"Good Cinema Will Always Find Its Place" — Akash Haque',
+    href: 'https://www.thedailystar.net/culture/tv-film/news/good-cinema-will-always-find-its-place-akash-haque-4184886',
+    category: 'PRESS',
+    accent: '#1d7c4d',
+    featured: true,
+  },
   {
     outlet: 'Nagorik Protidin Online',
     title: 'View Full Coverage',
@@ -34,6 +59,7 @@ export const newsData: NewsItem[] = [
     href: 'https://www.prothomalo.com/entertainment/dhallywood/uorx7yq03m',
     category: 'PRESS',
     accent: '#D4AF37',
+    featured: true,
   },
   {
     outlet: 'Desh TV',
@@ -55,6 +81,7 @@ export const newsData: NewsItem[] = [
     href: 'https://www.thedailystar.net/entertainment/tv-film/news/diff-closing-ceremony-university-chankarphul-kurak-among-noted-winners-4084126',
     category: 'PRESS',
     accent: '#D4AF37',
+    featured: true,
   },
   {
     outlet: 'Sara Bangla',
@@ -104,6 +131,7 @@ export const newsData: NewsItem[] = [
     href: 'https://epaper.thefinancialexpress.com.bd/popUp.php?img_name=2026%2F01%2F21%2Fimages%2F24_100.jpg',
     category: 'PRESS',
     accent: '#D4AF37',
+    featured: true,
   },
   {
     outlet: 'News Trail BD',
@@ -181,5 +209,6 @@ export const newsData: NewsItem[] = [
     href: 'https://epaper.thestatesman.com/4117111/Dainik-Statesman/13-TH-FEBRUARY-2026#page/8/1',
     category: 'PRESS',
     accent: '#D4AF37',
+    featured: true,
   },
 ]

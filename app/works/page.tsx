@@ -7,27 +7,16 @@ import { useLanguage } from '@/context/LanguageContext'
 
 type Project = {
   id: string
-  title: string
-  category: string
 }
 
 const projects: Project[] = [
-  { id: 'VpOd1qnnJHw', title: '', category: '' },
-  { id: 'nvwHhE5el6o', title: '', category: '' },
-  { id: 'UqMWgsWH7RU', title: '', category: '' },
-  { id: 'por5d5Nelog', title: '', category: '' },
-  { id: '2LJWoKDKiqc', title: '', category: '' },
-  { id: 'QTgY29dOPnQ', title: '', category: '' },
+  { id: 'VpOd1qnnJHw' },
+  { id: 'nvwHhE5el6o' },
+  { id: 'UqMWgsWH7RU' },
+  { id: 'por5d5Nelog' },
+  { id: '2LJWoKDKiqc' },
+  { id: 'QTgY29dOPnQ' },
 ]
-
-type Categories = {
-  film: string
-  tvc: string
-  ovc: string
-  ads: string
-  doc: string
-  music: string
-}
 
 export default function Works() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
@@ -48,15 +37,6 @@ export default function Works() {
       subtitle: 'A curated selection of cinematic narratives and high-impact visual storytelling.',
       total: 'Reels',
       year: '2026',
-      categories: {
-        film: 'Film',
-        tvc: 'TVC',
-        ovc: 'OVC',
-        ads: 'Ads',
-        doc: 'Documentary',
-        music: 'Music Video',
-      },
-      filterAll: 'All',
       reel: 'Reel',
       esc: 'ESC · close',
     },
@@ -67,15 +47,6 @@ export default function Works() {
       subtitle: 'সিনেমাটিক গল্প ও উচ্চ-প্রভাবশালী ভিজ্যুয়াল স্টোরিটেলিং-এর নির্বাচিত সংগ্রহ।',
       total: 'রিল',
       year: '২০২৬',
-      categories: {
-        film: 'ফিল্ম',
-        tvc: 'টিভিসি',
-        ovc: 'ওভিসি',
-        ads: 'বিজ্ঞাপন',
-        doc: 'ডকুমেন্টারি',
-        music: 'মিউজিক ভিডিও',
-      },
-      filterAll: 'সব',
       reel: 'রিল',
       esc: 'ESC · বন্ধ',
     },
@@ -165,7 +136,6 @@ export default function Works() {
               item={item}
               index={i}
               onClick={() => setSelectedProject(item)}
-              categoryLabel={t.categories[item.category as keyof Categories] ?? ''}
               reelLabel={t.reel}
             />
           ))}
@@ -230,11 +200,10 @@ type ProjectCardProps = {
   item: Project
   index: number
   onClick: () => void
-  categoryLabel: string
   reelLabel: string
 }
 
-function ProjectCard({ item, index, onClick, categoryLabel, reelLabel }: ProjectCardProps) {
+function ProjectCard({ item, index, onClick, reelLabel }: ProjectCardProps) {
   return (
     <motion.div
       onClick={onClick}
@@ -271,7 +240,7 @@ function ProjectCard({ item, index, onClick, categoryLabel, reelLabel }: Project
         <div className="flex items-end justify-between gap-3">
           <div className="space-y-3">
             <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-white/60">
-              {categoryLabel || 'Cinematic'}
+              Cinematic
             </div>
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 border-2 border-white/30 rounded-full flex items-center justify-center bg-white/10 backdrop-blur-md group-hover:bg-[#FFD700] group-hover:border-[#FFD700] group-hover:text-black transition-all duration-300">

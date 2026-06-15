@@ -9,13 +9,14 @@ import {
   useSpring,
   useTransform,
 } from 'framer-motion'
-import { ArrowUpRight, MapPin } from 'lucide-react'
+import { ArrowUpRight, Menu, X } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 
 export default function Navbar() {
   const { scrollY, scrollYProgress } = useScroll()
   const { language, changeLanguage } = useLanguage()
   const [hoveredLink, setHoveredLink] = useState<string | null>(null)
+  const [mobileOpen, setMobileOpen] = useState(false)
 
   const translations = {
     en: {
@@ -63,7 +64,6 @@ export default function Navbar() {
     [0, 80],
     ['rgba(0,0,0,0)', 'rgba(10,10,10,0.06)'],
   )
-  const locationOpacity = useTransform(scrollY, [0, 50], [1, 0])
   const progressWidth = useTransform(scrollYProgress, [0, 1], ['0%', '100%'])
 
   return (
@@ -203,8 +203,49 @@ export default function Navbar() {
               বাং
             </button>
           </div>
+
+          {/* Mobile menu toggle */}
+          <button
+            onClick={() => setMobileOpen((v) => !v)}
+            aria-label="Menu"
+            aria-expanded={mobileOpen}
+            className="md:hidden flex items-center justify-center w-9 h-9 -mr-1 rounded-full text-black hover:bg-black/[0.06] transition-colors"
+          >
+            {mobileOpen ? <X size={18} strokeWidth={2.5} /> : <Menu size={18} strokeWidth={2.5} />}
+          </button>
         </div>
       </motion.header>
+
+      {/* Mobile dropdown menu */}
+      {mobileOpen && (
+        <motion.nav
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.2 }}
+          className="md:hidden fixed top-[78px] left-3 right-3 z-[1000] bg-[rgba(250,248,243,0.97)] backdrop-blur-2xl border border-black/10 rounded-2xl shadow-[0_24px_60px_-20px_rgba(0,0,0,0.25)] p-3 flex flex-col"
+        >
+          {navLinks.map((link) => (
+            <a
+              key={link.name}
+              href={link.href}
+              onClick={() => setMobileOpen(false)}
+              className="px-4 py-3 rounded-xl text-[11px] font-bold uppercase tracking-[0.22em] text-black hover:bg-black/[0.05] hover:text-[#caa400] transition-colors"
+            >
+              {link.name}
+            </a>
+          ))}
+          <a
+            href="https://www.imdb.com/title/tt39394821"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setMobileOpen(false)}
+            className="mt-1 px-4 py-3 rounded-xl text-[11px] font-bold uppercase tracking-[0.22em] text-black/60 hover:bg-black/[0.05] transition-colors flex items-center gap-2"
+          >
+            {t.rate}
+            <ArrowUpRight size={13} strokeWidth={2.5} />
+          </a>
+        </motion.nav>
+      )}
     </>
   )
 }

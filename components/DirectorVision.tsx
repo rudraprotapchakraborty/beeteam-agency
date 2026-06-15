@@ -66,7 +66,7 @@ export default function DirectorVision() {
               Note from the Director
             </div>
             <p className="font-serif-d italic text-xl md:text-2xl text-[#FFD700] leading-snug">
-              "Identity is conditional. Power is performance. The horse, then, is everything."
+              &ldquo;Identity is conditional. Power is performance. The horse, then, is everything.&rdquo;
             </p>
             <div className="mt-4 font-mono text-[10px] uppercase tracking-[0.25em] text-white/40">
               — MONIRUL HAQUE AKASH
@@ -140,7 +140,7 @@ export default function DirectorVision() {
               ⟶ {t.endingLine}
             </p>
             <p className="font-serif-d italic text-3xl md:text-5xl lg:text-6xl text-white leading-[1.1] tracking-tight">
-              "{t.finalQuestion}"
+              &ldquo;{t.finalQuestion}&rdquo;
             </p>
           </div>
         </motion.div>

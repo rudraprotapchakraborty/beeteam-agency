@@ -40,18 +40,8 @@ export default function FeaturedNews() {
 
   const t = translations[language]
 
-  const pinnedOutlets = [
-    'The Daily Star',
-    'The Statesman',
-    'Prothom Alo',
-    'The Financial Express',
-  ]
-
-  const pinnedNews = pinnedOutlets
-    .map((outlet) => newsData.find((news) => news.outlet === outlet))
-    .filter((n): n is NewsItem => Boolean(n))
-
-  const otherNews = newsData.filter((news) => !pinnedOutlets.includes(news.outlet))
+  const pinnedNews = newsData.filter((news) => news.featured)
+  const otherNews = newsData.filter((news) => !news.featured)
 
   return (
     <section className="relative paper-tex py-14 md:py-20 overflow-hidden">
@@ -112,7 +102,7 @@ export default function FeaturedNews() {
               </div>
               <div className="flex-1 mx-4 h-px bg-black/10" />
               <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-black/40">
-                {pinnedNews.length}/04
+                {String(pinnedNews.length).padStart(2, '0')}
               </div>
             </div>
 
