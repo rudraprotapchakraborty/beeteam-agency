@@ -12,8 +12,8 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <WatchInCinemas />
       <PressRelease />
+      <WatchInCinemas />
       <FeaturedNews />
       <LatestRelease />
       <FilmInfoSection />

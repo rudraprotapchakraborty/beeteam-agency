@@ -1,70 +1,99 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Download, FileText, Quote, Sparkles, Users } from 'lucide-react'
+import { Clock, Download, FileText, Play, Quote, Users } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
+
+const TRAILER_URL = 'https://youtu.be/0VWQgPVgRrs?si=dA5mpSNb8-Zd2oNH'
 
 export default function PressRelease() {
   const { language } = useLanguage()
 
   const translations = {
     en: {
-      eyebrow: 'Press Release · May 2026',
+      eyebrow: 'Press Release · 16 June 2026',
       kicker: 'Just In',
-      ribbon: 'Featured',
+      ribbon: 'Now Showing',
       title1: 'Press Release',
-      title2: 'May 2026',
-      dateline: 'Dhaka, Bangladesh',
-      p1: 'The official trailer of the highly anticipated film "The University of Chankharpul" — a sharp, satirical look at university-based student politics, hall culture, the "big brother" hierarchy, and the abuse of power in Bangladesh — has been released. Its theatrical run has already sparked wide conversation among young audiences and cinephiles.',
-      quoteLead: 'Executive Producer · Hafizuddin Munna',
+      title2: 'June 2026',
+      dateline: 'Dhaka, 16 June 2026',
+      recipients:
+        'To: The News Editor / Chief Reporter · Feature Editor / Program Head · Entertainment & Culture Section',
+      headline:
+        'Following Audience Demand, “The University of Chankharpul” to Screen at Star Cineplex at 7:15 PM for After-Office Viewers',
+      p1: 'The political satire film “The University of Chankharpul,” released on Friday, 12 June 2026, has been receiving an overwhelmingly positive response from audiences since its release. With its bold portrayal of university life, student politics, hall culture, power dynamics, and contemporary social realities, the film has generated considerable discussion among young viewers as well as audiences from various professional and social backgrounds.',
+      p2: 'Despite unfavorable weather conditions and intermittent rainfall on its opening day, audience attendance at Star Cineplex (Bashundhara City) and Lion Cinemas, Keraniganj remained encouraging. University students, in particular, were among the most prominent viewers. Following the screenings, audience members praised the film’s political satire, realistic storytelling, and courageous approach to addressing sensitive social and political issues.',
+      p3: 'In response to the positive audience feedback and growing demand, the screening schedule at Star Cineplex (Bashundhara City) has been revised. From tomorrow, the previous 4:30 PM show will be replaced with a more convenient 7:15 PM evening show, allowing office-goers and working professionals to enjoy the film after work. The film will now be screened daily at 11:00 AM and 7:15 PM at Star Cineplex. Meanwhile, Lion Cinemas, Keraniganj will continue screening the film daily at 4:40 PM and 7:30 PM.',
+      scheduleLabel: 'Current Screening Schedule',
+      venue1: 'Star Cineplex · Bashundhara City',
+      venue1Times: 'Daily · 11:00 AM & 7:15 PM',
+      venue2: 'Lion Cinemas · Keraniganj',
+      venue2Times: 'Daily · 4:40 PM & 7:30 PM',
+      quoteLead: 'Director · Akash Haque',
       quote:
-        'This is the country’s first full-length student political satire film, where the unspoken harsh realities of university life, political allegiance, gestroom culture, and the politics of power have been presented with courage.',
-      p2: 'The film centers on a few second-year university friends entangled in campus politics, power struggles, and the collision of personal dreams. Blending humour, satire and stark realism, the story has already become a focal point of interest for the younger generation.',
-      p3: 'Directed by Akash Haque (Monirul Haque Akash), the 134-minute feature has won praise at multiple national and international festivals — including the FIPRESCI Award for Best Full-Length Feature Film in the Bangladesh Panorama section of the 24th Dhaka International Film Festival (DIFF), plus the Hiralal Sen Award and Best Screenplay Award at Dhaka University Film Society’s "Amar Bhashar Cholochitro 1432".',
-      p4: 'The world premiere was held at the National Museum during DIFF, where audience turnout was so large that reports describe viewers watching from the aisles. The film’s theme song "Sohomot Bhai" has gone viral across social media as a symbolic anthem of campus culture.',
-      castLabel: 'Cast',
-      cast: 'Devodyuti Aich · Rocky Khan · Boby Biswas · Abu Sayeed · Chyan Mondal · Jibon · Sohan · Ifad — and a fresh ensemble of new faces. In a special role: writer and poet Akhtaruzzaman Azad.',
-      productionLabel: 'Production',
-      production: 'Bee Team Limited',
-      distLabel: 'Distribution',
-      dist: 'HM Production & Multimedia',
-      directorQuoteLead: 'Director · Akash Haque',
+        'The love and appreciation we have received from audiences since the release have been truly inspiring. The enthusiastic participation of young viewers, in particular, gives us great hope and encouragement.',
+      directorQuoteLead: 'Executive Producer · Md. Hafizuddin Munna',
       directorQuote:
-        'This film is not just entertainment — it is a brave cinematic attempt to rethink the realities of Bangladesh’s university politics and youth society. It also reflects the mismanagement and inconsistencies of our higher education.',
-      release: 'Releasing soon in theatres nationwide. The filmmakers warmly invite audiences to experience it on the big screen.',
+        'This film is the work of an entirely new team. The support and appreciation from audiences have been our greatest achievement. We hope even more people will come to the theatres and experience the film.',
+      p4: 'Inspired by Rono Anowar’s short story “Jhora Patar Dukkho Bilash” (Melancholy of Fallen Leaves), “The University of Chankharpul” explores university life, student politics, hall culture, power structures, and the dreams and struggles of young people. The film has already earned significant recognition, including the prestigious FIPRESCI Award in the Bangladesh Panorama Section at the Dhaka International Film Festival (DIFF), as well as the Hiralal Sen Medal and Best Screenplay Award at the Amar Bhashar Chalachitra Utsab.',
+      trailerLabel: 'Official Trailer',
+      trailerText:
+        'The film’s official trailer has already generated considerable interest on social media and can be viewed here:',
+      trailerCta: 'Watch Trailer',
+      castLabel: 'Cast & Music',
+      cast: 'The film features performances by Debdyuti Aich, Rocky Khan, Bobby Biswas, and a talented ensemble of emerging artists. Its popular songs “Shohomot Bhai” and “Rajnitir Moydan” have also gained significant attention across social media platforms.',
+      productionLabel: 'Sent by',
+      production: 'Ershadul Huq Tinku · CEO, Cool Exposure · +8801711472367',
+      distLabel: 'For Further Information',
+      dist: 'Md. Hafizuddin Munna · Executive Producer · +8801711315557 · beeteamltd@gmail.com',
+      release:
+        'The film is now screening daily — the filmmakers warmly invite audiences to experience it on the big screen.',
       download: 'Download Full Release (PDF)',
-      pages: '03 Pages · PDF',
-      doc: 'DOC-PR · MAY 2026',
-      ticker: 'JUST IN · OFFICIAL PRESS RELEASE · TRAILER LIVE · THE UNIVERSITY OF CHANKHARPUL · FIPRESCI WINNER · DIFF 2026',
+      pages: 'PDF',
+      doc: 'DOC-PR · JUN 2026',
+      ticker: 'NOW SHOWING · STAR CINEPLEX 11:00 AM & 7:15 PM · LION CINEMAS 4:40 PM & 7:30 PM · THE UNIVERSITY OF CHANKHARPUL · FIPRESCI WINNER',
     },
     bn: {
-      eyebrow: 'প্রেস রিলিজ · মে ২০২৬',
+      eyebrow: 'প্রেস রিলিজ · ১৬ জুন ২০২৬',
       kicker: 'এইমাত্র',
-      ribbon: 'বিশেষ',
+      ribbon: 'চলছে',
       title1: 'প্রেস রিলিজ',
-      title2: 'মে ২০২৬',
-      dateline: 'ঢাকা, বাংলাদেশ',
-      p1: 'বাংলাদেশের বিশ্ববিদ্যালয়ভিত্তিক ছাত্ররাজনীতি, হল কালচার, বড় ভাই সংস্কৃতি এবং ক্ষমতার অপব্যবহারের বাস্তবতাকে ব্যঙ্গাত্মক অথচ তীক্ষ্ণ ভাষায় তুলে ধরা বহুল প্রতীক্ষিত চলচ্চিত্র "দ্য ইউনিভার্সিটি অফ চানখাঁরপুল"-এর অফিসিয়াল ট্রেলার প্রকাশিত হয়েছে। একইসাথে সম্প্রতি চলচ্চিত্রটি প্রেক্ষাগৃহে মুক্তির আভাস দেয়ার মাধ্যমে তরুণ দর্শক ও চলচ্চিত্রপ্রেমীদের মাঝে ব্যাপক আলোচনার জন্ম দিয়েছে।',
-      quoteLead: 'নির্বাহী প্রযোজক · হাফিজউদ্দিন মুন্না',
+      title2: 'জুন ২০২৬',
+      dateline: 'ঢাকা, ১৬ জুন ২০২৬',
+      recipients:
+        'প্রতি: বার্তা সম্পাদক / প্রধান প্রতিবেদক · ফিচার সম্পাদক / অনুষ্ঠান প্রধান · বিনোদন ও সংস্কৃতি বিভাগ',
+      headline:
+        'দর্শক চাহিদার পরিপ্রেক্ষিতে, অফিস-ফেরত দর্শকদের জন্য স্টার সিনেপ্লেক্সে সন্ধ্যা ৭:১৫ মিনিটে চলবে "দ্য ইউনিভার্সিটি অফ চানখাঁরপুল"',
+      p1: 'গত শুক্রবার, ১২ জুন ২০২৬-এ মুক্তি পাওয়া রাজনৈতিক স্যাটায়ার চলচ্চিত্র "দ্য ইউনিভার্সিটি অফ চানখাঁরপুল" মুক্তির পর থেকেই দর্শকদের কাছ থেকে অভূতপূর্ব সাড়া পাচ্ছে। বিশ্ববিদ্যালয় জীবন, ছাত্ররাজনীতি, হল কালচার, ক্ষমতার দ্বন্দ্ব এবং সমকালীন সামাজিক বাস্তবতার সাহসী উপস্থাপনার জন্য তরুণ দর্শকসহ বিভিন্ন পেশা ও শ্রেণির দর্শকের মধ্যে চলচ্চিত্রটি ব্যাপক আলোচনার জন্ম দিয়েছে।',
+      p2: 'মুক্তির দিন প্রতিকূল আবহাওয়া ও থেমে থেমে বৃষ্টি সত্ত্বেও স্টার সিনেপ্লেক্স (বসুন্ধরা সিটি) ও লায়ন সিনেমাস, কেরানীগঞ্জে দর্শক উপস্থিতি ছিল আশাব্যঞ্জক। বিশেষত বিশ্ববিদ্যালয়ের শিক্ষার্থীরা ছিলেন অন্যতম প্রধান দর্শক। প্রদর্শনী শেষে দর্শকরা চলচ্চিত্রের রাজনৈতিক স্যাটায়ার, বাস্তবধর্মী গল্প এবং স্পর্শকাতর সামাজিক ও রাজনৈতিক বিষয় তুলে ধরার সাহসিকতার প্রশংসা করেছেন।',
+      p3: 'ইতিবাচক দর্শক প্রতিক্রিয়া ও ক্রমবর্ধমান চাহিদার পরিপ্রেক্ষিতে স্টার সিনেপ্লেক্স (বসুন্ধরা সিটি)-এর প্রদর্শনী সময়সূচি পরিবর্তন করা হয়েছে। আগামীকাল থেকে পূর্বের বিকেল ৪:৩০ মিনিটের শো-টির পরিবর্তে অফিস-ফেরত কর্মজীবীদের সুবিধার্থে সন্ধ্যা ৭:১৫ মিনিটের শো চালু করা হচ্ছে। স্টার সিনেপ্লেক্সে চলচ্চিত্রটি এখন প্রতিদিন সকাল ১১:০০ ও সন্ধ্যা ৭:১৫ মিনিটে প্রদর্শিত হবে। অন্যদিকে, লায়ন সিনেমাস, কেরানীগঞ্জে প্রতিদিন বিকেল ৪:৪০ ও সন্ধ্যা ৭:৩০ মিনিটে চলচ্চিত্রটি প্রদর্শিত হবে।',
+      scheduleLabel: 'বর্তমান প্রদর্শনী সময়সূচি',
+      venue1: 'স্টার সিনেপ্লেক্স · বসুন্ধরা সিটি',
+      venue1Times: 'প্রতিদিন · সকাল ১১:০০ ও সন্ধ্যা ৭:১৫',
+      venue2: 'লায়ন সিনেমাস · কেরানীগঞ্জ',
+      venue2Times: 'প্রতিদিন · বিকেল ৪:৪০ ও সন্ধ্যা ৭:৩০',
+      quoteLead: 'পরিচালক · আকাশ হক',
       quote:
-        'এটি দেশের প্রথম পূর্ণদৈর্ঘ্য স্টুডেন্ট পলিটিক্যাল স্যাটায়ার চলচ্চিত্র, যেখানে বিশ্ববিদ্যালয় জীবনের অপ্রকাশিত রূঢ় বাস্তবতা, রাজনৈতিক আনুগত্য, গেস্টরুম সংস্কৃতি এবং ক্ষমতার রাজনীতিকে সাহসীভাবে উপস্থাপন করা হয়েছে।',
-      p2: 'চলচ্চিত্রটি মূলত বিশ্ববিদ্যালয়ের দ্বিতীয় বর্ষের কয়েকজন বন্ধুর গল্পকে কেন্দ্র করে নির্মিত, যারা ক্যাম্পাস রাজনীতি, ক্ষমতার দ্বন্দ্ব এবং ব্যক্তিগত স্বপ্নের সংঘর্ষে জড়িয়ে পড়ে। হাস্যরস, ব্যঙ্গ এবং বাস্তবতার সংমিশ্রণে নির্মিত এই গল্প তরুণ প্রজন্মের কাছে ইতোমধ্যেই বিশেষ আগ্রহের কেন্দ্রবিন্দুতে পরিণত হয়েছে।',
-      p3: 'পরিচালক আকাশ হক (Monirul Haque Akash) নির্মিত ১৩৪ মিনিট দৈর্ঘ্যের এই সিনেমাটি ইতোমধ্যেই বিভিন্ন আন্তর্জাতিক ও জাতীয় চলচ্চিত্র উৎসবে প্রশংসা কুড়িয়েছে। ২৪তম ঢাকা আন্তর্জাতিক চলচ্চিত্র উৎসব (DIFF)-এর বাংলাদেশ প্যানোরামা বিভাগে চলচ্চিত্রটি FIPRESCI Award for Best Full-Length Feature Film অর্জন করে। এছাড়াও ঢাকা বিশ্ববিদ্যালয় চলচ্চিত্র সংসদ আয়োজিত "আমার ভাষার চলচ্চিত্র ১৪৩২" উৎসবে সিনেমাটি হীরালাল সেন পুরস্কার এবং সেরা চিত্রনাট্য পুরস্কার লাভ করে।',
-      p4: 'চলচ্চিত্রটির ওয়ার্ল্ড প্রিমিয়ার অনুষ্ঠিত হয় ঢাকা আন্তর্জাতিক চলচ্চিত্র উৎসবে জাতীয় জাদুঘরে, যেখানে দর্শকদের ব্যাপক উপস্থিতি ও ইতিবাচক প্রতিক্রিয়া বিশেষভাবে আলোচিত হয়। গণমাধ্যমের প্রতিবেদন অনুযায়ী, প্রদর্শনীতে দর্শকদের অতিরিক্ত আগ্রহের কারণে অনেককে মেঝেতে বসেও সিনেমাটি উপভোগ করতে দেখা গেছে। সিনেমাটির থিম সং "সহমত ভাই" ইতোমধ্যেই সামাজিক যোগাযোগমাধ্যমে তরুণদের মধ্যে ব্যাপক জনপ্রিয়তা অর্জন করেছে।',
-      castLabel: 'অভিনয়ে',
-      cast: 'দেবদ্যুতি আইচ · রকি খান · ববি বিশ্বাস · আবু সায়ীদ · চয়ন · জীবন · সোহান · ইফাদ — এবং আরও একঝাঁক নতুন মুখ। বিশেষ একটি চরিত্রে রয়েছেন সাহিত্যিক ও কবি আনোয়ারুজ্জামান আজাদ।',
-      productionLabel: 'নির্মাণে',
-      production: 'বি টিম লিমিটেড',
-      distLabel: 'পরিবেশনায়',
-      dist: 'এইচ এম প্রোডাকশন এন্ড মাল্টিমিডিয়া',
-      directorQuoteLead: 'পরিচালক · আকাশ হক',
+        'মুক্তির পর থেকে দর্শকদের কাছ থেকে যে ভালোবাসা ও প্রশংসা পেয়েছি তা সত্যিই অনুপ্রেরণাদায়ক। বিশেষত তরুণ দর্শকদের উৎসাহী অংশগ্রহণ আমাদের অনেক আশা ও সাহস জোগায়।',
+      directorQuoteLead: 'নির্বাহী প্রযোজক · মোঃ হাফিজউদ্দিন মুন্না',
       directorQuote:
-        'এই সিনেমা শুধুমাত্র বিনোদন নয়; বরং বাংলাদেশের বিশ্ববিদ্যালয় রাজনীতি ও তরুণ সমাজের বাস্তবতাকে নতুনভাবে ভাবার একটি সাহসী সিনেম্যাটিক প্রচেষ্টা। সিনেমাটিতে একই সাথে দেশের উচ্চতর শিক্ষার অব্যবস্থাপনা ও অসঙ্গতিগুলোর প্রতিচ্ছবি ফুটে উঠেছে।',
-      release: 'শিগগিরই সিনেমাটি সারা দেশের প্রেক্ষাগৃহে মুক্তি পাবে। দর্শকদেরকে সিনেমাটি হলে গিয়ে দেখার জন্য সংশ্লিষ্ট নির্মাতারা আমন্ত্রণ জানান।',
+        'এই চলচ্চিত্রটি একেবারে নতুন একটি দলের কাজ। দর্শকদের সমর্থন ও প্রশংসাই আমাদের সবচেয়ে বড় অর্জন। আমরা আশা করি আরও বেশি মানুষ প্রেক্ষাগৃহে এসে সিনেমাটি উপভোগ করবেন।',
+      p4: 'রনো আনোয়ারের ছোটগল্প "ঝরা পাতার দুঃখ বিলাস" অবলম্বনে নির্মিত "দ্য ইউনিভার্সিটি অফ চানখাঁরপুল" বিশ্ববিদ্যালয় জীবন, ছাত্ররাজনীতি, হল কালচার, ক্ষমতার কাঠামো এবং তরুণদের স্বপ্ন ও সংগ্রামকে তুলে ধরে। চলচ্চিত্রটি ইতোমধ্যে উল্লেখযোগ্য স্বীকৃতি অর্জন করেছে, যার মধ্যে রয়েছে ঢাকা আন্তর্জাতিক চলচ্চিত্র উৎসব (DIFF)-এর বাংলাদেশ প্যানোরামা বিভাগে মর্যাদাপূর্ণ FIPRESCI Award, পাশাপাশি আমার ভাষার চলচ্চিত্র উৎসবে হীরালাল সেন পদক ও শ্রেষ্ঠ চিত্রনাট্য পুরস্কার।',
+      trailerLabel: 'অফিসিয়াল ট্রেলার',
+      trailerText:
+        'চলচ্চিত্রটির অফিসিয়াল ট্রেলার ইতোমধ্যে সামাজিক যোগাযোগমাধ্যমে ব্যাপক আগ্রহ তৈরি করেছে এবং এখানে দেখা যাবে:',
+      trailerCta: 'ট্রেলার দেখুন',
+      castLabel: 'অভিনয় ও সংগীত',
+      cast: 'চলচ্চিত্রটিতে অভিনয় করেছেন দেবদ্যুতি আইচ, রকি খান, ববি বিশ্বাস এবং একঝাঁক প্রতিভাবান উদীয়মান শিল্পী। এর জনপ্রিয় গান "সহমত ভাই" এবং "রাজনীতির ময়দান"-ও সামাজিক যোগাযোগমাধ্যমে ব্যাপক সাড়া ফেলেছে।',
+      productionLabel: 'প্রেরক',
+      production: 'এরশাদুল হক টিংকু · সিইও, কুল এক্সপোজার · +৮৮০১৭১১৪৭২৩৬৭',
+      distLabel: 'আরও তথ্যের জন্য',
+      dist: 'মোঃ হাফিজউদ্দিন মুন্না · নির্বাহী প্রযোজক · +৮৮০১৭১১৩১৫৫৫৭ · beeteamltd@gmail.com',
+      release: 'সিনেমাটি এখন প্রতিদিন প্রেক্ষাগৃহে চলছে — দর্শকদের বড় পর্দায় সিনেমাটি উপভোগ করার জন্য নির্মাতারা আন্তরিক আমন্ত্রণ জানান।',
       download: 'সম্পূর্ণ প্রেস রিলিজ ডাউনলোড করুন (PDF)',
-      pages: '০৩ পৃষ্ঠা · PDF',
-      doc: 'ডক-পিআর · মে ২০২৬',
-      ticker: 'এইমাত্র · অফিসিয়াল প্রেস রিলিজ · ট্রেলার লাইভ · দ্য ইউনিভার্সিটি অফ চানখাঁরপুল · FIPRESCI বিজয়ী · DIFF ২০২৬',
+      pages: 'PDF',
+      doc: 'ডক-পিআর · জুন ২০২৬',
+      ticker: 'এখন চলছে · স্টার সিনেপ্লেক্স সকাল ১১:০০ ও সন্ধ্যা ৭:১৫ · লায়ন সিনেমাস বিকেল ৪:৪০ ও সন্ধ্যা ৭:৩০ · দ্য ইউনিভার্সিটি অফ চানখাঁরপুল · FIPRESCI বিজয়ী',
     },
   } as const
 
@@ -83,7 +112,7 @@ export default function PressRelease() {
               key={i}
               className="font-display text-xl md:text-2xl tracking-[0.18em] uppercase px-8 flex items-center gap-8"
             >
-              <Sparkles size={14} strokeWidth={2.5} />
+              <Play size={14} strokeWidth={2.5} />
               {t.ticker}
               <span className="text-black/50">★</span>
             </span>
@@ -99,7 +128,7 @@ export default function PressRelease() {
 
       {/* Side vertical label */}
       <div className="hidden xl:block absolute left-6 top-32 [writing-mode:vertical-rl] rotate-180 font-mono text-[10px] uppercase tracking-[0.4em] text-white/30">
-        DOC · PR · MAY 2026 · OFFICIAL · BEE TEAM STUDIOS
+        DOC · PR · JUN 2026 · OFFICIAL · BEE TEAM STUDIOS
       </div>
 
       <div className="relative max-w-7xl mx-auto px-6 py-12 md:py-16 z-10">
@@ -196,23 +225,52 @@ export default function PressRelease() {
             <div className="stripes-gold h-2 w-full opacity-90" />
 
             {/* Letterhead */}
-            <div className="px-8 md:px-10 pt-6 pb-4 border-b border-black/10 flex items-center justify-between flex-wrap gap-3">
-              <div className="flex items-center gap-3">
-                <FileText size={16} className="text-[#d4af37]" />
-                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-black/55">
-                  {t.dateline}
+            <div className="px-8 md:px-10 pt-6 pb-4 border-b border-black/10">
+              <div className="flex items-center justify-between flex-wrap gap-3">
+                <div className="flex items-center gap-3">
+                  <FileText size={16} className="text-[#d4af37]" />
+                  <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-black/55">
+                    {t.dateline}
+                  </span>
+                </div>
+                <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-black/40">
+                  {t.doc}
                 </span>
               </div>
-              <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-black/40">
-                {t.doc}
-              </span>
+              <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.2em] text-black/45">
+                {t.recipients}
+              </p>
             </div>
 
             {/* Body */}
             <div className="px-8 md:px-10 py-7 md:py-8 space-y-5 text-[15px] leading-[1.7] text-black/80 font-serif-d">
-              <p>{t.p1}</p>
+              <h3 className="font-serif-d text-2xl md:text-3xl leading-tight text-black">
+                {t.headline}
+              </h3>
 
-              {/* Pull-quote — executive producer */}
+              <p>{t.p1}</p>
+              <p>{t.p2}</p>
+              <p>{t.p3}</p>
+
+              {/* Screening schedule */}
+              <div className="my-6 rounded-xl border border-[#FFD700]/50 bg-[#FFD700]/10 p-5">
+                <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-black/60 mb-4">
+                  <Clock size={12} className="text-[#d4af37]" />
+                  {t.scheduleLabel}
+                </div>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <div className="text-sm font-bold text-black">{t.venue1}</div>
+                    <div className="mt-1 text-sm text-black/65">{t.venue1Times}</div>
+                  </div>
+                  <div>
+                    <div className="text-sm font-bold text-black">{t.venue2}</div>
+                    <div className="mt-1 text-sm text-black/65">{t.venue2Times}</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Pull-quote — director */}
               <figure className="relative my-6 pl-6 border-l-2 border-[#FFD700]">
                 <Quote
                   size={18}
@@ -226,9 +284,35 @@ export default function PressRelease() {
                 </figcaption>
               </figure>
 
-              <p>{t.p2}</p>
-              <p>{t.p3}</p>
+              {/* Executive producer quote */}
+              <figure className="relative my-6 pl-6 border-l-2 border-black/20">
+                <blockquote className="font-serif-d italic text-base md:text-lg text-black/85 leading-snug">
+                  “{t.directorQuote}”
+                </blockquote>
+                <figcaption className="font-mono text-[10px] uppercase tracking-[0.3em] text-black/50 mt-3">
+                  — {t.directorQuoteLead}
+                </figcaption>
+              </figure>
+
               <p>{t.p4}</p>
+
+              {/* Trailer */}
+              <div className="my-6 rounded-xl border border-black/10 bg-white/60 p-5">
+                <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-black/55 mb-3">
+                  <Play size={12} className="text-[#d4af37]" />
+                  {t.trailerLabel}
+                </div>
+                <p className="text-[14px] leading-relaxed text-black/85 mb-4">{t.trailerText}</p>
+                <a
+                  href={TRAILER_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-[#0a0a0a] text-[#FFD700] px-4 py-2.5 rounded-full font-mono text-[10px] font-extrabold uppercase tracking-[0.2em] hover:gap-3 transition-all"
+                >
+                  <Play size={12} strokeWidth={3} />
+                  {t.trailerCta}
+                </a>
+              </div>
 
               {/* Cast strip */}
               <div className="mt-6 rounded-xl border border-black/10 bg-white/60 p-5">
@@ -239,21 +323,11 @@ export default function PressRelease() {
                 <p className="text-[14px] leading-relaxed text-black/85">{t.cast}</p>
               </div>
 
-              {/* Director quote */}
-              <figure className="relative mt-6 pl-6 border-l-2 border-black/20">
-                <blockquote className="font-serif-d italic text-base md:text-lg text-black/85 leading-snug">
-                  “{t.directorQuote}”
-                </blockquote>
-                <figcaption className="font-mono text-[10px] uppercase tracking-[0.3em] text-black/50 mt-3">
-                  — {t.directorQuoteLead}
-                </figcaption>
-              </figure>
-
               <p className="text-black font-medium">{t.release}</p>
             </div>
 
             {/* Bottom credits strip */}
-            <div className="grid grid-cols-2 gap-px bg-black/10 border-t border-black/10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-black/10 border-t border-black/10">
               <div className="bg-[#faf8f3] p-5 flex flex-col gap-1">
                 <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-black/40">
                   {t.productionLabel}
@@ -281,7 +355,7 @@ export default function PressRelease() {
             >
               <span className="text-black/50">★</span>
               {t.ticker}
-              <Sparkles size={14} strokeWidth={2.5} />
+              <Play size={14} strokeWidth={2.5} />
             </span>
           ))}
         </div>
