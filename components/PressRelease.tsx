@@ -11,93 +11,131 @@ export default function PressRelease() {
 
   const translations = {
     en: {
-      eyebrow: 'Press Release · 16 June 2026',
+      eyebrow: 'Press Release · 3 July 2026',
       kicker: 'Just In',
       ribbon: 'Now Showing',
       title1: 'Press Release',
-      title2: 'June 2026',
-      dateline: 'Dhaka, 16 June 2026',
+      title2: 'July 2026',
+      dateline: 'Dhaka, 3 July 2026',
       recipients:
         'To: The News Editor / Chief Reporter · Feature Editor / Program Head · Entertainment & Culture Section',
       headline:
-        'Following Audience Demand, “The University of Chankharpul” to Screen at Star Cineplex at 7:15 PM for After-Office Viewers',
-      p1: 'The political satire film “The University of Chankharpul,” released on Friday, 12 June 2026, has been receiving an overwhelmingly positive response from audiences since its release. With its bold portrayal of university life, student politics, hall culture, power dynamics, and contemporary social realities, the film has generated considerable discussion among young viewers as well as audiences from various professional and social backgrounds.',
-      p2: 'Despite unfavorable weather conditions and intermittent rainfall on its opening day, audience attendance at Star Cineplex (Bashundhara City) and Lion Cinemas, Keraniganj remained encouraging. University students, in particular, were among the most prominent viewers. Following the screenings, audience members praised the film’s political satire, realistic storytelling, and courageous approach to addressing sensitive social and political issues.',
-      p3: 'In response to the positive audience feedback and growing demand, the screening schedule at Star Cineplex (Bashundhara City) has been revised. From tomorrow, the previous 4:30 PM show will be replaced with a more convenient 7:15 PM evening show, allowing office-goers and working professionals to enjoy the film after work. The film will now be screened daily at 11:00 AM and 7:15 PM at Star Cineplex. Meanwhile, Lion Cinemas, Keraniganj will continue screening the film daily at 4:40 PM and 7:30 PM.',
-      scheduleLabel: 'Current Screening Schedule',
-      venue1: 'Star Cineplex · Bashundhara City',
-      venue1Times: 'Daily · 11:00 AM & 7:15 PM',
-      venue2: 'Lion Cinemas · Keraniganj',
-      venue2Times: 'Daily · 4:40 PM & 7:30 PM',
-      quoteLead: 'Director · Akash Haque',
+        'Acclaimed Bangladeshi Feature Film “The University of Chankharpul” Opens in Cumilla and Rajshahi',
+      p1: 'Following its successful theatrical release and widespread critical acclaim, the much-talked-about Bangladeshi feature film The University of Chankharpul is expanding its nationwide theatrical run with releases in two new cities.',
+      p2: 'Beginning Friday, July 3, 2026, the film will be screened at K Screen Cineplex, Cumilla, with daily shows at 2:00 PM and 5:00 PM. It will also open at Grand River View (GRV) Cineplex, Rajshahi, from Saturday, July 4, 2026, with a daily show at 3:30 PM.',
+      p3: 'Written and directed by Akash Haque, The University of Chankharpul presents a compelling portrayal of university life, exploring student politics, residential hall culture, friendship, personal struggles, and the social realities shaping today’s youth. Since its theatrical debut, the film has generated significant attention from both audiences and critics for its powerful storytelling, authentic performances, and thought-provoking narrative, earning particular appreciation among young moviegoers.',
+      scheduleLabel: 'Screening Expansion Schedule',
+      venue1: 'K Screen Cineplex · Cumilla',
+      venue1Times: 'Daily · 2:00 PM & 5:00 PM (From July 3)',
+      venue2: 'GRV Cineplex · Rajshahi',
+      venue2Times: 'Daily · 3:30 PM (From July 4)',
+      quoteLead: 'Executive Producer & Distributor · Md. Hafizuddin Munna',
       quote:
-        'The love and appreciation we have received from audiences since the release have been truly inspiring. The enthusiastic participation of young viewers, in particular, gives us great hope and encouragement.',
+        'The overwhelming love and support from audiences have inspired us to bring The University of Chankharpul to viewers across Bangladesh. We are delighted to introduce the film to audiences in Cumilla and Rajshahi. We firmly believe that its authentic portrayal of university life and its emotionally engaging story will resonate deeply with movie lovers.',
       directorQuoteLead: 'Executive Producer · Md. Hafizuddin Munna',
       directorQuote:
-        'This film is the work of an entirely new team. The support and appreciation from audiences have been our greatest achievement. We hope even more people will come to the theatres and experience the film.',
-      p4: 'Inspired by Rono Anowar’s short story “Jhora Patar Dukkho Bilash” (Melancholy of Fallen Leaves), “The University of Chankharpul” explores university life, student politics, hall culture, power structures, and the dreams and struggles of young people. The film has already earned significant recognition, including the prestigious FIPRESCI Award in the Bangladesh Panorama Section at the Dhaka International Film Festival (DIFF), as well as the Hiralal Sen Medal and Best Screenplay Award at the Amar Bhashar Chalachitra Utsab.',
+        'We warmly invite everyone to experience the film on the big screen with their family and friends. The theatrical release will continue to expand to additional cities across Bangladesh in the coming weeks.',
+      p4: 'The film features performances by Devodyuti Aich, Rocky Khan, Bobby Biswas, Akhtaruzzaman Azad, Chayan Mondal, Abu Saeed, Mehedi Hasan Sohan, Jibon along with a talented ensemble of emerging Bangladeshi actors.',
       trailerLabel: 'Official Trailer',
       trailerText:
         'The film’s official trailer has already generated considerable interest on social media and can be viewed here:',
       trailerCta: 'Watch Trailer',
-      castLabel: 'Cast & Music',
-      cast: 'The film features performances by Debdyuti Aich, Rocky Khan, Bobby Biswas, and a talented ensemble of emerging artists. Its popular songs “Shohomot Bhai” and “Rajnitir Moydan” have also gained significant attention across social media platforms.',
+      castLabel: 'Cast & Production Ensemble',
+      cast: 'The film features performances by Devodyuti Aich, Rocky Khan, Bobby Biswas, Akhtaruzzaman Azad, Chayan Mondal, Abu Saeed, Mehedi Hasan Sohan, Jibon, and a group of emerging Bangladeshi talents.',
       productionLabel: 'Sent by',
       production: 'Ershadul Huq Tinku · CEO, Cool Exposure · +8801711472367',
       distLabel: 'For Further Information',
       dist: 'Md. Hafizuddin Munna · Executive Producer · +8801711315557 · beeteamltd@gmail.com',
       release:
-        'The film is now screening daily — the filmmakers warmly invite audiences to experience it on the big screen.',
-      download: 'Download Full Release (PDF)',
-      pages: 'PDF',
-      doc: 'DOC-PR · JUN 2026',
-      ticker: 'NOW SHOWING · STAR CINEPLEX 11:00 AM & 7:15 PM · LION CINEMAS 4:40 PM & 7:30 PM · THE UNIVERSITY OF CHANKHARPUL · FIPRESCI WINNER',
+        'The film is expanding to more theatres across the country in response to massive audience demand.',
+      download: 'Download Expanded Release (TXT)',
+      pages: 'TXT · JULY 2026',
+      doc: 'DOC-PR · JUL 2026',
+      ticker: 'NOW SHOWING · K SCREEN CUMILLA 2:00 PM & 5:00 PM · GRV CINEPLEX RAJSHAHI 3:30 PM · THE UNIVERSITY OF CHANKHARPUL · ACCLAIMED DRAMA',
     },
     bn: {
-      eyebrow: 'প্রেস রিলিজ · ১৬ জুন ২০২৬',
+      eyebrow: 'প্রেস রিলিজ · ৩ জুলাই ২০২৬',
       kicker: 'এইমাত্র',
       ribbon: 'চলছে',
       title1: 'প্রেস রিলিজ',
-      title2: 'জুন ২০২৬',
-      dateline: 'ঢাকা, ১৬ জুন ২০২৬',
+      title2: 'জুলাই ২০২৬',
+      dateline: 'ঢাকা, ৩ জুলাই ২০২৬',
       recipients:
         'প্রতি: বার্তা সম্পাদক / প্রধান প্রতিবেদক · ফিচার সম্পাদক / অনুষ্ঠান প্রধান · বিনোদন ও সংস্কৃতি বিভাগ',
       headline:
-        'দর্শক চাহিদার পরিপ্রেক্ষিতে, অফিস-ফেরত দর্শকদের জন্য স্টার সিনেপ্লেক্সে সন্ধ্যা ৭:১৫ মিনিটে চলবে "দ্য ইউনিভার্সিটি অফ চানখাঁরপুল"',
-      p1: 'গত শুক্রবার, ১২ জুন ২০২৬-এ মুক্তি পাওয়া রাজনৈতিক স্যাটায়ার চলচ্চিত্র "দ্য ইউনিভার্সিটি অফ চানখাঁরপুল" মুক্তির পর থেকেই দর্শকদের কাছ থেকে অভূতপূর্ব সাড়া পাচ্ছে। বিশ্ববিদ্যালয় জীবন, ছাত্ররাজনীতি, হল কালচার, ক্ষমতার দ্বন্দ্ব এবং সমকালীন সামাজিক বাস্তবতার সাহসী উপস্থাপনার জন্য তরুণ দর্শকসহ বিভিন্ন পেশা ও শ্রেণির দর্শকের মধ্যে চলচ্চিত্রটি ব্যাপক আলোচনার জন্ম দিয়েছে।',
-      p2: 'মুক্তির দিন প্রতিকূল আবহাওয়া ও থেমে থেমে বৃষ্টি সত্ত্বেও স্টার সিনেপ্লেক্স (বসুন্ধরা সিটি) ও লায়ন সিনেমাস, কেরানীগঞ্জে দর্শক উপস্থিতি ছিল আশাব্যঞ্জক। বিশেষত বিশ্ববিদ্যালয়ের শিক্ষার্থীরা ছিলেন অন্যতম প্রধান দর্শক। প্রদর্শনী শেষে দর্শকরা চলচ্চিত্রের রাজনৈতিক স্যাটায়ার, বাস্তবধর্মী গল্প এবং স্পর্শকাতর সামাজিক ও রাজনৈতিক বিষয় তুলে ধরার সাহসিকতার প্রশংসা করেছেন।',
-      p3: 'ইতিবাচক দর্শক প্রতিক্রিয়া ও ক্রমবর্ধমান চাহিদার পরিপ্রেক্ষিতে স্টার সিনেপ্লেক্স (বসুন্ধরা সিটি)-এর প্রদর্শনী সময়সূচি পরিবর্তন করা হয়েছে। আগামীকাল থেকে পূর্বের বিকেল ৪:৩০ মিনিটের শো-টির পরিবর্তে অফিস-ফেরত কর্মজীবীদের সুবিধার্থে সন্ধ্যা ৭:১৫ মিনিটের শো চালু করা হচ্ছে। স্টার সিনেপ্লেক্সে চলচ্চিত্রটি এখন প্রতিদিন সকাল ১১:০০ ও সন্ধ্যা ৭:১৫ মিনিটে প্রদর্শিত হবে। অন্যদিকে, লায়ন সিনেমাস, কেরানীগঞ্জে প্রতিদিন বিকেল ৪:৪০ ও সন্ধ্যা ৭:৩০ মিনিটে চলচ্চিত্রটি প্রদর্শিত হবে।',
-      scheduleLabel: 'বর্তমান প্রদর্শনী সময়সূচি',
-      venue1: 'স্টার সিনেপ্লেক্স · বসুন্ধরা সিটি',
-      venue1Times: 'প্রতিদিন · সকাল ১১:০০ ও সন্ধ্যা ৭:১৫',
-      venue2: 'লায়ন সিনেমাস · কেরানীগঞ্জ',
-      venue2Times: 'প্রতিদিন · বিকেল ৪:৪০ ও সন্ধ্যা ৭:৩০',
+        'কুমিল্লা ও রাজশাহীতে মুক্তি পাচ্ছে প্রশংসিত বাংলাদেশি পূর্ণদৈর্ঘ্য চলচ্চিত্র “দ্য ইউনিভার্সিটি অফ চানখাঁরপুল”',
+      p1: 'সফল মুক্তি এবং দর্শকদের বিপুল প্রশংসার পর, আলোচিত বাংলাদেশি চলচ্চিত্র "দ্য ইউনিভার্সিটি অফ চানখাঁরপুল" দুটি নতুন শহরে মুক্তি পেয়ে এর দেশব্যাপী প্রদর্শন আরও প্রসারিত করছে।',
+      p2: 'শুক্রবার, ৩ জুলাই ২০২৬ থেকে কুমিল্লায় কে স্ক্রিন সিনেপ্লেক্সে প্রতিদিন দুপুর ২:০০ ও বিকেল ৫:০০ টায় সিনেমাটি প্রদর্শিত হবে। এছাড়াও শনিবার, ৪ জুলাই ২০২৬ থেকে রাজশাহীর গ্র্যান্ড রিভার ভিউ (জিআরভি) সিনেপ্লেক্সে প্রতিদিন দুপুর ৩:৩০ মিনিটে সিনেমাটি প্রদর্শিত হবে।',
+      p3: 'আকাশ হকের রচনা ও পরিচালনায় "দ্য ইউনিভার্সিটি অফ চানখাঁরপুল" ছবিতে ছাত্ররাজনীতি, হলের সংস্কৃতি, বন্ধুত্ব, ব্যক্তিগত লড়াই এবং তরুণদের সামাজিক বাস্তবতার এক বাস্তব চিত্র তুলে করা হয়েছে। মুক্তির পর থেকেই চলচ্চিত্রটি এর শক্তিশালী গল্প ও অভিনয়ের কারণে তরুণ দর্শক ও সমালোচকদের মাঝে বিপুল সাড়া ফেলেছে।',
+      scheduleLabel: 'নতুন প্রদর্শনী সময়সূচি',
+      venue1: 'কে স্ক্রিন সিনেপ্লেক্স · কুমিল্লা',
+      venue1Times: 'প্রতিদিন · দুপুর ২:০০ ও বিকেল ৫:০০ (৩ জুলাই থেকে)',
+      venue2: 'জিআরভি সিনেপ্লেক্স · রাজশাহী',
+      venue2Times: 'প্রতিদিন · দুপুর ৩:৩০ (৪ জুলাই থেকে)',
       quoteLead: 'পরিচালক · আকাশ হক',
       quote:
-        'মুক্তির পর থেকে দর্শকদের কাছ থেকে যে ভালোবাসা ও প্রশংসা পেয়েছি তা সত্যিই অনুপ্রেরণাদায়ক। বিশেষত তরুণ দর্শকদের উৎসাহী অংশগ্রহণ আমাদের অনেক আশা ও সাহস জোগায়।',
+        'দর্শকদের ভালোবাসাই আমাদের চলচ্চিত্রটি সারা দেশের মানুষের কাছে নিয়ে যেতে অনুপ্রাণিত করেছে। আমরা কুমিল্লা ও রাজশাহীর দর্শকদের কাছে এই চলচ্চিত্রটি পৌঁছে দিতে পেরে অত্যন্ত আনন্দিত। আমরা বিশ্বাস করি বিশ্ববিদ্যালয় জীবনের এই বাস্তব চিত্র মানুষের হৃদয় ছুঁয়ে যাবে।',
       directorQuoteLead: 'নির্বাহী প্রযোজক · মোঃ হাফিজউদ্দিন মুন্না',
       directorQuote:
-        'এই চলচ্চিত্রটি একেবারে নতুন একটি দলের কাজ। দর্শকদের সমর্থন ও প্রশংসাই আমাদের সবচেয়ে বড় অর্জন। আমরা আশা করি আরও বেশি মানুষ প্রেক্ষাগৃহে এসে সিনেমাটি উপভোগ করবেন।',
-      p4: 'রনো আনোয়ারের ছোটগল্প "ঝরা পাতার দুঃখ বিলাস" অবলম্বনে নির্মিত "দ্য ইউনিভার্সিটি অফ চানখাঁরপুল" বিশ্ববিদ্যালয় জীবন, ছাত্ররাজনীতি, হল কালচার, ক্ষমতার কাঠামো এবং তরুণদের স্বপ্ন ও সংগ্রামকে তুলে ধরে। চলচ্চিত্রটি ইতোমধ্যে উল্লেখযোগ্য স্বীকৃতি অর্জন করেছে, যার মধ্যে রয়েছে ঢাকা আন্তর্জাতিক চলচ্চিত্র উৎসব (DIFF)-এর বাংলাদেশ প্যানোরামা বিভাগে মর্যাদাপূর্ণ FIPRESCI Award, পাশাপাশি আমার ভাষার চলচ্চিত্র উৎসবে হীরালাল সেন পদক ও শ্রেষ্ঠ চিত্রনাট্য পুরস্কার।',
+        'আমরা আন্তরিকভাবে সবাইকে পরিবার ও বন্ধুদের নিয়ে সিনেমা হলে এসে সিনেমাটি বড় পর্দায় দেখার আমন্ত্রণ জানাচ্ছি। আগামী দিনগুলোতে আরও অনেক শহরে সিনেমাটি মুক্তি পাবে।',
+      p4: 'সিনেমাটিতে অভিনয় করেছেন দেবদ্যুতি আইচ, রকি খান, ববি বিশ্বাস, আখতারুজ্জামান আজাদের মতো গুণী ও দক্ষ অভিনেতারা, এবং সাথে যুক্ত আছেন একঝাঁক প্রতিভাবান উদীয়মান শিল্পী।',
       trailerLabel: 'অফিসিয়াল ট্রেলার',
       trailerText:
         'চলচ্চিত্রটির অফিসিয়াল ট্রেলার ইতোমধ্যে সামাজিক যোগাযোগমাধ্যমে ব্যাপক আগ্রহ তৈরি করেছে এবং এখানে দেখা যাবে:',
       trailerCta: 'ট্রেলার দেখুন',
-      castLabel: 'অভিনয় ও সংগীত',
-      cast: 'চলচ্চিত্রটিতে অভিনয় করেছেন দেবদ্যুতি আইচ, রকি খান, ববি বিশ্বাস এবং একঝাঁক প্রতিভাবান উদীয়মান শিল্পী। এর জনপ্রিয় গান "সহমত ভাই" এবং "রাজনীতির ময়দান"-ও সামাজিক যোগাযোগমাধ্যমে ব্যাপক সাড়া ফেলেছে।',
+      castLabel: 'অভিনয় ও শিল্পীদল',
+      cast: 'চলচ্চিত্রটিতে অভিনয় করেছেন দেবদ্যুতি আইচ, রকি খান, ববি বিশ্বাস, আখতারুজ্জামান আজাদ, চয়ন মন্ডল, আবু সাঈদ, মেহেদী হাসান সোহান, জীবন এবং একঝাঁক উদীয়মান শিল্পী।',
       productionLabel: 'প্রেরক',
       production: 'এরশাদুল হক টিংকু · সিইও, কুল এক্সপোজার · +৮৮০১৭১১৪৭২৩৬৭',
       distLabel: 'আরও তথ্যের জন্য',
-      dist: 'মোঃ হাফিজউদ্দিন মুন্না · নির্বাহী প্রযোজক · +৮৮০১৭১১৩১৫৫৫৭ · beeteamltd@gmail.com',
-      release: 'সিনেমাটি এখন প্রতিদিন প্রেক্ষাগৃহে চলছে — দর্শকদের বড় পর্দায় সিনেমাটি উপভোগ করার জন্য নির্মাতারা আন্তরিক আমন্ত্রণ জানান।',
-      download: 'সম্পূর্ণ প্রেস রিলিজ ডাউনলোড করুন (PDF)',
-      pages: 'PDF',
-      doc: 'ডক-পিআর · জুন ২০২৬',
-      ticker: 'এখন চলছে · স্টার সিনেপ্লেক্স সকাল ১১:০০ ও সন্ধ্যা ৭:১৫ · লায়ন সিনেমাস বিকেল ৪:৪০ ও সন্ধ্যা ৭:৩০ · দ্য ইউনিভার্সিটি অফ চানখাঁরপুল · FIPRESCI বিজয়ী',
+      dist: 'মোঃ হাফিজউদ্দিন মুন্না · নির্বাহী প্রযোজক · +৮৮০১টি১১৩১৫৫৫৭ · beeteamltd@gmail.com',
+      release: 'দর্শক চাহিদার কারণে দেশের আরও অনেক প্রেক্ষাগৃহে সিনেমাটির প্রদর্শন চলমান রয়েছে।',
+      download: 'সম্পূর্ণ প্রেস রিলিজ ডাউনলোড করুন (TXT)',
+      pages: 'TXT · জুলাই ২০২৬',
+      doc: 'ডক-পিআর · জুলাই ২০২৬',
+      ticker: 'এখন চলছে · কে স্ক্রিন কুমিল্লা দুপুর ২:০০ ও বিকেল ৫:০০ · জিআরভি রাজশাহী দুপুর ৩:৩০ · দ্য ইউনিভার্সিটি অফ চানখাঁরপুল',
     },
   } as const
 
   const t = translations[language]
+
+  const handleDownload = (e: React.MouseEvent) => {
+    e.preventDefault()
+    const textContent = `PRESS RELEASE
+For Immediate Release
+
+Acclaimed Bangladeshi Feature Film The University of Chankharpul Opens in Cumilla and Rajshahi
+
+Dhaka | July 3, 2026
+
+Following its successful theatrical release and widespread critical acclaim, the much-talked-about Bangladeshi feature film The University of Chankharpul is expanding its nationwide theatrical run with releases in two new cities.
+
+Beginning Friday, July 3, 2026, the film will be screened at K Screen Cineplex, Cumilla, with daily shows at 2:00 PM and 5:00 PM. It will also open at Grand River View (GRV) Cineplex, Rajshahi, from Saturday, July 4, 2026, with a daily show at 3:30 PM
+
+Written and directed by Akash Haque, The University of Chankharpul presents a compelling portrayal of university life, exploring student politics, residential hall culture, friendship, personal struggles, and the social realities shaping today's youth. Since its theatrical debut, the film has generated significant attention from both audiences and critics for its powerful storytelling, authentic performances, and thought-provoking narrative, earning particular appreciation among young moviegoers.
+
+The film features performances by Devodyuti Aich, Rocky Khan, Bobby Biswas, Akhtaruzzaman Azad, Chayan Mondal, Abu Saeed, Mehedi Hasan Sohan, Jibon along with a talented ensemble of emerging Bangladeshi actors.
+
+Speaking on the occasion, Md. Hafizuddin Munna, Executive Producer and Distributor of the film, said: "The overwhelming love and support from audiences have inspired us to bring The University of Chankharpul to viewers across Bangladesh. We are delighted to introduce the film to audiences in Cumilla and Rajshahi. We firmly believe that its authentic portrayal of university life and its emotionally engaging story will resonate deeply with movie lovers. We warmly invite everyone to experience the film on the big screen with their family and friends."
+
+The production team also confirmed that, in response to audience demand, the film's theatrical release will continue to expand to additional cities across Bangladesh in the coming weeks.
+
+Media Contact:
+Md. Hafizuddin Munna
+Executive Producer & Distributor
+Bee Team Productions
+Contact: 01711315557
+Email: beeteamltd@gmail.com`
+
+    const blob = new Blob([textContent], { type: 'text/plain;charset=utf-8;' })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    link.setAttribute('download', 'press_release_university_of_chankharpul_july_2026.txt')
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  }
 
   return (
     <section
@@ -128,7 +166,7 @@ export default function PressRelease() {
 
       {/* Side vertical label */}
       <div className="hidden xl:block absolute left-6 top-32 [writing-mode:vertical-rl] rotate-180 font-mono text-[10px] uppercase tracking-[0.4em] text-white/30">
-        DOC · PR · JUN 2026 · OFFICIAL · BEE TEAM STUDIOS
+        DOC · PR · JUL 2026 · OFFICIAL · BEE TEAM STUDIOS
       </div>
 
       <div className="relative max-w-7xl mx-auto px-6 py-12 md:py-16 z-10">
@@ -171,11 +209,9 @@ export default function PressRelease() {
             </h2>
 
             {/* Download CTA — beside the title */}
-            <a
-              href="/press-release.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative block bg-[#FFD700] text-black rounded-2xl p-6 overflow-hidden border-2 border-[#FFD700] shadow-[0_25px_60px_-15px_rgba(255,215,0,0.45)] sheen lg:w-[320px] shrink-0"
+            <button
+              onClick={handleDownload}
+              className="group relative block bg-[#FFD700] text-black rounded-2xl p-6 overflow-hidden border-2 border-[#FFD700] shadow-[0_25px_60px_-15px_rgba(255,215,0,0.45)] sheen lg:w-[320px] shrink-0 text-left cursor-pointer"
             >
               <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-black/65 mb-4">
                 <FileText size={12} className="text-black" />
@@ -189,11 +225,11 @@ export default function PressRelease() {
                   {t.doc}
                 </span>
                 <span className="inline-flex items-center gap-2 bg-[#0a0a0a] text-[#FFD700] px-4 py-2 rounded-full font-mono text-[10px] font-extrabold uppercase tracking-[0.2em] group-hover:gap-3 transition-all">
-                  PDF
+                  TXT
                   <Download size={12} strokeWidth={3} className="group-hover:translate-y-0.5 transition-transform" />
                 </span>
               </div>
-            </a>
+            </button>
           </div>
         </motion.div>
 
