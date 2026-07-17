@@ -1,17 +1,23 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import Image from 'next/image'
-import { useLanguage } from '@/context/LanguageContext'
+import { useRef } from 'react'
+import Reveal, { SectionEyebrow } from '@/components/ui/Reveal'
 
 export default function FilmInfoSection() {
-  const { language } = useLanguage()
+  const ref = useRef<HTMLElement | null>(null)
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start end', 'end start'],
+  })
+  const posterY = useTransform(scrollYProgress, [0, 1], [40, -40])
+  const posterRotate = useTransform(scrollYProgress, [0, 1], [-2, 2])
 
-  const translations = {
-    en: {
-      presents: 'Bee Team Presents',
-      eyebrow: 'Production File · 06',
-      title: 'Film Information',
+  const t = {
+      eyebrow: 'Production File',
+      title1: 'Film',
+      title2: 'Information',
       creatorLabel: 'Producer · Writer · Director · Editor · Cinematographer',
       creator: 'Monirul Haque Akash',
       production: 'Production Company',
@@ -29,187 +35,116 @@ export default function FilmInfoSection() {
       languageValue: 'Bengali',
       pictureValue: 'Colour',
       durationValue: '134 min',
-      sideTitle: 'THE UNIVERSITY OF CHANKHARPUL',
-      stamp: 'CERTIFIED',
-      stampSub: 'GOV/BD · 2026',
-    },
-    bn: {
-      presents: 'বি টিম উপস্থাপিত',
-      eyebrow: 'প্রোডাকশন ফাইল · ০৬',
-      title: 'ফিল্ম তথ্য',
-      creatorLabel: 'প্রযোজক · চিত্রনাট্যকার · পরিচালক · সম্পাদক · চিত্রগ্রাহক',
-      creator: 'মনিরুল হক আকাশ',
-      production: 'প্রযোজনা প্রতিষ্ঠান',
-      genre: 'ধরন',
-      country: 'দেশ',
-      language: 'ভাষা',
-      picture: 'চিত্র',
-      sound: 'শব্দ',
-      duration: 'সময়কাল',
-      format: 'প্রাপ্য ফরম্যাট',
-      executive: 'নির্বাহী প্রযোজনা',
-      digitalPartner: 'ডিজিটাল কমিউনিকেশনস ও মিডিয়া পার্টনার',
-      genreValue: 'রাজনৈতিক নাটক · ব্যঙ্গ',
-      countryValue: 'বাংলাদেশ',
-      languageValue: 'বাংলা',
-      pictureValue: 'রঙিন',
-      durationValue: '১৩৪ মিনিট',
-      sideTitle: 'দ্য ইউনিভার্সিটি অব চানখারপুল',
-      stamp: 'প্রত্যয়িত',
-      stampSub: 'সরকার/বিডি · ২০২৬',
-    },
-  } as const
+    }
 
-  const t = translations[language]
+  const specs = [
+    { label: t.production, value: 'Bee Team Ltd.' },
+    { label: t.genre, value: t.genreValue },
+    { label: t.country, value: t.countryValue },
+    { label: t.language, value: t.languageValue },
+    { label: t.picture, value: t.pictureValue },
+    { label: t.sound, value: '2.0 · 5.1', mono: true },
+    { label: t.duration, value: t.durationValue },
+    { label: t.format, value: 'DCP · MP4 · MOV', mono: true },
+    { label: t.executive, value: 'HM Production & Multimedia' },
+    {
+      label: t.digitalPartner,
+      value: 'Creative Surf',
+      href: 'https://www.creativesurf.agency/',
+    },
+  ]
 
   return (
-    <section className="relative bg-[#0a0a0a] text-white py-14 md:py-20 overflow-hidden grain">
-      {/* Subtle background flares */}
+    <section ref={ref} className="relative bg-page text-fg py-20 md:py-28 overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 right-0 w-[600px] h-[600px] -translate-y-1/2 bg-[#FFD700]/8 blur-[200px]" />
-      </div>
-
-      {/* Side rotating title */}
-      <div className="hidden xl:block absolute right-[-50px] top-1/2 -translate-y-1/2 rotate-90 origin-right font-mono text-white/15 tracking-[0.5em] text-xs select-none uppercase">
-        {t.sideTitle}
+        <div className="glow-orb bottom-0 right-1/4 w-[500px] h-[500px] bg-gold/[0.06]" />
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-start">
-          {/* LEFT — POSTER + STAMP */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9 }}
-            viewport={{ once: true }}
-            className="lg:col-span-5 relative"
-          >
-            <div className="relative w-full h-[640px] rounded-2xl overflow-hidden shadow-[0_50px_100px_-30px_rgba(0,0,0,0.6)] border border-white/10 group">
-              <Image
-                src="/poster2.jpg"
-                alt="Film Poster"
-                fill
-                sizes="(min-width: 1024px) 480px, 100vw"
-                className="object-cover transition-transform duration-[1.5s] group-hover:scale-105"
-                priority
-              />
-              {/* Frame brackets */}
-              <span className="absolute top-3 left-3 w-4 h-4 border-t-2 border-l-2 border-[#FFD700] z-10" />
-              <span className="absolute top-3 right-3 w-4 h-4 border-t-2 border-r-2 border-[#FFD700] z-10" />
-              <span className="absolute bottom-3 left-3 w-4 h-4 border-b-2 border-l-2 border-[#FFD700] z-10" />
-              <span className="absolute bottom-3 right-3 w-4 h-4 border-b-2 border-r-2 border-[#FFD700] z-10" />
-
-              {/* Top tape */}
-              <div className="absolute top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-black/70 backdrop-blur-sm font-mono text-[9px] uppercase tracking-[0.3em] text-[#FFD700] z-10">
-                ASSET · POSTER 02
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          {/* Floating poster — signature */}
+          <Reveal className="lg:col-span-5">
+            <motion.div style={{ y: posterY, rotate: posterRotate }} className="relative mx-auto max-w-md">
+              <div className="absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-[#ffd700]/20 via-transparent to-transparent blur-2xl" />
+              <div className="relative w-full aspect-[2/3] rounded-3xl overflow-hidden shadow-premium border border-line group">
+                <Image
+                  src="/poster2.jpg"
+                  alt="Film Poster"
+                  fill
+                  sizes="(min-width: 1024px) 420px, 90vw"
+                  className="object-cover transition-transform duration-[1.4s] group-hover:scale-105"
+                  priority
+                />
+                <div className="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-3xl" />
               </div>
-            </div>
-
-            {/* Certification stamp */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.5, rotate: -20 }}
-              whileInView={{ opacity: 1, scale: 1, rotate: -10 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.5, type: 'spring' }}
-              className="absolute -bottom-6 -right-4 w-32 h-32 rounded-full border-[3px] border-[#FFD700] flex flex-col items-center justify-center bg-[#0a0a0a] shadow-[0_20px_50px_-10px_rgba(0,0,0,0.8)]"
-            >
-              <span className="font-display text-2xl text-[#FFD700] leading-none">{t.stamp}</span>
-              <span className="font-mono text-[8px] uppercase tracking-[0.25em] text-white/60 mt-2">
-                {t.stampSub}
-              </span>
-              <span className="absolute inset-2 rounded-full border border-[#FFD700]/30" />
+              {/* Floating badge */}
+              <div className="absolute -bottom-4 -right-2 sm:-right-6 glass-strong rounded-2xl px-4 py-3 shadow-premium">
+                <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-subtle">
+                  Runtime
+                </div>
+                <div className="font-display text-3xl text-fg leading-none mt-0.5">
+                  {t.durationValue}
+                </div>
+              </div>
             </motion.div>
-          </motion.div>
+          </Reveal>
 
-          {/* RIGHT — CONTENT */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9 }}
-            viewport={{ once: true }}
-            className="lg:col-span-7"
-          >
-            <div className="flex items-center gap-3 mb-6">
-              <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#FFD700]">
-                /06
-              </span>
-              <span className="h-px w-12 bg-[#FFD700]/40" />
-              <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/50">
-                {t.eyebrow}
-              </span>
-            </div>
+          <div className="lg:col-span-7">
+            <Reveal>
+              <SectionEyebrow index="/06" label={t.eyebrow} />
+              <h2 className="h-display text-[clamp(48px,8vw,110px)] text-fg leading-[0.86] mb-8">
+                {t.title1}
+                <br />
+                <span className="text-gold-bright">{t.title2}</span>
+              </h2>
+            </Reveal>
 
-            <h2 className="h-display text-[clamp(48px,8vw,120px)] text-white leading-[0.86] mb-6">
-              {t.title.split(' ')[0]}
-              <br />
-              <span className="text-[#FFD700]">{t.title.split(' ').slice(1).join(' ')}</span>
-            </h2>
-
-            {/* Creator card — clapperboard inspired */}
-            <div className="mb-6 relative bg-gradient-to-br from-white/[0.04] to-white/[0.02] border border-white/10 rounded-xl overflow-hidden">
-              {/* Stripe header */}
-              <div className="stripes-gold h-2 w-full opacity-90" />
-              <div className="p-6 md:p-8 grid grid-cols-1 sm:grid-cols-[1fr_auto] items-center gap-4">
-                <div>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/40 mb-2">
-                    {t.creatorLabel}
-                  </p>
-                  <p className="font-display text-4xl md:text-5xl text-[#FFD700]">{t.creator}</p>
-                </div>
-                <div className="font-mono text-right">
-                  <div className="text-[9px] uppercase tracking-[0.3em] text-white/40">SCN</div>
-                  <div className="text-3xl text-white">01</div>
-                  <div className="text-[9px] uppercase tracking-[0.3em] text-white/40 mt-1">TK 01</div>
-                </div>
+            {/* Creator highlight */}
+            <Reveal delay={0.08}>
+              <div className="mb-8 relative rounded-2xl border border-gold/20 bg-gradient-to-br from-gold/10 to-transparent p-6 md:p-8 overflow-hidden">
+                <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-subtle mb-2">
+                  {t.creatorLabel}
+                </p>
+                <p className="font-display text-4xl md:text-5xl text-gold-bright">{t.creator}</p>
               </div>
-            </div>
+            </Reveal>
 
-            {/* Spec grid */}
-            <div className="grid sm:grid-cols-2 gap-x-10 gap-y-2 border-t border-white/10 pt-6">
-              <InfoRow label={t.production} value="Bee Team Ltd." />
-              <InfoRow label={t.genre} value={t.genreValue} />
-              <InfoRow label={t.country} value={t.countryValue} />
-              <InfoRow label={t.language} value={t.languageValue} />
-              <InfoRow label={t.picture} value={t.pictureValue} />
-              <InfoRow label={t.sound} value="2.0 · 5.1" mono />
-              <InfoRow label={t.duration} value={t.durationValue} accent />
-              <InfoRow label={t.format} value="DCP · MP4 · MOV" mono />
-              <InfoRow label={t.executive} value="HM Production & Multimedia" />
-              <InfoRow label={t.digitalPartner} value="Creative Surf" href="https://www.creativesurf.agency/" />
-            </div>
-          </motion.div>
+            {/* Spec bento */}
+            <Reveal delay={0.12}>
+              <div className="grid sm:grid-cols-2 gap-px rounded-2xl overflow-hidden border border-line bg-fill-hover">
+                {specs.map((spec) => (
+                  <div
+                    key={spec.label}
+                    className="bg-page-3 p-5 group hover:bg-card transition-colors"
+                  >
+                    <span className="font-mono text-[9px] uppercase tracking-[0.28em] text-subtle block mb-1.5">
+                      {spec.label}
+                    </span>
+                    {spec.href ? (
+                      <a
+                        href={spec.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-base font-medium text-fg group-hover:text-gold-bright transition-colors"
+                      >
+                        {spec.value}
+                      </a>
+                    ) : (
+                      <span
+                        className={`text-base font-medium text-fg ${
+                          spec.mono ? 'font-mono-d' : ''
+                        } group-hover:text-gold-bright transition-colors`}
+                      >
+                        {spec.value}
+                      </span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </Reveal>
+          </div>
         </div>
       </div>
     </section>
-  )
-}
-
-function InfoRow({
-  label,
-  value,
-  mono,
-  accent,
-  href,
-}: {
-  label: string
-  value: string
-  mono?: boolean
-  accent?: boolean
-  href?: string
-}) {
-  const valueClass = `text-base font-medium ${mono ? 'font-mono-d' : ''} ${accent ? 'text-[#FFD700]' : 'text-white'} group-hover:text-[#FFD700] transition-colors`
-  return (
-    <div className="flex flex-col py-4 border-b border-white/10 group">
-      <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-white/40 mb-1.5">
-        {label}
-      </span>
-      {href ? (
-        <a href={href} target="_blank" rel="noopener noreferrer" className={`${valueClass} no-underline`}>
-          {value}
-        </a>
-      ) : (
-        <span className={valueClass}>{value}</span>
-      )}
-    </div>
   )
 }

@@ -1,10 +1,24 @@
 'use client'
 
 import { useRef } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
-import { ChevronLeft, ChevronRight, ExternalLink, Film, Play } from 'lucide-react'
-import { newsData } from '@/lib/newsData'
-import { useLanguage } from '@/context/LanguageContext'
+import {
+  motion,
+  useMotionTemplate,
+  useMotionValue,
+  useScroll,
+  useSpring,
+  useTransform,
+} from 'framer-motion'
+import {
+  ChevronLeft,
+  ChevronRight,
+  ExternalLink,
+  Film,
+  Play,
+} from 'lucide-react'
+import { getNewsImage, newsData } from '@/lib/newsData'
+import MagneticButton from '@/components/ui/MagneticButton'
+import { EASE_OUT_EXPO } from '@/lib/motion'
 
 const pressCaptures = [
   {
@@ -89,169 +103,171 @@ const newsBarItems: NewsBarItem[] = [
     outlet: news.outlet,
     title: news.title,
     href: news.href,
-    thumb: null,
+    thumb: getNewsImage(news), // null when image is empty — no auto thumbnail
     kind: 'link' as const,
     featured: Boolean(news.featured),
   })),
 ].sort((a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)))
 
 export default function Hero() {
-  const { language } = useLanguage()
   const containerRef = useRef<HTMLElement | null>(null)
   const scrollerRef = useRef<HTMLDivElement | null>(null)
+
+  const mouseX = useMotionValue(0.5)
+  const mouseY = useMotionValue(0.5)
+  const glowX = useSpring(useTransform(mouseX, [0, 1], [20, 80]), { stiffness: 40, damping: 20 })
+  const glowY = useSpring(useTransform(mouseY, [0, 1], [20, 70]), { stiffness: 40, damping: 20 })
+  const glowBg = useMotionTemplate`radial-gradient(600px circle at ${glowX}% ${glowY}%, rgba(255, 215, 0,0.18), transparent 55%)`
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end start'],
   })
-  const heroBgY = useTransform(scrollYProgress, [0, 1], ['0%', '30%'])
-  const heroBgScale = useTransform(scrollYProgress, [0, 1], [1, 1.18])
-  const titleY = useTransform(scrollYProgress, [0, 1], ['0%', '-40%'])
+  const heroBgY = useTransform(scrollYProgress, [0, 1], ['0%', '28%'])
+  const heroBgScale = useTransform(scrollYProgress, [0, 1], [1, 1.15])
+  const titleY = useTransform(scrollYProgress, [0, 1], ['0%', '-25%'])
+  const titleOpacity = useTransform(scrollYProgress, [0, 0.55], [1, 0])
+  const contentBlur = useTransform(scrollYProgress, [0, 0.5], [0, 8])
+  const contentFilter = useMotionTemplate`blur(${contentBlur}px)`
 
-  const translations = {
-    en: {
+  const t = {
       tagline: 'When a team failed',
       title1: 'BEETEAM',
       title2: 'STUDIOS',
       trailer: 'Watch Trailer',
       viewWork: 'View Reel',
-      featureBadge: 'Feature Film · 2026',
-      runtime: 'Runtime · 134 min',
-      shot: 'Shot on RED · 4K UHD',
-      press: 'Press Coverage',
+      press: 'Press Desk',
       open: 'Open',
-      featured: '★ Featured',
+      featured: 'Featured',
       link: 'Link',
       prev: 'Previous',
       next: 'Next',
-      scrollHint: 'Use arrows or scroll',
-    },
-    bn: {
-      tagline: 'When a team failed',
-      title1: 'বিটিম',
-      title2: 'স্টুডিওস',
-      trailer: 'ট্রেলার দেখুন',
-      viewWork: 'রিল দেখুন',
-      featureBadge: 'ফিচার ফিল্ম · ২০২৬',
-      runtime: 'সময়কাল · ১৪৪ মিনিট',
-      shot: 'RED-এ ধারণকৃত · 4K UHD',
-      press: 'প্রেস কভারেজ',
-      open: 'খুলুন',
-      featured: '★ ফিচার্ড',
-      link: 'লিংক',
-      prev: 'আগে',
-      next: 'পরে',
-      scrollHint: 'অ্যারো বা স্ক্রল ব্যবহার করুন',
-    },
-  } as const
-
-  const t = translations[language]
+      scrollHint: 'Drag or scroll',
+      live: 'Now screening',
+      film: 'The University of Chankharpul',
+    }
 
   const scrollByCards = (dir: -1 | 1) => {
     const el = scrollerRef.current
     if (!el) return
-    el.scrollBy({ left: dir * 320, behavior: 'smooth' })
-  }
-
-  const openNewsItem = (item: NewsBarItem, e: React.MouseEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
-    window.open(item.href, '_blank', 'noopener,noreferrer')
+    el.scrollBy({ left: dir * 300, behavior: 'smooth' })
   }
 
   return (
-    <section ref={containerRef} className="relative font-sans">
-      <div className="relative h-[100svh] min-h-[760px] w-full overflow-hidden bg-[#0a0a0a] grain">
+    <section
+      ref={containerRef}
+      className="relative"
+      onMouseMove={(e) => {
+        const rect = e.currentTarget.getBoundingClientRect()
+        mouseX.set((e.clientX - rect.left) / rect.width)
+        mouseY.set((e.clientY - rect.top) / rect.height)
+      }}
+    >
+      <div className="relative min-h-[100svh] w-full overflow-hidden bg-[#030303] flex flex-col hero-cinematic">
+        {/* Cinematic background */}
         <motion.div style={{ y: heroBgY, scale: heroBgScale }} className="absolute inset-0">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/hero.jpg"
-            alt="Beeteam Background"
+            alt=""
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-[#0a0a0a]" />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/25 via-transparent to-black/15" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-[#030303]" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-black/40" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,rgba(3,3,3,0.85)_100%)]" />
         </motion.div>
 
-        {/* Letterbox bars */}
-        <div className="absolute top-0 left-0 right-0 h-12 bg-[#0a0a0a] z-10" />
-        <div className="absolute bottom-0 left-0 right-0 h-10 bg-[#0a0a0a] z-10" />
-
-        {/* Frame markers */}
-        <div className="absolute top-12 left-0 right-0 px-8 lg:px-12 mt-4 flex justify-between items-center font-mono text-[10px] uppercase tracking-[0.3em] text-[#FFD700]/70 z-20">
-          <div className="flex items-center gap-3">
-            <span className="w-2 h-2 rounded-full bg-[#FFD700] blink" />
-            REEL 01 · {t.featureBadge}
-          </div>
-          <div className="hidden md:flex items-center gap-4">
-            <span>{t.runtime}</span>
-            <span className="opacity-40">·</span>
-            <span>{t.shot}</span>
-          </div>
-        </div>
-
-        <div className="hidden lg:flex absolute left-6 top-1/2 -translate-y-1/2 [writing-mode:vertical-rl] rotate-180 font-mono text-[10px] uppercase tracking-[0.4em] text-white/50 z-20">
-          T—00:00:08:24 · A1 · 24fps
-        </div>
-        <div className="hidden lg:flex absolute right-6 top-1/2 -translate-y-1/2 [writing-mode:vertical-rl] font-mono text-[10px] uppercase tracking-[0.4em] text-white/50 z-20">
-          DIRECTOR · MONIRUL HAQUE AKASH · 2026
-        </div>
-
-        {/* Branding only (parallax) — news bar is NOT inside this transform */}
+        {/* Interactive lighting */}
         <motion.div
-          style={{ y: titleY }}
-          className="relative z-20 h-full flex flex-col items-center justify-center text-white px-8 lg:px-10 pb-44"
+          className="absolute inset-0 pointer-events-none mix-blend-screen"
+          style={{ background: glowBg }}
+        />
+
+        {/* Floating particles (CSS only — performant) */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          {Array.from({ length: 12 }).map((_, i) => (
+            <span
+              key={i}
+              className="absolute rounded-full bg-[#ffd700]/30"
+              style={{
+                width: 2 + (i % 3),
+                height: 2 + (i % 3),
+                left: `${8 + i * 7.5}%`,
+                top: `${15 + (i * 13) % 60}%`,
+                animation: `float-y ${5 + (i % 4)}s ease-in-out ${i * 0.3}s infinite`,
+                opacity: 0.25 + (i % 5) * 0.08,
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Branding — fills space above news, clears navbar */}
+        <motion.div
+          style={{ y: titleY, opacity: titleOpacity, filter: contentFilter }}
+          className="relative z-20 flex-1 min-h-0 flex flex-col items-center justify-center text-white px-6 pt-24 sm:pt-28 pb-6"
         >
-          <motion.p
+          <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.35 }}
-            className="mb-4 font-mono text-[11px] sm:text-[12px] uppercase tracking-[0.35em] text-[#FFD700]/90 text-center"
+            transition={{ duration: 0.9, delay: 0.15, ease: EASE_OUT_EXPO }}
+            className="mb-3 sm:mb-4 flex items-center gap-3"
           >
-            {t.tagline}
-          </motion.p>
+            <span className="dot-pulse" />
+            <span className="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.4em] text-[#ffd700]/90">
+              {t.tagline}
+            </span>
+          </motion.div>
 
           <motion.h1
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 48 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.5 }}
-            className="h-display text-[clamp(48px,7vw,148px)] text-white text-center leading-[0.85] w-full"
+            transition={{ duration: 1.1, delay: 0.25, ease: EASE_OUT_EXPO }}
+            className="h-display text-[clamp(44px,11vw,140px)] text-center leading-[0.82] w-full"
           >
-            <span className="block">{t.title1}</span>
-            <span className="block text-[#FFD700] -mt-[0.08em]">{t.title2}</span>
+            <span className="block text-white drop-shadow-[0_8px_40px_rgba(0,0,0,0.5)]">
+              {t.title1}
+            </span>
+            <span className="block text-[#ffd700] -mt-[0.06em]">
+              {t.title2}
+            </span>
           </motion.h1>
 
           <motion.div
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ duration: 1, delay: 1, ease: 'easeOut' }}
+            initial={{ scaleX: 0, opacity: 0 }}
+            animate={{ scaleX: 1, opacity: 1 }}
+            transition={{ duration: 1, delay: 0.45, ease: EASE_OUT_EXPO }}
             style={{ originX: 0.5 }}
-            className="mt-4 h-px w-40 bg-gradient-to-r from-transparent via-[#FFD700] to-transparent"
+            className="mt-4 h-px w-36 bg-gradient-to-r from-transparent via-[#ffd700] to-transparent"
           />
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.9 }}
-            className="flex flex-col sm:flex-row items-center gap-4 mt-5"
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.55, duration: 0.8 }}
+            className="mt-4 font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.32em] text-white/45 text-center"
           >
-            <motion.a
+            {t.live} · {t.film}
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.6, ease: EASE_OUT_EXPO }}
+            className="flex flex-col sm:flex-row items-center gap-3 mt-6"
+          >
+            <MagneticButton
               href="https://www.youtube.com/watch?v=ErRnSJQ9nhg"
               target="_blank"
               rel="noopener noreferrer"
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.97 }}
-              className="group relative px-7 py-3.5 bg-[#FFD700] text-black text-[11px] font-extrabold uppercase tracking-[0.22em] rounded-full flex items-center gap-2.5 shadow-[0_12px_40px_-12px_rgba(255,215,0,0.6)] sheen overflow-hidden"
+              className="group relative px-8 py-3.5 bg-[#ffd700] text-black text-[11px] font-extrabold uppercase tracking-[0.22em] rounded-full flex items-center gap-2.5 shadow-gold sheen overflow-hidden"
             >
               <Play size={14} strokeWidth={3} className="relative z-10 fill-current" />
               <span className="relative z-10">{t.trailer}</span>
-            </motion.a>
+            </MagneticButton>
 
-            <motion.a
+            <MagneticButton
               href="/works"
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.04 }}
-              className="group flex items-center gap-2.5 text-white text-[11px] font-extrabold uppercase tracking-[0.22em] px-7 py-3.5 rounded-full border border-white/20 hover:border-[#FFD700] hover:text-[#FFD700] transition-colors backdrop-blur-sm"
+              className="group flex items-center gap-2.5 text-white text-[11px] font-extrabold uppercase tracking-[0.22em] px-8 py-3.5 rounded-full border border-white/15 hover:border-[#ffd700]/60 hover:text-[#ffd700] transition-colors glass"
             >
               <Film size={14} />
               {t.viewWork}
@@ -259,130 +275,112 @@ export default function Hero() {
                 size={12}
                 className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
               />
-            </motion.a>
+            </MagneticButton>
           </motion.div>
         </motion.div>
 
-        {/* News scroll bar — fixed to hero bottom, outside parallax transform */}
-        <div
-          id="press"
-          className="absolute left-0 right-0 bottom-10 z-30 px-3 sm:px-5"
-        >
-          <div className="flex items-center gap-2 mb-2 px-1">
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#FFD700] shrink-0">
-              <span className="w-1.5 h-1.5 rounded-full bg-black" />
-              <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-black font-bold">
-                {t.press}
-              </span>
-            </div>
-            <span className="flex-1 h-px bg-white/15" />
-            <span className="font-mono text-[8px] uppercase tracking-[0.3em] text-white/40 shrink-0">
-              {newsBarItems.length} items · {t.scrollHint}
-            </span>
-
-            <div className="flex items-center gap-1.5 shrink-0">
-              <button
-                type="button"
-                aria-label={t.prev}
-                onClick={() => scrollByCards(-1)}
-                className="h-8 w-8 rounded-full border border-white/20 bg-black/50 text-white hover:border-[#FFD700] hover:text-[#FFD700] flex items-center justify-center transition-colors"
-              >
-                <ChevronLeft size={16} />
-              </button>
-              <button
-                type="button"
-                aria-label={t.next}
-                onClick={() => scrollByCards(1)}
-                className="h-8 w-8 rounded-full border border-white/20 bg-black/50 text-white hover:border-[#FFD700] hover:text-[#FFD700] flex items-center justify-center transition-colors"
-              >
-                <ChevronRight size={16} />
-              </button>
-            </div>
-          </div>
-
-          <div
-            ref={scrollerRef}
-            className="flex gap-3 overflow-x-auto overflow-y-hidden pb-2 touch-pan-x"
-            style={{
-              scrollbarWidth: 'thin',
-              scrollbarColor: 'rgba(255,215,0,0.55) rgba(255,255,255,0.08)',
-              WebkitOverflowScrolling: 'touch',
-            }}
-          >
-            {newsBarItems.map((item) => (
-              <a
-                key={item.id}
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => openNewsItem(item, e)}
-                className="group shrink-0 w-[148px] snap-start cursor-pointer"
-              >
-                <div className="relative h-[142px] rounded-xl overflow-hidden border border-white/15 group-hover:border-[#FFD700] bg-[#111] shadow-[0_12px_34px_-12px_rgba(0,0,0,0.85)] transition-colors">
-                  {item.thumb ? (
-                    <img
-                      src={item.thumb}
-                      alt={item.outlet}
-                      className="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
-                    />
-                  ) : (
-                    <div
-                      className="absolute inset-0"
-                      style={{
-                        background: `linear-gradient(145deg, ${item.featured ? '#2a2208' : '#1a1a1a'} 0%, #0a0a0a 100%)`,
-                      }}
-                    >
-                      <div className="absolute inset-0 opacity-30 bg-[radial-gradient(circle_at_30%_20%,rgba(255,215,0,0.25),transparent_55%)]" />
-                      <div className="absolute inset-0 flex items-center justify-center px-3">
-                        <span className="font-display text-[26px] leading-none text-white/15 text-center uppercase">
-                          {item.outlet.slice(0, 18)}
-                        </span>
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/15 to-black/35" />
-
-                  <div className="absolute top-2 left-2 z-10">
-                    {item.featured ? (
-                      <span className="font-mono text-[7px] uppercase tracking-[0.2em] px-1.5 py-0.5 rounded bg-[#FFD700] text-black font-bold border border-[#FFD700]">
-                        {t.featured}
-                      </span>
-                    ) : (
-                      <span className="font-mono text-[7px] uppercase tracking-[0.2em] px-1.5 py-0.5 rounded bg-black/60 text-white/70 border border-white/10">
-                        {t.link}
-                      </span>
-                    )}
-                  </div>
-
-                  <div className="absolute bottom-0 left-0 right-0 p-2.5 z-10">
-                    <p className="text-[10px] leading-snug text-white font-semibold line-clamp-2">
-                      {item.title}
-                    </p>
-                    <div className="flex items-center gap-1 mt-1 text-white/55 group-hover:text-[#FFD700] transition-colors">
-                      <ExternalLink size={9} />
-                      <span className="font-mono text-[7px] uppercase tracking-[0.2em]">
-                        {t.open}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-2 flex justify-center">
-                  <span className="px-2.5 py-0.5 rounded bg-[#FFD700] text-black font-mono text-[8px] font-bold uppercase tracking-[0.18em] shadow max-w-full truncate">
-                    {item.outlet}
+        {/* Press strip — in flow, not overlaid on CTAs */}
+        <div id="press" className="relative z-30 shrink-0 pb-5 sm:pb-7 pt-2">
+          <div className="mx-auto max-w-[96rem] px-3 sm:px-5">
+            <div className="glass-strong rounded-2xl sm:rounded-3xl p-3 sm:p-4 shadow-premium border border-white/10">
+              <div className="flex items-center gap-2 mb-3 px-1">
+                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#ffd700] shrink-0">
+                  <span className="w-1.5 h-1.5 rounded-full bg-black animate-pulse" />
+                  <span className="font-mono text-[9px] uppercase tracking-[0.28em] text-black font-bold">
+                    {t.press}
                   </span>
                 </div>
-              </a>
-            ))}
+                <span className="flex-1 h-px bg-white/10" />
+                <span className="font-mono text-[8px] uppercase tracking-[0.25em] text-white/35 hidden sm:inline shrink-0">
+                  {newsBarItems.length} · {t.scrollHint}
+                </span>
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <button
+                    type="button"
+                    aria-label={t.prev}
+                    onClick={() => scrollByCards(-1)}
+                    className="h-8 w-8 rounded-full border border-white/12 bg-white/[0.04] text-white hover:border-[#ffd700] hover:text-[#ffd700] flex items-center justify-center transition-colors"
+                  >
+                    <ChevronLeft size={16} />
+                  </button>
+                  <button
+                    type="button"
+                    aria-label={t.next}
+                    onClick={() => scrollByCards(1)}
+                    className="h-8 w-8 rounded-full border border-white/12 bg-white/[0.04] text-white hover:border-[#ffd700] hover:text-[#ffd700] flex items-center justify-center transition-colors"
+                  >
+                    <ChevronRight size={16} />
+                  </button>
+                </div>
+              </div>
+
+              <div
+                ref={scrollerRef}
+                className="flex gap-3 overflow-x-auto overflow-y-hidden pb-1 no-scrollbar touch-pan-x"
+                style={{ WebkitOverflowScrolling: 'touch' }}
+              >
+                {newsBarItems.map((item, i) => (
+                  <a
+                    key={item.id}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group shrink-0 w-[140px] sm:w-[152px] snap-start"
+                  >
+                    <div className="relative h-[128px] sm:h-[136px] rounded-xl overflow-hidden border border-white/10 group-hover:border-[#ffd700]/70 bg-[#111] transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-[0_16px_40px_-12px_rgba(255, 215, 0,0.25)]">
+                      {item.thumb ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={item.thumb}
+                          alt={item.outlet}
+                          loading={i < 6 ? 'eager' : 'lazy'}
+                          className="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
+                        />
+                      ) : (
+                        <div className="absolute inset-0 bg-gradient-to-br from-[#111] to-[#0a0a0a]">
+                          <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_30%_20%,rgba(255,215,0,0.18),transparent_55%)]" />
+                          <div className="absolute inset-0 flex items-center justify-center px-3">
+                            <span className="font-display text-[22px] leading-none text-white/12 text-center uppercase">
+                              {item.outlet.slice(0, 16)}
+                            </span>
+                          </div>
+                        </div>
+                      )}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/20 to-black/30" />
+                      <div className="absolute top-2 left-2 z-10">
+                        <span
+                          className={`font-mono text-[7px] uppercase tracking-[0.18em] px-1.5 py-0.5 rounded ${
+                            item.featured
+                              ? 'bg-[#ffd700] text-black font-bold'
+                              : 'bg-black/55 text-white/65 border border-white/10'
+                          }`}
+                        >
+                          {item.featured ? t.featured : t.link}
+                        </span>
+                      </div>
+                      <div className="absolute bottom-0 left-0 right-0 p-2.5 z-10">
+                        <p className="text-[10px] leading-snug text-white font-semibold line-clamp-2">
+                          {item.title}
+                        </p>
+                        <div className="flex items-center gap-1 mt-1 text-white/45 group-hover:text-[#ffd700] transition-colors">
+                          <ExternalLink size={9} />
+                          <span className="font-mono text-[7px] uppercase tracking-[0.18em]">
+                            {t.open}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="mt-2 flex justify-center">
+                      <span className="px-2.5 py-0.5 rounded-full bg-[#ffd700]/90 text-black font-mono text-[8px] font-bold uppercase tracking-[0.14em] max-w-full truncate">
+                        {item.outlet}
+                      </span>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
-
-        {/* Corner brackets */}
-        <span className="absolute top-16 left-6 w-8 h-8 border-t border-l border-[#FFD700]/40 z-20" />
-        <span className="absolute top-16 right-6 w-8 h-8 border-t border-r border-[#FFD700]/40 z-20" />
-        <span className="absolute bottom-[15.5rem] left-6 w-8 h-8 border-b border-l border-[#FFD700]/40 z-20" />
-        <span className="absolute bottom-[15.5rem] right-6 w-8 h-8 border-b border-r border-[#FFD700]/40 z-20" />
       </div>
     </section>
   )

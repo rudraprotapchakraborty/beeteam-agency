@@ -3,171 +3,89 @@
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { AnimatePresence, motion } from 'framer-motion'
+import { EASE_OUT_EXPO } from '@/lib/motion'
 
-type Phase = 'count' | 'logo' | 'wipe' | 'gone'
+type Phase = 'logo' | 'exit' | 'gone'
 
 export default function OpeningScene() {
-  const [phase, setPhase] = useState<Phase>('count')
+  const [phase, setPhase] = useState<Phase>('logo')
 
+  // logo → exit → gone
   useEffect(() => {
-    const t1 = setTimeout(() => setPhase('logo'), 1100)
-    const t2 = setTimeout(() => setPhase('wipe'), 2400)
-    const t3 = setTimeout(() => setPhase('gone'), 3300)
-    return () => {
-      clearTimeout(t1)
-      clearTimeout(t2)
-      clearTimeout(t3)
-    }
-  }, [])
+    if (phase !== 'logo') return
 
-  const wiping = phase === 'wipe' || phase === 'gone'
+    const toExit = setTimeout(() => setPhase('exit'), 1400)
+    const toGone = setTimeout(() => setPhase('gone'), 2300)
+
+    return () => {
+      clearTimeout(toExit)
+      clearTimeout(toGone)
+    }
+  }, [phase])
+
+  // Safety: once exit starts, always clear the overlay
+  useEffect(() => {
+    if (phase !== 'exit') return
+    const t = setTimeout(() => setPhase('gone'), 750)
+    return () => clearTimeout(t)
+  }, [phase])
 
   return (
     <AnimatePresence>
       {phase !== 'gone' && (
         <motion.div
           key="opening"
+          initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.6 }}
-          className="fixed inset-0 z-[99999] overflow-hidden bg-[#0a0a0a] flex items-center justify-center"
+          transition={{ duration: 0.55, ease: EASE_OUT_EXPO }}
+          className="fixed inset-0 z-[99999] overflow-hidden bg-[#030303] flex items-center justify-center"
+          aria-hidden
         >
-          {/* Film strip top + bottom */}
-          <div className="absolute top-0 left-0 right-0 h-8 film-strip opacity-90" />
-          <div className="absolute bottom-0 left-0 right-0 h-8 film-strip opacity-90" />
-
-          {/* Crosshair frame */}
-          <div className="absolute inset-12 border border-white/10 pointer-events-none">
-            <span className="absolute -top-px -left-px w-6 h-6 border-t-2 border-l-2 border-[#FFD700]" />
-            <span className="absolute -top-px -right-px w-6 h-6 border-t-2 border-r-2 border-[#FFD700]" />
-            <span className="absolute -bottom-px -left-px w-6 h-6 border-b-2 border-l-2 border-[#FFD700]" />
-            <span className="absolute -bottom-px -right-px w-6 h-6 border-b-2 border-r-2 border-[#FFD700]" />
+          <div className="absolute inset-0 pointer-events-none">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70vw] h-[70vw] max-w-[700px] max-h-[700px] rounded-full bg-[#ffd700]/15 blur-[120px] mesh-animate" />
+            <div className="absolute bottom-0 right-0 w-[40vw] h-[40vw] rounded-full bg-[#ffd700]/08 blur-[100px]" />
           </div>
 
-          {/* Top corner specs */}
-          <div className="absolute top-12 left-12 right-12 flex justify-between items-center font-mono text-[10px] uppercase tracking-[0.25em] text-white/50 z-10">
-            <div className="flex items-center gap-3">
-              <span className="dot-pulse" />
-              <span>REC · 24fps · 35mm</span>
-            </div>
-            <div>SCN 01 · TK 01</div>
-          </div>
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
-          {/* Bottom corner specs */}
-          <div className="absolute bottom-12 left-12 right-12 flex justify-between items-center font-mono text-[10px] uppercase tracking-[0.25em] text-white/50 z-10">
-            <div>BEE TEAM · STUDIO 2026</div>
-            <div className="flex items-center gap-2">
-              <span className="w-3 h-3 border border-[#FFD700]" />
-              <span>A1 · 1.85:1</span>
-            </div>
-          </div>
-
-          {/* Countdown numbers */}
-          <AnimatePresence mode="wait">
-            {phase === 'count' && (
-              <motion.div
-                key="count"
-                initial={{ opacity: 0, scale: 0.6 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 1.4 }}
-                transition={{ duration: 0.5 }}
-                className="relative z-20"
-              >
-                <div className="relative w-[300px] h-[300px] flex items-center justify-center">
-                  <motion.div
-                    initial={{ rotate: 0 }}
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 1.1, ease: 'linear' }}
-                    className="absolute inset-0 rounded-full border border-[#FFD700]/40"
-                    style={{
-                      background:
-                        'conic-gradient(from 0deg, rgba(255,215,0,0.6), transparent 70%)',
-                    }}
-                  />
-                  <span className="absolute inset-8 rounded-full border border-white/20" />
-                  <span className="absolute inset-0 rounded-full border-t border-[#FFD700]" />
-                  <span className="absolute left-1/2 top-0 w-px h-1/2 bg-[#FFD700]/50 -translate-x-1/2" />
-                  <span className="absolute left-0 top-1/2 w-1/2 h-px bg-[#FFD700]/50 -translate-y-1/2" />
-                  <motion.span
-                    key="num-3"
-                    initial={{ opacity: 1 }}
-                    animate={{ opacity: [1, 1, 0] }}
-                    transition={{ duration: 1.0, times: [0, 0.7, 1] }}
-                    className="font-display text-[180px] text-[#FFD700] leading-none select-none"
-                  >
-                    3
-                  </motion.span>
-                </div>
-              </motion.div>
-            )}
-
-            {phase === 'logo' && (
-              <motion.div
-                key="logo"
-                initial={{ opacity: 0, scale: 0.85 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 1.04 }}
-                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                className="relative z-20 flex flex-col items-center"
-              >
-                <div className="relative isolate drop-shadow-[0_0_60px_rgba(255,215,0,0.4)]">
-                  <Image
-                    src="/beeteam_full_logo.png"
-                    alt="BeeTeam"
-                    width={360}
-                    height={120}
-                    priority
-                    style={{ width: 'auto', height: 'auto' }}
-                  />
-                  <Image
-                    src="/beeteam_full_logo.png"
-                    alt=""
-                    aria-hidden
-                    width={360}
-                    height={120}
-                    style={{
-                      width: 'auto',
-                      height: 'auto',
-                      position: 'absolute',
-                      inset: 0,
-                      mixBlendMode: 'lighten',
-                    }}
-                    className="invert brightness-200 hue-rotate-180"
-                  />
-                </div>
-                <motion.div
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: 1 }}
-                  transition={{ duration: 0.9, ease: 'easeOut', delay: 0.2 }}
-                  style={{ originX: 0 }}
-                  className="mt-6 h-px w-48 bg-gradient-to-r from-transparent via-[#FFD700] to-transparent"
-                />
-                <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.4em] text-white/50">
-                  Studios — Est. 2026
-                </p>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          {/* Wipe transitions out */}
           <motion.div
-            initial={{ x: 0 }}
-            animate={wiping ? { x: '-110%' } : { x: 0 }}
-            transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
-            className="absolute inset-0 bg-[#0a0a0a]"
-            style={{ clipPath: 'polygon(0 0, 70% 0, 50% 100%, 0% 100%)' }}
-          />
-          <motion.div
-            initial={{ x: 0 }}
-            animate={wiping ? { x: '110%' } : { x: 0 }}
-            transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
-            className="absolute inset-0 bg-[#0a0a0a]"
-            style={{ clipPath: 'polygon(30% 0, 100% 0, 100% 100%, 50% 100%)' }}
-          />
-
-          {/* Vignette */}
-          <div className="absolute inset-0 pointer-events-none" style={{
-            background: 'radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.7) 100%)',
-          }} />
+            key="logo"
+            initial={{ opacity: 0, y: 24, filter: 'blur(12px)' }}
+            animate={
+              phase === 'exit'
+                ? { opacity: 0, y: -12, filter: 'blur(6px)', scale: 1.03 }
+                : { opacity: 1, y: 0, filter: 'blur(0px)', scale: 1 }
+            }
+            transition={{ duration: 0.65, ease: EASE_OUT_EXPO }}
+            className="relative z-20 flex flex-col items-center px-8"
+          >
+            <div className="relative drop-shadow-[0_0_80px_rgba(255, 215, 0,0.45)]">
+              <Image
+                src="/logo-white.png"
+                alt="BeeTeam"
+                width={380}
+                height={120}
+                priority
+                style={{ width: 'auto', height: 'auto', maxWidth: 'min(80vw, 380px)' }}
+              />
+            </div>
+            <motion.div
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 0.9, ease: EASE_OUT_EXPO, delay: 0.15 }}
+              style={{ originX: 0.5 }}
+              className="mt-7 h-px w-40 bg-gradient-to-r from-transparent via-[#ffd700] to-transparent"
+            />
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.35 }}
+              className="mt-5 font-mono text-[10px] uppercase tracking-[0.42em] text-white/45"
+            >
+              Studios · Est. 2026
+            </motion.p>
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>

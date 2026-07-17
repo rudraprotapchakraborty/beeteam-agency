@@ -1,9 +1,10 @@
 'use client'
 
-import { useRef, useState } from 'react'
-import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion'
-import { ArrowUpRight, ChevronRight, Maximize2, Sparkles, Trophy, X } from 'lucide-react'
-import { useLanguage } from '@/context/LanguageContext'
+import { useEffect, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { Maximize2, X } from 'lucide-react'
+import Reveal, { SectionEyebrow } from '@/components/ui/Reveal'
+import { EASE_OUT_EXPO, SPRING_SNAPPY } from '@/lib/motion'
 
 type Award = {
   url: string
@@ -59,155 +60,99 @@ const awards: Award[] = [
 
 export default function HallOfFame() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
-  const containerRef = useRef<HTMLElement | null>(null)
-  const { language } = useLanguage()
 
-  const translations = {
-    en: {
-      eyebrow: 'Hall of Fame · 08',
+  const t = {
+      eyebrow: 'Hall of Fame',
       title1: 'Hall of',
       title2: 'Fame',
       subtitle: 'Verified cinematic certifications and international recognitions for 2026.',
-      registry: 'Registry ID',
-      exhibition: 'Unrestricted Global Exhibition',
       verify: 'Verify',
-      total: 'Honors',
-      year: 'Year',
-      moreTitle: 'More to come',
-      moreSub: 'Festival circuit · 2026 onwards',
-      moreDesc: 'Additional honours, certifications and international invitations are being added as they arrive.',
-      rateOnImdb: 'Rate on IMDb',
-    },
-    bn: {
-      eyebrow: 'গৌরবের দেয়াল · ০৮',
-      title1: 'গৌরবের',
-      title2: 'দেয়াল',
-      subtitle: '২০২৬ সালের জন্য যাচাইকৃত চলচ্চিত্র সার্টিফিকেশন ও আন্তর্জাতিক স্বীকৃতি।',
-      registry: 'রেজিস্ট্রি আইডি',
-      exhibition: 'সীমাহীন বৈশ্বিক প্রদর্শনী',
-      verify: 'যাচাই করুন',
-      total: 'সম্মাননা',
-      year: 'বছর',
-      moreTitle: 'আরো আসছে',
-      moreSub: 'উৎসব সার্কিট · ২০২৬ থেকে',
-      moreDesc: 'নতুন সম্মাননা, সার্টিফিকেশন ও আন্তর্জাতিক আমন্ত্রণ পাওয়ার সাথে সাথে এখানে যুক্ত হবে।',
-      rateOnImdb: 'IMDb-তে রেট করুন',
-    },
-  } as const
+      close: 'Close',
+    }
 
-  const t = translations[language]
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start end', 'end start'],
-  })
-
-  const ySoft = useTransform(scrollYProgress, [0, 1], [0, -40])
+  useEffect(() => {
+    if (!selectedImage) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setSelectedImage(null)
+    }
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    window.addEventListener('keydown', onKey)
+    return () => {
+      document.body.style.overflow = prev
+      window.removeEventListener('keydown', onKey)
+    }
+  }, [selectedImage])
 
   return (
-    <section id="certification" ref={containerRef} className="relative paper-tex py-14 md:py-20 overflow-hidden">
+    <section id="certification" className="relative bg-page-3 py-20 md:py-28 overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute bottom-1/4 right-0 w-[500px] h-[500px] bg-[#FFD700]/10 blur-[180px]" />
+        <div className="glow-orb top-0 right-0 w-[500px] h-[500px] bg-gold/[0.05]" />
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        {/* HEADER */}
-        <motion.div
-          style={{ y: ySoft }}
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="grid lg:grid-cols-12 gap-8 mb-10 items-end"
-        >
-          <div className="lg:col-span-7">
-            <div className="flex items-center gap-3 mb-6">
-              <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#FFD700]">
-                /08
-              </span>
-              <span className="h-px w-12 bg-[#FFD700]/40" />
-              <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-black/50">
-                {t.eyebrow}
-              </span>
-            </div>
-            <h2 className="h-display text-[clamp(48px,8vw,128px)] text-black leading-[0.86] whitespace-nowrap">
-              {t.title1} <span className="text-[#FFD700]">{t.title2}</span>
+        <div className="grid lg:grid-cols-12 gap-8 mb-14 items-end">
+          <Reveal className="lg:col-span-7">
+            <SectionEyebrow index="/08" label={t.eyebrow} />
+            <h2 className="h-display text-[clamp(48px,9vw,120px)] text-fg leading-[0.86]">
+              {t.title1} <span className="text-gold-bright">{t.title2}</span>
             </h2>
-          </div>
+          </Reveal>
+          <Reveal delay={0.1} className="lg:col-span-4 lg:col-start-9 lg:pl-8 lg:border-l border-line">
+            <p className="text-sm text-muted leading-relaxed">{t.subtitle}</p>
+          </Reveal>
+        </div>
 
-          <div className="lg:col-span-4 lg:col-start-9 lg:pl-8 lg:border-l border-black/10 space-y-4">
-            <p className="text-sm text-black/65 leading-relaxed">{t.subtitle}</p>
-            <div className="flex gap-6 pt-2">
-              <div>
-                <div className="font-display text-4xl text-black flex items-center gap-2">
-                  <Trophy size={20} className="text-[#FFD700] fill-[#FFD700]" />
-                  {awards.length}
-                </div>
-                <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-black/40 mt-1">
-                  {t.total}
-                </div>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* AWARDS GRID — uniform */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Asymmetric masonry-like grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 auto-rows-fr">
           {awards.map((award, i) => (
-            <AwardCard
+            <motion.button
               key={award.id}
-              award={award}
-              index={i}
-              onOpen={() => setSelectedImage(award.url)}
-              verifyLabel={t.verify}
-            />
+              type="button"
+              onClick={() => setSelectedImage(award.url)}
+              initial={{ opacity: 0, y: 36 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.06, duration: 0.75, ease: EASE_OUT_EXPO }}
+              whileHover={{ y: -8 }}
+              className={`group relative flex flex-col text-left rounded-3xl border border-line bg-card overflow-hidden cursor-pointer transition-shadow duration-500 hover:shadow-gold hover:border-gold/35 sheen ${
+                i === 0 ? 'sm:col-span-2 lg:col-span-1 lg:row-span-1' : ''
+              }`}
+            >
+              <div className="relative aspect-[4/3] overflow-hidden bg-black">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={award.url}
+                  alt={award.title}
+                  loading="lazy"
+                  className="w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+                <div className="absolute bottom-3 right-3 w-9 h-9 rounded-full bg-gold-bright text-black opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center scale-90 group-hover:scale-100">
+                  <Maximize2 size={14} strokeWidth={2.5} />
+                </div>
+              </div>
+              <div className="flex flex-col flex-1 p-5 space-y-2.5">
+                <div className="font-mono text-[9px] uppercase tracking-[0.28em] text-gold">
+                  {award.outlet}
+                </div>
+                <h3 className="text-base font-semibold text-fg leading-tight group-hover:text-gold-bright transition-colors">
+                  {award.title}
+                </h3>
+                <p className="text-sm text-muted leading-relaxed line-clamp-2 flex-1">
+                  {award.desc}
+                </p>
+                <div className="flex justify-between items-center pt-3 border-t border-line">
+                  <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-faint">
+                    {award.date}
+                  </span>
+                  <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-muted group-hover:text-gold-bright transition-colors font-bold">
+                    {t.verify} →
+                  </span>
+                </div>
+              </div>
+            </motion.button>
           ))}
-
-          {/* Closing tile — fills the 6th grid cell with brand CTA */}
-          <motion.a
-            href="https://www.imdb.com/title/tt39394821"
-            target="_blank"
-            rel="noopener noreferrer"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: awards.length * 0.05 }}
-            whileHover={{ y: -4 }}
-            className="group relative flex flex-col bg-[#0a0a0a] text-white rounded-2xl overflow-hidden border border-[#FFD700]/30 shadow-[0_25px_60px_-20px_rgba(255,215,0,0.25)] sheen"
-          >
-            {/* Stripes header */}
-            <div className="stripes-gold h-2 w-full opacity-90" />
-
-            {/* Frame brackets */}
-            <span className="absolute top-3 left-3 w-3 h-3 border-t-2 border-l-2 border-[#FFD700]/70 z-10" />
-            <span className="absolute top-3 right-3 w-3 h-3 border-t-2 border-r-2 border-[#FFD700]/70 z-10" />
-            <span className="absolute bottom-3 left-3 w-3 h-3 border-b-2 border-l-2 border-[#FFD700]/70 z-10" />
-            <span className="absolute bottom-3 right-3 w-3 h-3 border-b-2 border-r-2 border-[#FFD700]/70 z-10" />
-
-            <div className="flex-1 flex flex-col items-center justify-center text-center px-6 py-10 gap-4">
-              <div className="w-12 h-12 rounded-full bg-[#FFD700]/15 flex items-center justify-center">
-                <Sparkles size={20} className="text-[#FFD700]" />
-              </div>
-              <div className="font-mono text-[9px] uppercase tracking-[0.3em] text-[#FFD700]">
-                {t.moreSub}
-              </div>
-              <div className="font-display text-3xl text-white leading-tight">
-                {t.moreTitle}
-              </div>
-              <p className="text-sm text-white/65 leading-relaxed max-w-[28ch]">
-                {t.moreDesc}
-              </p>
-            </div>
-
-            <div className="px-6 py-4 border-t border-white/10 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.25em] text-white/55 group-hover:text-[#FFD700] transition-colors">
-              <span>{t.rateOnImdb}</span>
-              <ArrowUpRight
-                size={14}
-                strokeWidth={2.5}
-                className="group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform"
-              />
-            </div>
-          </motion.a>
         </div>
       </div>
 
@@ -217,111 +162,35 @@ export default function HallOfFame() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[1000] bg-black/95 backdrop-blur-xl flex items-center justify-center p-8"
+            className="fixed inset-0 z-[1000] bg-black/95 backdrop-blur-xl flex items-center justify-center p-6 md:p-10"
             onClick={() => setSelectedImage(null)}
           >
             <motion.div
-              initial={{ scale: 0.92, y: 30 }}
+              initial={{ scale: 0.92, y: 24 }}
               animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.92, y: 30 }}
-              transition={{ type: 'spring', stiffness: 120 }}
+              exit={{ scale: 0.94, y: 12 }}
+              transition={SPRING_SNAPPY}
               className="relative"
               onClick={(e) => e.stopPropagation()}
             >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={selectedImage}
                 alt="Award"
-                className="max-w-full max-h-[85vh] object-contain rounded-xl shadow-[0_60px_140px_-30px_rgba(0,0,0,0.6)]"
+                className="max-w-full max-h-[85vh] object-contain rounded-2xl shadow-premium"
               />
-              <span className="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-[#FFD700] z-10" />
-              <span className="absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-[#FFD700] z-10" />
-              <span className="absolute bottom-2 left-2 w-4 h-4 border-b-2 border-l-2 border-[#FFD700] z-10" />
-              <span className="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-[#FFD700] z-10" />
             </motion.div>
-
             <button
+              type="button"
               onClick={() => setSelectedImage(null)}
-              className="absolute top-8 right-8 text-white hover:rotate-90 transition-transform"
+              aria-label={t.close}
+              className="absolute top-8 right-8 text-fg hover:rotate-90 transition-transform"
             >
               <X size={32} />
             </button>
-
-            <div className="absolute bottom-8 left-8 font-mono text-[10px] uppercase tracking-[0.3em] text-white/60">
-              ESC · close
-            </div>
           </motion.div>
         )}
       </AnimatePresence>
     </section>
-  )
-}
-
-type AwardCardProps = {
-  award: Award
-  index: number
-  onOpen: () => void
-  verifyLabel: string
-}
-
-function AwardCard({ award, index, onOpen, verifyLabel }: AwardCardProps) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.06 }}
-      onClick={onOpen}
-      whileHover={{ y: -6 }}
-      className="group relative flex flex-col bg-white rounded-2xl border border-black/8 overflow-hidden cursor-pointer transition-all duration-500 hover:shadow-[0_30px_70px_-20px_rgba(0,0,0,0.2)] hover:border-[#FFD700] sheen"
-    >
-      {/* Top tape */}
-      <div className="absolute top-3 left-3 right-3 z-10 flex justify-between items-center">
-        <span className="px-2.5 py-1 bg-[#FFD700] text-black font-mono text-[9px] uppercase tracking-[0.25em] rounded font-bold">
-          {award.id}
-        </span>
-      </div>
-
-      <div className="relative aspect-[4/3] overflow-hidden bg-black">
-        <motion.img
-          src={award.url}
-          alt={award.title}
-          className="w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-105"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-
-        {/* Hover icon */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          whileHover={{ opacity: 1, scale: 1 }}
-          className="absolute bottom-3 right-3 w-9 h-9 rounded-full bg-[#FFD700] text-black opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center"
-        >
-          <Maximize2 size={14} strokeWidth={2.5} />
-        </motion.div>
-      </div>
-
-      <div className="flex flex-col flex-1 p-5 space-y-3">
-        <div className="font-mono text-[9px] uppercase tracking-[0.3em] text-[#FFD700]">
-          {award.outlet}
-        </div>
-
-        <h3 className="text-base font-semibold text-black leading-tight group-hover:text-[#FFD700] transition-colors">
-          {award.title}
-        </h3>
-
-        <p className="text-sm text-black/60 leading-relaxed line-clamp-3 flex-1">
-          {award.desc}
-        </p>
-
-        <div className="flex justify-between items-center pt-3 border-t border-black/5">
-          <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-black/40">
-            {award.date}
-          </span>
-          <span className="flex items-center gap-1 font-mono text-[9px] uppercase tracking-[0.25em] text-black font-bold group-hover:text-[#FFD700] transition-colors">
-            {verifyLabel}
-            <ChevronRight size={12} className="text-[#FFD700] group-hover:translate-x-1 transition-transform" />
-          </span>
-        </div>
-      </div>
-    </motion.div>
   )
 }

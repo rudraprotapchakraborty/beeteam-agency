@@ -1,251 +1,210 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import {
   AnimatePresence,
   motion,
+  useMotionValueEvent,
   useScroll,
-  useSpring,
-  useTransform,
 } from 'framer-motion'
-import { ArrowUpRight, Menu, X } from 'lucide-react'
-import { useLanguage } from '@/context/LanguageContext'
+import { ArrowUpRight, Menu, Moon, Sun, X } from 'lucide-react'
+import MagneticButton from '@/components/ui/MagneticButton'
+import { useTheme } from '@/context/ThemeContext'
+import { EASE_OUT_EXPO } from '@/lib/motion'
+
+const navLinks = [
+  { name: 'Home', href: '/' },
+  { name: 'Works', href: '/works' },
+  { name: 'Team', href: '/team' },
+]
 
 export default function Navbar() {
   const { scrollY, scrollYProgress } = useScroll()
-  const { language, changeLanguage } = useLanguage()
-  const [hoveredLink, setHoveredLink] = useState<string | null>(null)
+  const { theme, toggleTheme } = useTheme()
+  const [hidden, setHidden] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [hovered, setHovered] = useState<string | null>(null)
+  const [lastY, setLastY] = useState(0)
 
-  const translations = {
-    en: {
-      home: 'Home',
-      works: 'Works',
-      location: 'Dhaka · BD',
-      imdb: 'IMDb',
-      rate: 'Rate Chankharpul',
-      reel: 'Now Reeling',
-    },
-    bn: {
-      home: 'হোম',
-      works: 'কাজসমূহ',
-      location: 'ঢাকা · বাংলাদেশ',
-      imdb: 'আইএমডিবি',
-      rate: 'চানখারপুল রেট করুন',
-      reel: 'এখন চলছে',
-    },
-  } as const
+  useMotionValueEvent(scrollY, 'change', (y) => {
+    const dy = y - lastY
+    setScrolled(y > 40)
+    if (y > 120 && dy > 4 && !mobileOpen) setHidden(true)
+    else if (dy < -4 || y < 80) setHidden(false)
+    setLastY(y)
+  })
 
-  const t = translations[language]
-
-  const navLinks = [
-    { name: t.home, href: '/' },
-    { name: t.works, href: '/works' },
-  ]
-
-  const fluidSpring = { stiffness: 260, damping: 30, mass: 0.8 }
-
-  const navWidth = useTransform(scrollY, [0, 80], ['100%', '92%'])
-  const navTop = useTransform(scrollY, [0, 80], ['0px', '14px'])
-  const navRadius = useTransform(scrollY, [0, 80], ['0px', '999px'])
-  const navBg = useTransform(
-    scrollY,
-    [0, 80],
-    ['rgba(250, 248, 243, 0.7)', 'rgba(250, 248, 243, 0.95)'],
-  )
-  const navShadow = useTransform(
-    scrollY,
-    [0, 80],
-    ['0px 0px 0px rgba(0,0,0,0)', '0px 18px 50px -12px rgba(0,0,0,0.12)'],
-  )
-  const borderOpacity = useTransform(
-    scrollY,
-    [0, 80],
-    ['rgba(0,0,0,0)', 'rgba(10,10,10,0.06)'],
-  )
-  const progressWidth = useTransform(scrollYProgress, [0, 1], ['0%', '100%'])
+  useEffect(() => {
+    if (mobileOpen) document.body.style.overflow = 'hidden'
+    else document.body.style.overflow = ''
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [mobileOpen])
 
   return (
     <>
-      {/* Top tape: timecode + reel ticker */}
-      <div className="fixed top-0 left-0 right-0 z-[1001] bg-[#0a0a0a] text-[#f4f1ea] text-[9px] font-mono uppercase tracking-[0.3em] py-1 px-6 flex justify-between items-center border-b border-[#FFD700]/20 pointer-events-none">
-        <div className="flex items-center gap-3">
-          <span className="dot-pulse" />
-          <span className="opacity-80">{t.reel}</span>
-          <span className="opacity-30">·</span>
-          <span className="opacity-60">The University of Chankharpul</span>
-        </div>
-        <div className="hidden md:flex items-center gap-3 opacity-60">
-          <span>24fps</span>
-          <span className="opacity-30">·</span>
-          <span>2.39:1</span>
-          <span className="opacity-30">·</span>
-          <span>DCP</span>
-        </div>
-      </div>
-
       <motion.header
-        style={{
-          width: useSpring(navWidth, fluidSpring),
-          top: useSpring(navTop, fluidSpring),
-          borderRadius: useSpring(navRadius, fluidSpring),
-          backgroundColor: navBg,
-          boxShadow: navShadow,
-          borderWidth: '1px',
-          borderColor: borderOpacity,
+        initial={{ y: -20, opacity: 0 }}
+        animate={{
+          y: hidden ? -120 : 0,
+          opacity: 1,
         }}
-        className="fixed left-1/2 -translate-x-1/2 z-[1000] flex items-center justify-between px-6 lg:px-8 py-3 backdrop-blur-2xl mt-6"
+        transition={{ duration: 0.45, ease: EASE_OUT_EXPO }}
+        className="fixed top-0 left-0 right-0 z-[1000] flex justify-center px-3 sm:px-4 pt-3 sm:pt-4 pointer-events-none"
       >
-        {/* Scroll progress */}
         <motion.div
-          style={{ width: progressWidth }}
-          className="absolute bottom-0 left-0 h-px bg-[#FFD700]"
-        />
+          className={`pointer-events-auto relative flex w-full max-w-6xl items-center justify-between gap-3 rounded-full px-3 sm:px-5 py-2.5 transition-shadow duration-500 glass-strong ${
+            scrolled ? 'shadow-premium' : ''
+          }`}
+        >
+          <motion.div
+            className="absolute bottom-0 left-6 right-6 h-px origin-left rounded-full bg-gradient-to-r from-[var(--brand)] via-[var(--brand)] to-transparent"
+            style={{ scaleX: scrollYProgress }}
+          />
 
-        {/* LEFT */}
-        <div className="flex items-center gap-5">
-          <motion.a
-            href="/"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="relative h-9 w-28 cursor-pointer group"
-          >
+          <a href="/" className="relative h-8 w-24 sm:h-9 sm:w-28 shrink-0 group">
             <Image
-              src="/beeteam_full_logo.png"
+              src="/logo-white.png"
               alt="Beeteam Logo"
               fill
               sizes="112px"
-              className="object-contain transition-transform duration-500 group-hover:rotate-[-2deg]"
+              className="logo-dark object-contain transition-transform duration-500 group-hover:scale-[1.03]"
               priority
             />
-          </motion.a>
+            <Image
+              src="/logo-black.png"
+              alt="Beeteam Logo"
+              fill
+              sizes="112px"
+              className="logo-light object-contain transition-transform duration-500 group-hover:scale-[1.03]"
+              priority
+            />
+          </a>
 
-        </div>
-
-        {/* CENTER NAV */}
-        <nav className="hidden md:flex items-center gap-1 bg-black/[0.04] p-1 rounded-full border border-black/[0.04]">
-          {navLinks.map((link) => (
-            <motion.a
-              key={link.name}
-              href={link.href}
-              onMouseEnter={() => setHoveredLink(link.name)}
-              onMouseLeave={() => setHoveredLink(null)}
-              className="px-6 py-2 text-[10px] font-bold uppercase tracking-[0.22em] relative z-10"
-            >
-              <span
-                className={`relative z-10 transition-colors ${hoveredLink === link.name ? 'text-[#FFD700]' : 'text-black'}`}
+          <nav className="hidden md:flex items-center gap-0.5 rounded-full p-1 border border-line bg-fill-soft">
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                onMouseEnter={() => setHovered(link.name)}
+                onMouseLeave={() => setHovered(null)}
+                className="relative px-5 py-2 text-[10px] font-bold uppercase tracking-[0.22em] z-10"
               >
-                {link.name}
-              </span>
-
-              <AnimatePresence>
-                {hoveredLink === link.name && (
+                <span
+                  className={`relative z-10 transition-colors duration-300 ${
+                    hovered === link.name ? 'text-gold-bright' : 'text-muted'
+                  }`}
+                >
+                  {link.name}
+                </span>
+                {hovered === link.name && (
                   <motion.span
-                    layoutId="nav-pill-bg"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.25, ease: 'easeOut' }}
-                    className="absolute inset-0 bg-[#0a0a0a] rounded-full"
+                    layoutId="nav-pill"
+                    className="absolute inset-0 rounded-full bg-fill-hover"
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                   />
                 )}
-              </AnimatePresence>
-            </motion.a>
-          ))}
-        </nav>
+              </a>
+            ))}
+          </nav>
 
-        {/* RIGHT */}
-        <div className="flex items-center gap-5">
-          <motion.a
-            href="https://www.imdb.com/title/tt39394821"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden lg:flex items-center font-mono text-[9px] font-bold uppercase tracking-[0.25em] text-black/60 hover:text-black transition-colors"
-          >
-            <span className="opacity-40">·</span>
-            <span className="px-3">{t.rate}</span>
-            <span className="opacity-40">·</span>
-          </motion.a>
-
-          <motion.a
-            href="https://www.imdb.com/title/tt39394821"
-            target="_blank"
-            rel="noopener noreferrer"
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
-            className="group relative flex items-center gap-2 bg-[#FFD700] text-black px-5 py-2.5 rounded-full overflow-hidden shadow-[0_8px_24px_-8px_rgba(212,175,55,0.5)] sheen"
-          >
-            <span className="relative z-10 text-[10px] font-extrabold uppercase tracking-[0.22em]">
-              {t.imdb}
-            </span>
-            <ArrowUpRight
-              size={14}
-              strokeWidth={3}
-              className="relative z-10 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform"
-            />
-          </motion.a>
-
-          <div className="flex items-center font-mono text-[10px] font-bold uppercase tracking-[0.18em]">
+          <div className="flex items-center gap-2 sm:gap-3">
             <button
-              onClick={() => changeLanguage('en')}
-              className={`transition-colors ${language === 'en' ? 'text-black' : 'text-black/35 hover:text-black/60'}`}
+              type="button"
+              onClick={toggleTheme}
+              aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+              className="flex items-center justify-center w-9 h-9 rounded-full border border-line bg-fill-soft text-fg hover:border-gold/40 hover:text-gold-bright transition-colors"
             >
-              EN
+              {theme === 'dark' ? <Sun size={15} strokeWidth={2.2} /> : <Moon size={15} strokeWidth={2.2} />}
             </button>
 
-            <span className="mx-2 text-black/25">/</span>
+            <MagneticButton
+              href="https://www.imdb.com/title/tt39394821"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden sm:inline-flex group items-center gap-2 bg-gold-bright text-ink px-4 py-2 rounded-full sheen overflow-hidden shadow-gold"
+              strength={0.25}
+            >
+              <span className="relative z-10 text-[10px] font-extrabold uppercase tracking-[0.2em]">
+                IMDb
+              </span>
+              <ArrowUpRight
+                size={13}
+                strokeWidth={2.5}
+                className="relative z-10 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              />
+            </MagneticButton>
 
             <button
-              onClick={() => changeLanguage('bn')}
-              className={`transition-colors ${language === 'bn' ? 'text-black' : 'text-black/35 hover:text-black/60'}`}
+              type="button"
+              onClick={() => setMobileOpen((v) => !v)}
+              aria-label="Menu"
+              aria-expanded={mobileOpen}
+              className="md:hidden flex items-center justify-center w-9 h-9 rounded-full text-fg hover:bg-fill-hover transition-colors"
             >
-              বাং
+              {mobileOpen ? <X size={18} /> : <Menu size={18} />}
             </button>
           </div>
-
-          {/* Mobile menu toggle */}
-          <button
-            onClick={() => setMobileOpen((v) => !v)}
-            aria-label="Menu"
-            aria-expanded={mobileOpen}
-            className="md:hidden flex items-center justify-center w-9 h-9 -mr-1 rounded-full text-black hover:bg-black/[0.06] transition-colors"
-          >
-            {mobileOpen ? <X size={18} strokeWidth={2.5} /> : <Menu size={18} strokeWidth={2.5} />}
-          </button>
-        </div>
+        </motion.div>
       </motion.header>
 
-      {/* Mobile dropdown menu */}
-      {mobileOpen && (
-        <motion.nav
-          initial={{ opacity: 0, y: -8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.2 }}
-          className="md:hidden fixed top-[78px] left-3 right-3 z-[1000] bg-[rgba(250,248,243,0.97)] backdrop-blur-2xl border border-black/10 rounded-2xl shadow-[0_24px_60px_-20px_rgba(0,0,0,0.25)] p-3 flex flex-col"
-        >
-          {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              onClick={() => setMobileOpen(false)}
-              className="px-4 py-3 rounded-xl text-[11px] font-bold uppercase tracking-[0.22em] text-black hover:bg-black/[0.05] hover:text-[#caa400] transition-colors"
-            >
-              {link.name}
-            </a>
-          ))}
-          <a
-            href="https://www.imdb.com/title/tt39394821"
-            target="_blank"
-            rel="noopener noreferrer"
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="md:hidden fixed inset-0 z-[999] bg-page/80 backdrop-blur-xl"
             onClick={() => setMobileOpen(false)}
-            className="mt-1 px-4 py-3 rounded-xl text-[11px] font-bold uppercase tracking-[0.22em] text-black/60 hover:bg-black/[0.05] transition-colors flex items-center gap-2"
           >
-            {t.rate}
-            <ArrowUpRight size={13} strokeWidth={2.5} />
-          </a>
-        </motion.nav>
-      )}
+            <motion.nav
+              initial={{ opacity: 0, y: -16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.35, ease: EASE_OUT_EXPO }}
+              onClick={(e) => e.stopPropagation()}
+              className="mt-20 mx-4 glass-strong rounded-3xl p-4 flex flex-col gap-1 shadow-premium"
+            >
+              {navLinks.map((link, i) => (
+                <motion.a
+                  key={link.href}
+                  href={link.href}
+                  initial={{ opacity: 0, x: -12 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.05 * i }}
+                  onClick={() => setMobileOpen(false)}
+                  className="px-5 py-4 rounded-2xl text-sm font-bold uppercase tracking-[0.2em] text-fg hover:bg-fill-soft hover:text-gold-bright transition-colors"
+                >
+                  {link.name}
+                </motion.a>
+              ))}
+              <button
+                type="button"
+                onClick={() => {
+                  toggleTheme()
+                }}
+                className="mx-1 mt-1 flex items-center justify-center gap-2 rounded-full border border-line px-5 py-3 text-[11px] font-extrabold uppercase tracking-[0.2em] text-fg"
+              >
+                {theme === 'dark' ? <Sun size={14} /> : <Moon size={14} />}
+                {theme === 'dark' ? 'Light mode' : 'Dark mode'}
+              </button>
+              <a
+                href="https://www.imdb.com/title/tt39394821"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMobileOpen(false)}
+                className="mt-1 mx-1 flex items-center justify-center gap-2 rounded-full bg-gold-bright text-ink px-5 py-3.5 text-[11px] font-extrabold uppercase tracking-[0.2em]"
+              >
+                Rate on IMDb
+                <ArrowUpRight size={14} />
+              </a>
+            </motion.nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   )
 }
