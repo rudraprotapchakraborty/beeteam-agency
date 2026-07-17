@@ -17,7 +17,7 @@ type Award = {
 
 const awards: Award[] = [
   {
-    url: 'https://i.ibb.co.com/hFnQSfsh/Whats-App-Image-2026-05-26-at-5-25-25-PM.jpg',
+    url: '/awards/award-1.jpg',
     title: 'Certificate of Achievement',
     outlet: 'FIPRESCI Bangladesh',
     desc: "Recognized during the 24th Dhaka International Film Festival for the film 'The University of Chankharpul'.",
@@ -25,7 +25,7 @@ const awards: Award[] = [
     id: 'CERT-001',
   },
   {
-    url: 'https://i.ibb.co.com/bjh4YCq5/Whats-App-Image-2026-05-26-at-5-25-265-PM.jpg',
+    url: '/awards/award-2.jpg',
     title: 'National Film Certification',
     outlet: 'Government of Bangladesh',
     desc: 'Granted unrestricted public exhibition status under the Film Certification Act 2023.',
@@ -33,7 +33,7 @@ const awards: Award[] = [
     id: 'GOV-882',
   },
   {
-    url: 'https://i.ibb.co/NnNMzSqc/Whats-App-Image-2026-01-26-at-3-15-54-PM.jpg',
+    url: '/awards/award-3.jpg',
     title: 'Bangladesh Panorama Winner',
     outlet: 'Dhaka International Film Festival',
     desc: 'Awarded in the Full Length Section 2026 for cinematic production excellence.',
@@ -41,7 +41,7 @@ const awards: Award[] = [
     id: 'WIN-992',
   },
   {
-    url: 'https://i.ibb.co/rR9gQW33/IMG-0134-1-2.jpg',
+    url: '/awards/award-4.jpg',
     title: 'Hiralal Sen Padak',
     outlet: 'Dhaka University Film Society',
     desc: 'Awarded by Dhaka University Film Society in recognition of outstanding contribution to cinema.',
@@ -49,7 +49,7 @@ const awards: Award[] = [
     id: 'DUFS-001',
   },
   {
-    url: 'https://i.ibb.co/m5kNgc8w/Whats-App-Image-2026-01-26-at-3-21-45-PM.jpg',
+    url: '/awards/award-5.jpg',
     title: 'International Critics Laurels',
     outlet: 'FIPRESCI International',
     desc: 'Recognized for cinematic contribution to the 24th DIFF Bangladesh Panorama.',
