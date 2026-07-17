@@ -6,12 +6,10 @@ import HallOfFame from '@/components/HallOfFame'
 import FilmInfoSection from '@/components/FilmInfoSection'
 import SynopsisSection from '@/components/SynopsisSection'
 import PressRelease from '@/components/PressRelease'
-import EntrancePopups from '@/components/EntrancePopups'
 
 export default function Home() {
   return (
     <>
-      <EntrancePopups />
       <Hero />
       <PressRelease />
       <FeaturedNews />
