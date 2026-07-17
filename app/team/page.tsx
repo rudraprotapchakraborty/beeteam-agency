@@ -23,7 +23,7 @@ const team: Member[] = [
   },
   {
     index: '03',
-    name: 'Dev Vai',
+    name: 'Devodyuti Aich',
     role: 'Performance Supervisor',
   },
   {
