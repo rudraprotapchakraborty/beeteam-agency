@@ -1,14 +1,66 @@
 'use client'
 
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
-import { motion, useScroll, useSpring, useTransform } from 'framer-motion'
-import { Play } from 'lucide-react'
+import { AnimatePresence, motion, useScroll, useSpring, useTransform } from 'framer-motion'
+import { Play, X } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
+
+const posters = [
+  {
+    src: '/poster1.jpg',
+    alt: 'The University of Chankharpul — Theatrical Poster 01',
+    labelEn: 'Poster 01',
+    labelBn: 'পোস্টার ০১',
+    size: '27 × 40 IN',
+  },
+  {
+    src: '/poster2.jpg',
+    alt: 'The University of Chankharpul — Theatrical Poster 02',
+    labelEn: 'Poster 02',
+    labelBn: 'পোস্টার ০২',
+    size: '27 × 40 IN',
+  },
+  {
+    src: '/BUFT poster 0001.jpg',
+    alt: 'The University of Chankharpul — BUFT Premiere Poster 01',
+    labelEn: 'BUFT Poster 01',
+    labelBn: 'বিইউএফটি পোস্টার ০১',
+    size: 'BUFT · 2026',
+  },
+  {
+    src: '/BUFT poster 0002.jpg',
+    alt: 'The University of Chankharpul — BUFT Premiere Poster 02',
+    labelEn: 'BUFT Poster 02',
+    labelBn: 'বিইউএফটি পোস্টার ০২',
+    size: 'BUFT · 2026',
+  },
+] as const
+
+type Poster = (typeof posters)[number]
+
+const trailers = [
+  {
+    id: 'ErRnSJQ9nhg',
+    titleEn: 'Official Trailer',
+    titleBn: 'অফিসিয়াল ট্রেলার',
+    meta: '02:44 · 4K',
+  },
+  {
+    id: '0VWQgPVgRrs',
+    titleEn: 'Official Trailer 02',
+    titleBn: 'অফিসিয়াল ট্রেলার ০২',
+    meta: 'YouTube · 4K',
+  },
+] as const
+
+type Trailer = (typeof trailers)[number]
 
 export default function LatestRelease() {
   const containerRef = useRef<HTMLElement | null>(null)
   const { language } = useLanguage()
+  const [activePoster, setActivePoster] = useState<Poster | null>(null)
+  const [activeTrailer, setActiveTrailer] = useState<Trailer | null>(null)
 
   const translations = {
     en: {
@@ -16,26 +68,60 @@ export default function LatestRelease() {
       title1: 'Latest',
       title2: 'Release',
       tagline: 'Production House · Studio 2026',
-      resolution: 'Resolution',
-      duration: 'Duration',
-      trailer: 'Official Trailer',
-      poster: 'Theatrical Poster',
-      caption: 'A satirical political drama by Monirul Haque Akash. Premiered at the 24th Dhaka International Film Festival.',
+      caption:
+        'A satirical political drama by Monirul Haque Akash. Premiered at the 24th Dhaka International Film Festival.',
+      posters: 'Posters',
+      postersSub: 'Theatrical & premiere showcase assets',
+      trailers: 'Trailers',
+      trailersSub: 'Official film trailers',
+      openPoster: 'View',
+      playTrailer: 'Play',
+      close: 'Close',
     },
     bn: {
       eyebrow: 'এখন প্রদর্শিত · ০৫',
       title1: 'সর্বশেষ',
       title2: 'প্রকাশনা',
       tagline: 'প্রোডাকশন হাউস · স্টুডিও ২০২৬',
-      resolution: 'রেজোলিউশন',
-      duration: 'সময়কাল',
-      trailer: 'অফিসিয়াল ট্রেলার',
-      poster: 'থিয়েটার পোস্টার',
-      caption: 'মনিরুল হক আকাশের একটি ব্যঙ্গাত্মক রাজনৈতিক নাটক। ২৪তম ঢাকা আন্তর্জাতিক চলচ্চিত্র উৎসবে প্রিমিয়ার।',
+      caption:
+        'মনিরুল হক আকাশের একটি ব্যঙ্গাত্মক রাজনৈতিক নাটক। ২৪তম ঢাকা আন্তর্জাতিক চলচ্চিত্র উৎসবে প্রিমিয়ার।',
+      posters: 'পোস্টার',
+      postersSub: 'থিয়েটার ও প্রিমিয়ার শোকেস অ্যাসেট',
+      trailers: 'ট্রেলার',
+      trailersSub: 'অফিসিয়াল ফিল্ম ট্রেলারসমূহ',
+      openPoster: 'দেখুন',
+      playTrailer: 'চালান',
+      close: 'বন্ধ',
     },
   } as const
 
   const t = translations[language]
+  const lightboxOpen = Boolean(activePoster || activeTrailer)
+
+  useEffect(() => {
+    if (!lightboxOpen) return
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setActivePoster(null)
+        setActiveTrailer(null)
+      }
+    }
+
+    const prevOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    window.addEventListener('keydown', onKeyDown)
+
+    return () => {
+      document.body.style.overflow = prevOverflow
+      window.removeEventListener('keydown', onKeyDown)
+    }
+  }, [lightboxOpen])
+
+  const closeLightbox = () => {
+    setActivePoster(null)
+    setActiveTrailer(null)
+  }
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -44,8 +130,6 @@ export default function LatestRelease() {
 
   const smooth = useSpring(scrollYProgress, { stiffness: 120, damping: 25, mass: 0.5 })
   const yParallax = useTransform(smooth, [0, 1], [60, -60])
-  const posterY = useTransform(smooth, [0, 1], [40, -40])
-  const scaleSoft = useTransform(smooth, [0, 1], [0.97, 1.03])
 
   return (
     <section
@@ -72,7 +156,7 @@ export default function LatestRelease() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="grid lg:grid-cols-12 gap-8 mb-10 items-end"
+          className="grid lg:grid-cols-12 gap-8 mb-14 items-end"
         >
           <div className="lg:col-span-7">
             <div className="flex items-center gap-3 mb-6">
@@ -110,109 +194,281 @@ export default function LatestRelease() {
           </div>
         </motion.div>
 
-        {/* Trailer + Poster */}
-        <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-start">
-          {/* TRAILER */}
-          <motion.div
-            style={{ scale: scaleSoft }}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.9, ease: 'easeOut' }}
-            className="relative"
-          >
-            <div className="absolute -top-4 left-0 right-0 flex justify-between items-center font-mono text-[10px] uppercase tracking-[0.25em] text-black/50 z-10 pointer-events-none">
-              <span className="flex items-center gap-2">
-                <Play size={10} className="fill-current text-[#FFD700]" />
-                {t.trailer}
-              </span>
-              <span>02:44 · 4K</span>
-            </div>
-            <div className="relative w-full aspect-video rounded-2xl overflow-hidden border border-black/10 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.2)] bg-black">
-              <iframe
-                className="absolute inset-0 w-full h-full"
-                src="https://www.youtube.com/embed/ErRnSJQ9nhg?rel=0&modestbranding=1"
-                title="Official Trailer"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-              {/* Inner frame */}
-              <span className="absolute top-2 left-2 w-3 h-3 border-t-2 border-l-2 border-[#FFD700] z-10 pointer-events-none" />
-              <span className="absolute top-2 right-2 w-3 h-3 border-t-2 border-r-2 border-[#FFD700] z-10 pointer-events-none" />
-              <span className="absolute bottom-2 left-2 w-3 h-3 border-b-2 border-l-2 border-[#FFD700] z-10 pointer-events-none" />
-              <span className="absolute bottom-2 right-2 w-3 h-3 border-b-2 border-r-2 border-[#FFD700] z-10 pointer-events-none" />
-            </div>
-          </motion.div>
-
-          {/* POSTER */}
-          <motion.div
-            style={{ y: posterY }}
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.9, ease: 'easeOut' }}
-            className="relative"
-          >
-            <div className="absolute -top-4 left-0 right-0 flex justify-between items-center font-mono text-[10px] uppercase tracking-[0.25em] text-black/50 z-10 pointer-events-none">
-              <span>{t.poster}</span>
-              <span>27 × 40 IN</span>
-            </div>
-            <div className="relative w-full rounded-2xl overflow-hidden border border-black/10 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.25)] bg-black group h-full">
-              <div className="relative h-full min-h-[330px] md:min-h-[380px]">
-                <Image
-                  src="/poster1.jpg"
-                  alt="Official Poster"
-                  fill
-                  sizes="(min-width: 768px) 50vw, 100vw"
-                  className="object-cover transition-transform duration-[1.5s] group-hover:scale-[1.04]"
-                  priority
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
-              </div>
-              <span className="absolute top-2 left-2 w-3 h-3 border-t-2 border-l-2 border-[#FFD700] z-10 pointer-events-none" />
-              <span className="absolute top-2 right-2 w-3 h-3 border-t-2 border-r-2 border-[#FFD700] z-10 pointer-events-none" />
-              <span className="absolute bottom-2 left-2 w-3 h-3 border-b-2 border-l-2 border-[#FFD700] z-10 pointer-events-none" />
-              <span className="absolute bottom-2 right-2 w-3 h-3 border-b-2 border-r-2 border-[#FFD700] z-10 pointer-events-none" />
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Spec strip */}
+        {/* ========== PART 1: POSTERS ========== */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-          className="mt-8 grid grid-cols-3 gap-px bg-black/10 border border-black/10 rounded-xl overflow-hidden"
+          transition={{ duration: 0.8 }}
+          className="mb-16"
         >
-          <SpecCell label={t.resolution} value="4K UHD" mono />
-          <SpecCell label={t.duration} value="02:14" mono accent />
-          <SpecCell label="Format" value="DCP · MP4" mono />
+          <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
+            <div>
+              <div className="flex items-center gap-3 mb-2">
+                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#FFD700]">
+                  01
+                </span>
+                <span className="h-px w-8 bg-[#FFD700]/40" />
+                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-black/50">
+                  Gallery
+                </span>
+              </div>
+              <h3 className="h-display text-[clamp(32px,4vw,56px)] text-black leading-none">
+                {t.posters}
+              </h3>
+              <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.25em] text-black/40">
+                {t.postersSub}
+              </p>
+            </div>
+            <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-black/30">
+              {posters.length} assets
+            </span>
+          </div>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+            {posters.map((poster, i) => (
+              <motion.button
+                key={poster.src}
+                type="button"
+                onClick={() => setActivePoster(poster)}
+                initial={{ opacity: 0, y: 28 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: i * 0.08 }}
+                whileHover={{ y: -6 }}
+                className="group relative block w-full text-left cursor-pointer"
+              >
+                <div className="relative aspect-[2/3] rounded-2xl overflow-hidden border border-black/10 bg-black shadow-[0_24px_60px_-20px_rgba(0,0,0,0.3)] group-hover:border-[#FFD700]/60 transition-colors">
+                  <Image
+                    src={poster.src}
+                    alt={poster.alt}
+                    fill
+                    sizes="(min-width: 1024px) 25vw, 50vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                    priority={i < 2}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80 group-hover:opacity-100 transition-opacity" />
+
+                  {/* Frame brackets */}
+                  <span className="absolute top-2 left-2 w-3 h-3 border-t-2 border-l-2 border-[#FFD700] z-10" />
+                  <span className="absolute top-2 right-2 w-3 h-3 border-t-2 border-r-2 border-[#FFD700] z-10" />
+                  <span className="absolute bottom-2 left-2 w-3 h-3 border-b-2 border-l-2 border-[#FFD700] z-10" />
+                  <span className="absolute bottom-2 right-2 w-3 h-3 border-b-2 border-r-2 border-[#FFD700] z-10" />
+
+                  <div className="absolute bottom-0 left-0 right-0 p-3 z-10">
+                    <div className="flex items-center justify-between gap-2">
+                      <div>
+                        <span className="block font-mono text-[9px] uppercase tracking-[0.25em] text-[#FFD700]">
+                          {language === 'bn' ? poster.labelBn : poster.labelEn}
+                        </span>
+                        <span className="block font-mono text-[8px] uppercase tracking-[0.2em] text-white/50 mt-0.5">
+                          {poster.size}
+                        </span>
+                      </div>
+                      <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-white/70 group-hover:text-[#FFD700] transition-colors">
+                        {t.openPoster}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </motion.button>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* ========== PART 2: TRAILERS ========== */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
+            <div>
+              <div className="flex items-center gap-3 mb-2">
+                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#FFD700]">
+                  02
+                </span>
+                <span className="h-px w-8 bg-[#FFD700]/40" />
+                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-black/50">
+                  Screening
+                </span>
+              </div>
+              <h3 className="h-display text-[clamp(32px,4vw,56px)] text-black leading-none">
+                {t.trailers}
+              </h3>
+              <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.25em] text-black/40">
+                {t.trailersSub}
+              </p>
+            </div>
+            <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-black/30">
+              {trailers.length} videos
+            </span>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
+            {trailers.map((trailer, i) => (
+              <motion.button
+                key={trailer.id}
+                type="button"
+                onClick={() => setActiveTrailer(trailer)}
+                initial={{ opacity: 0, y: 28 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, delay: i * 0.1 }}
+                whileHover={{ y: -4 }}
+                className="group relative w-full text-left cursor-pointer"
+              >
+                <div className="mb-3 flex justify-between items-center font-mono text-[10px] uppercase tracking-[0.25em] text-black/50">
+                  <span className="flex items-center gap-2">
+                    <Play size={10} className="fill-current text-[#FFD700]" />
+                    {language === 'bn' ? trailer.titleBn : trailer.titleEn}
+                  </span>
+                  <span>{trailer.meta}</span>
+                </div>
+
+                <div className="relative w-full aspect-video rounded-2xl overflow-hidden border border-black/10 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.2)] bg-black group-hover:border-[#FFD700]/60 transition-colors">
+                  {/* YouTube thumbnail preview */}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={`https://img.youtube.com/vi/${trailer.id}/maxresdefault.jpg`}
+                    alt={language === 'bn' ? trailer.titleBn : trailer.titleEn}
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                  />
+                  <div className="absolute inset-0 bg-black/35 group-hover:bg-black/45 transition-colors" />
+
+                  {/* Play button */}
+                  <div className="absolute inset-0 flex items-center justify-center z-10">
+                    <span className="flex h-16 w-16 items-center justify-center rounded-full bg-[#FFD700] text-black shadow-[0_12px_40px_-8px_rgba(255,215,0,0.7)] group-hover:scale-110 transition-transform">
+                      <Play size={22} className="fill-current ml-0.5" />
+                    </span>
+                  </div>
+
+                  <span className="absolute top-2 left-2 w-3 h-3 border-t-2 border-l-2 border-[#FFD700] z-10" />
+                  <span className="absolute top-2 right-2 w-3 h-3 border-t-2 border-r-2 border-[#FFD700] z-10" />
+                  <span className="absolute bottom-2 left-2 w-3 h-3 border-b-2 border-l-2 border-[#FFD700] z-10" />
+                  <span className="absolute bottom-2 right-2 w-3 h-3 border-b-2 border-r-2 border-[#FFD700] z-10" />
+
+                  <div className="absolute bottom-0 left-0 right-0 p-3 z-10">
+                    <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-white/80 group-hover:text-[#FFD700] transition-colors">
+                      {t.playTrailer}
+                    </span>
+                  </div>
+                </div>
+              </motion.button>
+            ))}
+          </div>
         </motion.div>
       </div>
-    </section>
-  )
-}
 
-function SpecCell({
-  label,
-  value,
-  mono,
-  accent,
-}: {
-  label: string
-  value: string
-  mono?: boolean
-  accent?: boolean
-}) {
-  return (
-    <div className="bg-[#faf8f3] p-5 flex flex-col gap-2">
-      <div className="font-mono text-[9px] uppercase tracking-[0.3em] text-black/40">{label}</div>
-      <div
-        className={`text-base font-semibold ${mono ? 'font-mono-d' : ''} ${accent ? 'text-[#FFD700]' : 'text-black'}`}
-      >
-        {value}
-      </div>
-    </div>
+      {/* Poster lightbox */}
+      <AnimatePresence>
+        {activePoster && (
+          <motion.div
+            role="dialog"
+            aria-modal="true"
+            aria-label={language === 'bn' ? activePoster.labelBn : activePoster.labelEn}
+            className="fixed inset-0 z-[99999] flex items-center justify-center p-4 md:p-8 bg-black/85 backdrop-blur-md cursor-pointer"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            onClick={closeLightbox}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96, y: 12 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.96, y: 12 }}
+              transition={{ type: 'spring', stiffness: 280, damping: 28 }}
+              className="relative max-h-[90vh] flex flex-col items-center cursor-default"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                type="button"
+                onClick={closeLightbox}
+                aria-label={t.close}
+                className="absolute -top-2 -right-2 z-20 flex items-center justify-center h-9 w-9 rounded-full bg-white/10 hover:bg-[#FFD700] text-white hover:text-black transition-colors cursor-pointer"
+              >
+                <X size={16} strokeWidth={2.5} />
+              </button>
+
+              <div className="relative w-[min(100vw-2rem,28rem)] max-h-[80vh] aspect-[2/3] rounded-2xl overflow-hidden border border-white/15 bg-black shadow-[0_40px_100px_-20px_rgba(0,0,0,0.8)]">
+                <Image
+                  src={activePoster.src}
+                  alt={activePoster.alt}
+                  fill
+                  sizes="(min-width: 768px) 28rem, 90vw"
+                  className="object-contain"
+                  priority
+                />
+              </div>
+
+              <div className="mt-4 text-center">
+                <span className="block font-mono text-[11px] uppercase tracking-[0.3em] text-[#FFD700]">
+                  {language === 'bn' ? activePoster.labelBn : activePoster.labelEn}
+                </span>
+                <span className="block font-mono text-[9px] uppercase tracking-[0.25em] text-white/45 mt-1">
+                  {activePoster.size}
+                </span>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Trailer lightbox — same style as poster */}
+      <AnimatePresence>
+        {activeTrailer && (
+          <motion.div
+            role="dialog"
+            aria-modal="true"
+            aria-label={language === 'bn' ? activeTrailer.titleBn : activeTrailer.titleEn}
+            className="fixed inset-0 z-[99999] flex items-center justify-center p-4 md:p-8 bg-black/85 backdrop-blur-md cursor-pointer"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            onClick={closeLightbox}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96, y: 12 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.96, y: 12 }}
+              transition={{ type: 'spring', stiffness: 280, damping: 28 }}
+              className="relative w-full max-w-5xl flex flex-col items-center cursor-default"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                type="button"
+                onClick={closeLightbox}
+                aria-label={t.close}
+                className="absolute -top-2 -right-2 md:-top-3 md:-right-3 z-20 flex items-center justify-center h-9 w-9 rounded-full bg-white/10 hover:bg-[#FFD700] text-white hover:text-black transition-colors cursor-pointer"
+              >
+                <X size={16} strokeWidth={2.5} />
+              </button>
+
+              <div className="relative w-full aspect-video rounded-2xl overflow-hidden border border-white/15 bg-black shadow-[0_40px_100px_-20px_rgba(0,0,0,0.8)]">
+                <iframe
+                  className="absolute inset-0 w-full h-full"
+                  src={`https://www.youtube.com/embed/${activeTrailer.id}?rel=0&modestbranding=1&autoplay=1`}
+                  title={language === 'bn' ? activeTrailer.titleBn : activeTrailer.titleEn}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+
+              <div className="mt-4 text-center">
+                <span className="block font-mono text-[11px] uppercase tracking-[0.3em] text-[#FFD700]">
+                  {language === 'bn' ? activeTrailer.titleBn : activeTrailer.titleEn}
+                </span>
+                <span className="block font-mono text-[9px] uppercase tracking-[0.25em] text-white/45 mt-1">
+                  {activeTrailer.meta}
+                </span>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </section>
   )
 }
