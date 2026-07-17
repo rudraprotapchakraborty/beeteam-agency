@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import { Clock, Download, FileText, Play, Quote, Users } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 
-const TRAILER_URL = 'https://youtu.be/0VWQgPVgRrs?si=dA5mpSNb8-Zd2oNH'
+const TRAILER_URL = 'https://www.youtube.com/watch?v=ErRnSJQ9nhg'
 
 export default function PressRelease() {
   const { language } = useLanguage()

@@ -2,7 +2,7 @@
 
 import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { ArrowDown, ExternalLink, Film } from 'lucide-react'
+import { ExternalLink, Film, Play } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext'
 
 export default function Hero() {
@@ -19,10 +19,10 @@ export default function Hero() {
 
   const translations = {
     en: {
+      tagline: 'When a team failed',
       title1: 'BEETEAM',
       title2: 'STUDIOS',
-      subtitle: 'Engineering cinematic authority for high-performance global brands.',
-      contact: 'Begin a film',
+      trailer: 'Watch Trailer',
       viewWork: 'View Reel',
       presents: 'Bee Team Presents',
       scrollHint: 'Scroll to enter',
@@ -32,10 +32,10 @@ export default function Hero() {
       press: 'Press Coverage',
     },
     bn: {
+      tagline: 'When a team failed',
       title1: 'বিটিম',
       title2: 'স্টুডিওস',
-      subtitle: 'উচ্চ-ক্ষমতাসম্পন্ন বৈশ্বিক ব্র্যান্ডের জন্য সিনেমাটিক কর্তৃত্ব নির্মাণ।',
-      contact: 'একটি ফিল্ম শুরু করুন',
+      trailer: 'ট্রেলার দেখুন',
       viewWork: 'রিল দেখুন',
       presents: 'বি টিম উপস্থাপন করছে',
       scrollHint: 'প্রবেশ করতে স্ক্রল করুন',
@@ -153,6 +153,15 @@ export default function Hero() {
         >
           {/* Beeteam Studios branding */}
           <div className="flex-1 flex flex-col items-center justify-center text-white px-8 lg:px-10 pt-16 pb-2">
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.35 }}
+              className="mb-4 font-mono text-[11px] sm:text-[12px] uppercase tracking-[0.35em] text-[#FFD700]/90 text-center"
+            >
+              {t.tagline}
+            </motion.p>
+
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -171,29 +180,22 @@ export default function Hero() {
               className="mt-4 h-px w-40 bg-gradient-to-r from-transparent via-[#FFD700] to-transparent"
             />
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.9 }}
-              className="text-base text-white/70 max-w-xs text-center mt-3 font-light tracking-wide"
-            >
-              {t.subtitle}
-            </motion.p>
-
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.1 }}
+              transition={{ duration: 0.8, delay: 0.9 }}
               className="flex flex-col sm:flex-row items-center gap-4 mt-5"
             >
               <motion.a
-                href="#contact"
+                href="https://www.youtube.com/watch?v=ErRnSJQ9nhg"
+                target="_blank"
+                rel="noopener noreferrer"
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.97 }}
                 className="group relative px-7 py-3.5 bg-[#FFD700] text-black text-[11px] font-extrabold uppercase tracking-[0.22em] rounded-full flex items-center gap-2.5 shadow-[0_12px_40px_-12px_rgba(255,215,0,0.6)] sheen overflow-hidden"
               >
-                <span className="relative z-10">{t.contact}</span>
-                <ArrowDown size={14} strokeWidth={3} className="relative z-10 group-hover:translate-y-0.5 transition-transform" />
+                <Play size={14} strokeWidth={3} className="relative z-10 fill-current" />
+                <span className="relative z-10">{t.trailer}</span>
               </motion.a>
 
               <motion.a
