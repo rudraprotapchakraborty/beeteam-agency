@@ -316,7 +316,7 @@ export default function Hero() {
 
               <div
                 ref={scrollerRef}
-                className="flex gap-3 overflow-x-auto overflow-y-hidden pb-1 no-scrollbar touch-pan-x"
+                className="flex gap-3 overflow-x-auto overflow-y-hidden pb-3 news-scrollbar touch-pan-x"
                 style={{ WebkitOverflowScrolling: 'touch' }}
               >
                 {newsBarItems.map((item, i) => (
