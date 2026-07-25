@@ -8,20 +8,24 @@ import {
   useMotionValueEvent,
   useScroll,
 } from 'framer-motion'
-import { ArrowUpRight, Menu, Moon, Sun, X } from 'lucide-react'
+import { Menu, Moon, Sun, Ticket, X } from 'lucide-react'
 import MagneticButton from '@/components/ui/MagneticButton'
+import Avatar from '@/components/ui/Avatar'
 import { useTheme } from '@/context/ThemeContext'
+import { useAuth } from '@/context/AuthContext'
 import { EASE_OUT_EXPO } from '@/lib/motion'
 
 const navLinks = [
   { name: 'Home', href: '/' },
   { name: 'Works', href: '/works' },
   { name: 'Team', href: '/team' },
+  { name: 'Tickets', href: '/tickets' },
 ]
 
 export default function Navbar() {
   const { scrollY, scrollYProgress } = useScroll()
   const { theme, toggleTheme } = useTheme()
+  const { user } = useAuth()
   const [hidden, setHidden] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -122,21 +126,32 @@ export default function Navbar() {
             </button>
 
             <MagneticButton
-              href="https://www.imdb.com/title/tt39394821"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/tickets"
               className="hidden sm:inline-flex group items-center gap-2 bg-gold-bright text-ink px-4 py-2 rounded-full sheen overflow-hidden shadow-gold"
               strength={0.25}
             >
+              <Ticket size={13} strokeWidth={2.5} className="relative z-10" />
               <span className="relative z-10 text-[10px] font-extrabold uppercase tracking-[0.2em]">
-                IMDb
+                Buy Tickets
               </span>
-              <ArrowUpRight
-                size={13}
-                strokeWidth={2.5}
-                className="relative z-10 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-              />
             </MagneticButton>
+
+            {user ? (
+              <a
+                href="/dashboard"
+                aria-label="Your dashboard"
+                className="hidden sm:inline-flex items-center rounded-full transition-transform hover:scale-105"
+              >
+                <Avatar name={user.fullName} size={34} />
+              </a>
+            ) : (
+              <a
+                href="/login"
+                className="hidden sm:inline-flex items-center rounded-full border border-line bg-fill-soft px-4 py-2 text-[10px] font-extrabold uppercase tracking-[0.2em] text-fg hover:border-gold/40 hover:text-gold-bright transition-colors"
+              >
+                Sign in
+              </a>
+            )}
 
             <button
               type="button"
@@ -192,14 +207,33 @@ export default function Navbar() {
                 {theme === 'dark' ? 'Light mode' : 'Dark mode'}
               </button>
               <a
-                href="https://www.imdb.com/title/tt39394821"
-                target="_blank"
-                rel="noopener noreferrer"
+                href={user ? '/dashboard' : '/login'}
+                onClick={() => setMobileOpen(false)}
+                className="mx-1 mt-1 flex items-center gap-3 rounded-2xl border border-line px-4 py-3 text-fg hover:bg-fill-soft transition-colors"
+              >
+                {user ? (
+                  <>
+                    <Avatar name={user.fullName} size={32} />
+                    <span className="flex flex-col text-left">
+                      <span className="text-sm font-semibold">{user.fullName}</span>
+                      <span className="text-[10px] uppercase tracking-[0.18em] text-subtle">
+                        View dashboard
+                      </span>
+                    </span>
+                  </>
+                ) : (
+                  <span className="text-[11px] font-extrabold uppercase tracking-[0.2em]">
+                    Sign in / Register
+                  </span>
+                )}
+              </a>
+              <a
+                href="/tickets"
                 onClick={() => setMobileOpen(false)}
                 className="mt-1 mx-1 flex items-center justify-center gap-2 rounded-full bg-gold-bright text-ink px-5 py-3.5 text-[11px] font-extrabold uppercase tracking-[0.2em]"
               >
-                Rate on IMDb
-                <ArrowUpRight size={14} />
+                <Ticket size={14} />
+                Buy Tickets
               </a>
             </motion.nav>
           </motion.div>

@@ -5,6 +5,7 @@ import LatestRelease from '@/components/LatestRelease'
 import HallOfFame from '@/components/HallOfFame'
 import FilmInfoSection from '@/components/FilmInfoSection'
 import SynopsisSection from '@/components/SynopsisSection'
+import TicketSection from '@/components/tickets/TicketSection'
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
       <FilmInfoSection />
       <DirectorVision />
       <SynopsisSection />
+      <TicketSection />
       <HallOfFame />
     </>
   )

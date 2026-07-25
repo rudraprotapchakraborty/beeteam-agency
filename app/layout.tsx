@@ -7,6 +7,7 @@ import Footer from '@/components/Footer'
 import OpeningScene from '@/components/OpeningScene'
 import SmoothScroll from '@/components/providers/SmoothScroll'
 import { ThemeProvider } from '@/context/ThemeContext'
+import { AuthProvider } from '@/context/AuthContext'
 
 const display = Bebas_Neue({
   weight: '400',
@@ -71,12 +72,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </head>
       <body className="noise antialiased bg-page text-fg">
         <ThemeProvider>
-          <SmoothScroll>
-            <OpeningScene />
-            <Navbar />
-            <main className="relative min-h-screen">{children}</main>
-            <Footer />
-          </SmoothScroll>
+          <AuthProvider>
+            <SmoothScroll>
+              <OpeningScene />
+              <Navbar />
+              <main className="relative min-h-screen">{children}</main>
+              <Footer />
+            </SmoothScroll>
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -26,7 +26,18 @@
       "mcp__Claude_Preview__preview_start",
       "Bash(kill %1)",
       "PowerShell(Get-NetTCPConnection -LocalPort 3000 -ErrorAction SilentlyContinue | Select-Object -First 3 OwningProcess; Get-Process -Id \\(Get-NetTCPConnection -LocalPort 3000 -ErrorAction SilentlyContinue\\).OwningProcess -ErrorAction SilentlyContinue | Select-Object Id, ProcessName | Format-Table)",
-      "PowerShell($conns = Get-NetTCPConnection -LocalPort 3000 -ErrorAction SilentlyContinue | Where-Object { $_.OwningProcess -ne 0 } | Select-Object -ExpandProperty OwningProcess -Unique; foreach \\($pid in $conns\\) { try { Stop-Process -Id $pid -Force -ErrorAction Stop; \"killed $pid\" } catch { \"skip $pid : $_\" } }; Start-Sleep 2; \\(Get-NetTCPConnection -LocalPort 3000 -ErrorAction SilentlyContinue | Where-Object { $_.OwningProcess -ne 0 } | Measure-Object\\).Count)"
+      "PowerShell($conns = Get-NetTCPConnection -LocalPort 3000 -ErrorAction SilentlyContinue | Where-Object { $_.OwningProcess -ne 0 } | Select-Object -ExpandProperty OwningProcess -Unique; foreach \\($pid in $conns\\) { try { Stop-Process -Id $pid -Force -ErrorAction Stop; \"killed $pid\" } catch { \"skip $pid : $_\" } }; Start-Sleep 2; \\(Get-NetTCPConnection -LocalPort 3000 -ErrorAction SilentlyContinue | Where-Object { $_.OwningProcess -ne 0 } | Measure-Object\\).Count)",
+      "Bash(node -e \"console.log\\('mongodb', require\\('mongodb/package.json'\\).version\\); console.log\\('bcryptjs', require\\('bcryptjs/package.json'\\).version\\); console.log\\('jose', require\\('jose/package.json'\\).version\\)\")",
+      "Bash(docker --version)",
+      "Bash(timeout 180 node scripts/mongo-mem.mjs)",
+      "Bash(echo \"started pid $!\")",
+      "Bash(pkill -f mongo-mem.mjs)",
+      "Bash(pkill -f \"node.*mongodb-memory\")",
+      "Bash(node scripts/mongo-mem.mjs)",
+      "Bash(node scripts/inspect.mjs)",
+      "Bash(npm uninstall *)",
+      "Bash(node -e \"const p=require\\('./package.json'\\); console.log\\(JSON.stringify\\(p.dependencies,null,1\\)\\); console.log\\('devDeps has memory-server:', !!\\(p.devDependencies['mongodb-memory-server']\\)\\)\")",
+      "Bash(echo \"=== lint exit: $? ===\")"
     ]
   }
 }
