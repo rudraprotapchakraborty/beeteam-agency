@@ -10,7 +10,7 @@ export async function GET() {
   const users = await usersCollection()
   const purchases = await purchasesCollection()
 
-  const docs = await users.find({}).sort({ createdAt: -1 }).toArray()
+  const docs = await users.find({ isAdmin: { $ne: true } }).sort({ createdAt: -1 }).toArray()
 
   // Attach a per-user purchase + confirmed count.
   const counts = await purchases

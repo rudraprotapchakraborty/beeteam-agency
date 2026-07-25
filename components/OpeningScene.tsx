@@ -10,6 +10,16 @@ type Phase = 'logo' | 'exit' | 'gone'
 export default function OpeningScene() {
   const [phase, setPhase] = useState<Phase>('logo')
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if (sessionStorage.getItem('beeteam_visited')) {
+        setPhase('gone')
+      } else {
+        sessionStorage.setItem('beeteam_visited', 'true')
+      }
+    }
+  }, [])
+
   // logo → exit → gone
   useEffect(() => {
     if (phase !== 'logo') return
@@ -38,7 +48,7 @@ export default function OpeningScene() {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.55, ease: EASE_OUT_EXPO }}
-          className="fixed inset-0 z-[99999] overflow-hidden bg-[#030303] flex items-center justify-center"
+          className="fixed inset-0 z-[99999] overflow-hidden bg-[#030303] flex items-center justify-center opening-scene-overlay"
           aria-hidden
         >
           <div className="absolute inset-0 pointer-events-none">

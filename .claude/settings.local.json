@@ -37,7 +37,12 @@
       "Bash(node scripts/inspect.mjs)",
       "Bash(npm uninstall *)",
       "Bash(node -e \"const p=require\\('./package.json'\\); console.log\\(JSON.stringify\\(p.dependencies,null,1\\)\\); console.log\\('devDeps has memory-server:', !!\\(p.devDependencies['mongodb-memory-server']\\)\\)\")",
-      "Bash(echo \"=== lint exit: $? ===\")"
+      "Bash(echo \"=== lint exit: $? ===\")",
+      "Bash(node -e \"console.log\\(require\\('@vercel/analytics/package.json'\\).version\\)\")",
+      "Bash(nslookup -type=SRV _mongodb._tcp.cluster0.evyrxb5.mongodb.net)",
+      "Bash(nslookup cluster0.evyrxb5.mongodb.net)",
+      "Bash(node _mongo_test.mjs)",
+      "Bash(node _promote.mjs)"
     ]
   }
 }

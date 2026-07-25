@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
-import { ArrowRight, Loader2 } from 'lucide-react'
+import { ArrowRight, Loader2, Eye, EyeOff } from 'lucide-react'
 import { useAuth } from '@/context/AuthContext'
 import { EASE_OUT_EXPO } from '@/lib/motion'
 
@@ -96,7 +96,7 @@ export function AuthShell({
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: EASE_OUT_EXPO }}
-        className="relative z-10 w-full max-w-md glass-strong rounded-3xl p-8 sm:p-10 shadow-premium"
+        className="relative z-10 w-full max-w-md glass-strong rounded-3xl p-6 sm:p-10 shadow-premium"
       >
         <p className="label-mono text-gold-bright mb-3">BeeTeam Access</p>
         <h1 className="font-serif-d text-3xl sm:text-4xl text-fg mb-2">{title}</h1>
@@ -124,19 +124,37 @@ export function Field({
   autoComplete?: string
   inputMode?: 'tel' | 'text' | 'numeric'
 }) {
+  const [showPassword, setShowPassword] = useState(false)
+  const isPassword = type === 'password'
+  const actualType = isPassword ? (showPassword ? 'text' : 'password') : type
+
   return (
     <label className="flex flex-col gap-1.5">
       <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-subtle">{label}</span>
-      <input
-        type={type}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder}
-        autoComplete={autoComplete}
-        inputMode={inputMode}
-        required
-        className="rounded-xl border border-line bg-fill-soft px-4 py-3 text-sm text-fg placeholder:text-faint outline-none transition-colors focus:border-gold/50 focus:bg-fill-hover"
-      />
+      <div className="relative w-full">
+        <input
+          type={actualType}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder={placeholder}
+          autoComplete={autoComplete}
+          inputMode={inputMode}
+          required
+          className={`w-full rounded-xl border border-line bg-fill-soft py-3 pl-4 ${
+            isPassword ? 'pr-11' : 'pr-4'
+          } text-sm text-fg placeholder:text-faint outline-none transition-colors focus:border-gold/50 focus:bg-fill-hover`}
+        />
+        {isPassword && value.length > 0 && (
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-3.5 top-1/2 -translate-y-1/2 rounded-full p-1 text-subtle hover:text-gold-bright transition-colors cursor-pointer"
+            aria-label={showPassword ? 'Hide password' : 'Show password'}
+          >
+            {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+          </button>
+        )}
+      </div>
     </label>
   )
 }

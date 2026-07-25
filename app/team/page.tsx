@@ -18,7 +18,7 @@ const team: Member[] = [
   },
   {
     index: '02',
-    name: 'Munna Vai',
+    name: 'Md. Hafizuddin Munna',
     role: 'Executive Producer',
   },
   {

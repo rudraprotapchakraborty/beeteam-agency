@@ -233,14 +233,14 @@ export default function TicketFlow() {
                 <span className="font-semibold text-fg">Send Money</span>, and send{' '}
                 <span className="font-semibold text-gold-bright">{TICKET_PRICE} BDT</span> to:
               </p>
-              <div className="mt-3 flex items-center justify-between gap-3 rounded-xl border border-line bg-page/40 px-4 py-3">
-                <span className="font-mono-d text-lg font-semibold tracking-wide text-fg">
+              <div className="mt-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-xl border border-line bg-page/40 px-4 py-3">
+                <span className="font-mono-d text-lg font-semibold tracking-wide text-fg text-center sm:text-left">
                   {PAYMENT_NUMBERS[method]}
                 </span>
                 <button
                   type="button"
                   onClick={copyNumber}
-                  className="inline-flex items-center gap-1.5 rounded-full border border-line px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.15em] text-muted hover:bg-fill-hover transition-colors"
+                  className="inline-flex items-center justify-center gap-1.5 rounded-full border border-line px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.15em] text-muted hover:bg-fill-hover transition-colors w-full sm:w-auto"
                 >
                   {copied ? <Check size={12} /> : <Copy size={12} />}
                   {copied ? 'Copied' : 'Copy'}

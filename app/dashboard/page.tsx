@@ -3,11 +3,13 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
-import { LogOut, Ticket as TicketIcon, Loader2, ShieldCheck } from 'lucide-react'
+import { LogOut, Ticket as TicketIcon, Loader2, ShieldCheck, Edit2, Check, X } from 'lucide-react'
 import { useAuth } from '@/context/AuthContext'
 import Avatar from '@/components/ui/Avatar'
+import StatusBadge from '@/components/ui/StatusBadge'
+import AdminPanel from '@/components/admin/AdminPanel'
 import { EASE_OUT_EXPO } from '@/lib/motion'
-import { PAYMENT_LABELS, statusLabel } from '@/lib/tickets'
+import { PAYMENT_LABELS } from '@/lib/tickets'
 
 type Purchase = {
   id: string
@@ -21,17 +23,56 @@ type Purchase = {
 }
 
 export default function DashboardPage() {
-  const { user, loading, logout } = useAuth()
+  const { user, loading, logout, refresh } = useAuth()
   const router = useRouter()
   const [purchases, setPurchases] = useState<Purchase[]>([])
   const [loadingPurchases, setLoadingPurchases] = useState(true)
+
+  const [isEditingName, setIsEditingName] = useState(false)
+  const [editName, setEditName] = useState('')
+  const [savingName, setSavingName] = useState(false)
+  const [nameError, setNameError] = useState('')
+
+  const startEditing = () => {
+    if (user) {
+      setEditName(user.fullName)
+      setIsEditingName(true)
+      setNameError('')
+    }
+  }
+
+  const saveName = async () => {
+    if (editName.trim().length < 2) {
+      setNameError('Name must be at least 2 characters.')
+      return
+    }
+    setSavingName(true)
+    setNameError('')
+    try {
+      const res = await fetch('/api/auth/me', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fullName: editName }),
+      })
+      if (!res.ok) {
+        const d = await res.json()
+        throw new Error(d.error || 'Failed to save.')
+      }
+      await refresh()
+      setIsEditingName(false)
+    } catch (err: any) {
+      setNameError(err.message || 'Something went wrong.')
+    } finally {
+      setSavingName(false)
+    }
+  }
 
   useEffect(() => {
     if (!loading && !user) router.replace('/login?next=/dashboard')
   }, [loading, user, router])
 
   useEffect(() => {
-    if (!user) return
+    if (!user || user.isAdmin) return
     fetch('/api/tickets', { cache: 'no-store' })
       .then((r) => r.json())
       .then((d) => setPurchases(d.purchases ?? []))
@@ -62,7 +103,7 @@ export default function DashboardPage() {
         <div className="glow-orb top-16 right-1/4 w-[460px] h-[460px] bg-gold/[0.05]" />
       </div>
 
-      <div className="max-w-4xl mx-auto px-6 relative z-10">
+      <div className={`${user.isAdmin ? 'max-w-6xl' : 'max-w-4xl'} mx-auto px-6 relative z-10`}>
         {/* Profile header */}
         <motion.div
           initial={{ opacity: 0, y: 22 }}
@@ -73,31 +114,71 @@ export default function DashboardPage() {
           <div className="flex flex-col sm:flex-row sm:items-center gap-5">
             <Avatar name={user.fullName} size={72} className="text-2xl" />
             <div className="min-w-0 flex-1">
-              <div className="flex items-center gap-2">
-                <h1 className="font-serif-d text-2xl sm:text-3xl text-fg truncate">
-                  {user.fullName}
-                </h1>
-                {user.isAdmin && (
-                  <span className="inline-flex items-center gap-1 rounded-full bg-gold-bright/15 px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.15em] text-gold-bright">
-                    <ShieldCheck size={11} /> Admin
-                  </span>
-                )}
-              </div>
+              {isEditingName ? (
+                <div className="flex flex-col gap-1.5 w-full max-w-sm">
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="text"
+                      value={editName}
+                      onChange={(e) => setEditName(e.target.value)}
+                      disabled={savingName}
+                      className="flex-1 rounded-lg border border-line bg-fill-soft px-3 py-1.5 text-sm text-fg focus:border-gold-bright focus:outline-none"
+                      autoFocus
+                    />
+                    <button
+                      type="button"
+                      onClick={saveName}
+                      disabled={savingName}
+                      className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-gold-bright text-ink hover:opacity-90 disabled:opacity-50 transition-opacity"
+                      title="Save name"
+                    >
+                      {savingName ? (
+                        <Loader2 size={14} className="animate-spin" />
+                      ) : (
+                        <Check size={14} strokeWidth={2.5} />
+                      )}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setIsEditingName(false)}
+                      disabled={savingName}
+                      className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-line text-muted hover:bg-fill-hover disabled:opacity-50 transition-colors"
+                      title="Cancel"
+                    >
+                      <X size={14} />
+                    </button>
+                  </div>
+                  {nameError && (
+                    <p className="text-[11px] text-red-500 font-medium">{nameError}</p>
+                  )}
+                </div>
+              ) : (
+                <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                  <h1 className="font-serif-d text-2xl sm:text-3xl text-fg truncate">
+                    {user.fullName}
+                  </h1>
+                  <button
+                    type="button"
+                    onClick={startEditing}
+                    className="p-1 rounded-full text-subtle hover:text-gold-bright hover:bg-fill-soft transition-colors"
+                    title="Edit name"
+                  >
+                    <Edit2 size={14} />
+                  </button>
+                  {user.isAdmin && (
+                    <span className="inline-flex items-center gap-1 rounded-full bg-gold-bright/15 px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.15em] text-gold-bright">
+                      <ShieldCheck size={11} /> Admin
+                    </span>
+                  )}
+                </div>
+              )}
               <p className="text-sm text-muted font-mono-d mt-0.5">{user.phone}</p>
               {memberSince && (
                 <p className="text-xs text-subtle mt-1">Member since {memberSince}</p>
               )}
             </div>
 
-            <div className="flex items-center gap-2">
-              {user.isAdmin && (
-                <a
-                  href="/admin"
-                  className="rounded-full border border-line px-4 py-2.5 text-[10px] font-extrabold uppercase tracking-[0.18em] text-fg hover:bg-fill-hover transition-colors"
-                >
-                  Admin panel
-                </a>
-              )}
+            {!user.isAdmin && (
               <button
                 type="button"
                 onClick={async () => {
@@ -108,52 +189,63 @@ export default function DashboardPage() {
               >
                 <LogOut size={13} /> Sign out
               </button>
-            </div>
+            )}
           </div>
 
-          <div className="mt-6 grid grid-cols-2 gap-3 sm:max-w-xs">
-            <Stat label="Confirmed" value={confirmed} />
-            <Stat label="Total bookings" value={purchases.length} />
-          </div>
+          {!user.isAdmin && (
+            <div className="mt-6 grid grid-cols-2 gap-3 sm:max-w-xs">
+              <Stat label="Confirmed" value={confirmed} />
+              <Stat label="Total bookings" value={purchases.length} />
+            </div>
+          )}
         </motion.div>
 
         {/* Recent purchases */}
-        <div className="mt-10">
-          <div className="flex items-center justify-between mb-5">
-            <h2 className="font-serif-d text-xl text-fg">Recent purchases</h2>
-            <a
-              href="/tickets"
-              className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-gold-bright link-underline"
-            >
-              Buy more →
-            </a>
-          </div>
-
-          {loadingPurchases ? (
-            <div className="flex items-center justify-center rounded-2xl border border-line bg-fill-soft py-14 text-muted">
-              <Loader2 className="animate-spin" size={18} />
-            </div>
-          ) : purchases.length === 0 ? (
-            <div className="rounded-2xl border border-line bg-fill-soft py-14 text-center">
-              <div className="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-fill-hover text-subtle">
-                <TicketIcon size={18} />
-              </div>
-              <p className="text-sm text-muted">No purchases yet.</p>
+        {!user.isAdmin && (
+          <div className="mt-10">
+            <div className="flex items-center justify-between mb-5">
+              <h2 className="font-serif-d text-xl text-fg">Recent purchases</h2>
               <a
                 href="/tickets"
-                className="mt-4 inline-block rounded-full bg-gold-bright px-5 py-2.5 text-[10px] font-extrabold uppercase tracking-[0.18em] text-ink shadow-gold"
+                className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-gold-bright link-underline"
               >
-                Book a ticket
+                Buy more →
               </a>
             </div>
-          ) : (
-            <div className="grid gap-3">
-              {purchases.map((p) => (
-                <PurchaseCard key={p.id} p={p} />
-              ))}
-            </div>
-          )}
-        </div>
+
+            {loadingPurchases ? (
+              <div className="flex items-center justify-center rounded-2xl border border-line bg-fill-soft py-14 text-muted">
+                <Loader2 className="animate-spin" size={18} />
+              </div>
+            ) : purchases.length === 0 ? (
+              <div className="rounded-2xl border border-line bg-fill-soft py-14 text-center">
+                <div className="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-fill-hover text-subtle">
+                  <TicketIcon size={18} />
+                </div>
+                <p className="text-sm text-muted">No purchases yet.</p>
+                <a
+                  href="/tickets"
+                  className="mt-4 inline-block rounded-full bg-gold-bright px-5 py-2.5 text-[10px] font-extrabold uppercase tracking-[0.18em] text-ink shadow-gold"
+                >
+                  Book a ticket
+                </a>
+              </div>
+            ) : (
+              <div className="grid gap-3">
+                {purchases.map((p) => (
+                  <PurchaseCard key={p.id} p={p} />
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Admin management — only for admins, merged into their dashboard */}
+        {user.isAdmin && (
+          <div className="mt-14 border-t border-line pt-12">
+            <AdminPanel />
+          </div>
+        )}
       </div>
     </section>
   )
@@ -165,21 +257,6 @@ function Stat({ label, value }: { label: string; value: number }) {
       <p className="font-display text-3xl text-gold-bright leading-none">{value}</p>
       <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.18em] text-subtle">{label}</p>
     </div>
-  )
-}
-
-export function StatusBadge({ status }: { status: Purchase['status'] }) {
-  const styles: Record<Purchase['status'], string> = {
-    verified: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30',
-    rejected: 'bg-red-500/15 text-red-400 border-red-500/30',
-    pending: 'bg-gold-bright/15 text-gold-bright border-gold/30',
-  }
-  return (
-    <span
-      className={`inline-flex items-center rounded-full border px-3 py-1 text-[10px] font-bold uppercase tracking-[0.12em] ${styles[status]}`}
-    >
-      {statusLabel(status)}
-    </span>
   )
 }
 

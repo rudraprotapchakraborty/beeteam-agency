@@ -2,13 +2,14 @@
 
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import {
   AnimatePresence,
   motion,
   useMotionValueEvent,
   useScroll,
 } from 'framer-motion'
-import { Menu, Moon, Sun, Ticket, X } from 'lucide-react'
+import { LogOut, Menu, Moon, Sun, Ticket, X } from 'lucide-react'
 import MagneticButton from '@/components/ui/MagneticButton'
 import Avatar from '@/components/ui/Avatar'
 import { useTheme } from '@/context/ThemeContext'
@@ -19,13 +20,13 @@ const navLinks = [
   { name: 'Home', href: '/' },
   { name: 'Works', href: '/works' },
   { name: 'Team', href: '/team' },
-  { name: 'Tickets', href: '/tickets' },
 ]
 
 export default function Navbar() {
   const { scrollY, scrollYProgress } = useScroll()
   const { theme, toggleTheme } = useTheme()
-  const { user } = useAuth()
+  const { user, logout } = useAuth()
+  const router = useRouter()
   const [hidden, setHidden] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -137,13 +138,26 @@ export default function Navbar() {
             </MagneticButton>
 
             {user ? (
-              <a
-                href="/dashboard"
-                aria-label="Your dashboard"
-                className="hidden sm:inline-flex items-center rounded-full transition-transform hover:scale-105"
-              >
-                <Avatar name={user.fullName} size={34} />
-              </a>
+              <>
+                <a
+                  href="/dashboard"
+                  aria-label="Your dashboard"
+                  className="hidden sm:inline-flex items-center rounded-full transition-transform hover:scale-105"
+                >
+                  <Avatar name={user.fullName} size={34} />
+                </a>
+                <button
+                  type="button"
+                  onClick={async () => {
+                    await logout()
+                    router.push('/')
+                  }}
+                  aria-label="Sign out"
+                  className="hidden sm:inline-flex items-center justify-center w-9 h-9 rounded-full border border-line bg-fill-soft text-fg hover:border-gold/40 hover:text-gold-bright transition-colors"
+                >
+                  <LogOut size={15} strokeWidth={2.2} />
+                </button>
+              </>
             ) : (
               <a
                 href="/login"
@@ -172,7 +186,7 @@ export default function Navbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="md:hidden fixed inset-0 z-[999] bg-page/80 backdrop-blur-xl"
+            className="md:hidden fixed inset-0 z-[999] bg-page/80 backdrop-blur-xl overflow-y-auto pb-10"
             onClick={() => setMobileOpen(false)}
           >
             <motion.nav
@@ -235,6 +249,20 @@ export default function Navbar() {
                 <Ticket size={14} />
                 Buy Tickets
               </a>
+              {user && (
+                <button
+                  type="button"
+                  onClick={async () => {
+                    setMobileOpen(false)
+                    await logout()
+                    router.push('/')
+                  }}
+                  className="mx-1 mt-1 flex items-center justify-center gap-2 rounded-full border border-line px-5 py-3 text-[11px] font-extrabold uppercase tracking-[0.2em] text-fg hover:bg-fill-soft transition-colors"
+                >
+                  <LogOut size={14} />
+                  Sign out
+                </button>
+              )}
             </motion.nav>
           </motion.div>
         )}

@@ -3,10 +3,7 @@
 import { useRef } from 'react'
 import {
   motion,
-  useMotionTemplate,
-  useMotionValue,
   useScroll,
-  useSpring,
   useTransform,
 } from 'framer-motion'
 import {
@@ -113,11 +110,7 @@ export default function Hero() {
   const containerRef = useRef<HTMLElement | null>(null)
   const scrollerRef = useRef<HTMLDivElement | null>(null)
 
-  const mouseX = useMotionValue(0.5)
-  const mouseY = useMotionValue(0.5)
-  const glowX = useSpring(useTransform(mouseX, [0, 1], [20, 80]), { stiffness: 40, damping: 20 })
-  const glowY = useSpring(useTransform(mouseY, [0, 1], [20, 70]), { stiffness: 40, damping: 20 })
-  const glowBg = useMotionTemplate`radial-gradient(600px circle at ${glowX}% ${glowY}%, rgba(255, 215, 0,0.18), transparent 55%)`
+
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -127,8 +120,6 @@ export default function Hero() {
   const heroBgScale = useTransform(scrollYProgress, [0, 1], [1, 1.15])
   const titleY = useTransform(scrollYProgress, [0, 1], ['0%', '-25%'])
   const titleOpacity = useTransform(scrollYProgress, [0, 0.55], [1, 0])
-  const contentBlur = useTransform(scrollYProgress, [0, 0.5], [0, 8])
-  const contentFilter = useMotionTemplate`blur(${contentBlur}px)`
 
   const t = {
       tagline: 'When a team failed',
@@ -157,11 +148,6 @@ export default function Hero() {
     <section
       ref={containerRef}
       className="relative"
-      onMouseMove={(e) => {
-        const rect = e.currentTarget.getBoundingClientRect()
-        mouseX.set((e.clientX - rect.left) / rect.width)
-        mouseY.set((e.clientY - rect.top) / rect.height)
-      }}
     >
       <div className="relative min-h-[100svh] w-full overflow-hidden bg-[#030303] flex flex-col hero-cinematic">
         {/* Cinematic background */}
@@ -177,11 +163,7 @@ export default function Hero() {
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,rgba(3,3,3,0.85)_100%)]" />
         </motion.div>
 
-        {/* Interactive lighting */}
-        <motion.div
-          className="absolute inset-0 pointer-events-none mix-blend-screen"
-          style={{ background: glowBg }}
-        />
+
 
         {/* Floating particles (CSS only — performant) */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -203,7 +185,7 @@ export default function Hero() {
 
         {/* Branding — fills space above news, clears navbar */}
         <motion.div
-          style={{ y: titleY, opacity: titleOpacity, filter: contentFilter }}
+          style={{ y: titleY, opacity: titleOpacity }}
           className="relative z-20 flex-1 min-h-0 flex flex-col items-center justify-center text-white px-6 pt-24 sm:pt-28 pb-6"
         >
           <motion.div
@@ -267,7 +249,7 @@ export default function Hero() {
 
             <MagneticButton
               href="/works"
-              className="group flex items-center gap-2.5 text-white text-[11px] font-extrabold uppercase tracking-[0.22em] px-8 py-3.5 rounded-full border border-white/15 hover:border-[#ffd700]/60 hover:text-[#ffd700] transition-colors glass"
+              className="group flex items-center gap-2.5 text-white text-[11px] font-extrabold uppercase tracking-[0.22em] px-8 py-3.5 rounded-full border border-white/15 hover:border-[#ffd700]/60 hover:text-[#ffd700] transition-colors glass-dark"
             >
               <Film size={14} />
               {t.viewWork}
@@ -282,7 +264,7 @@ export default function Hero() {
         {/* Press strip — in flow, not overlaid on CTAs */}
         <div id="press" className="relative z-30 shrink-0 pb-5 sm:pb-7 pt-2">
           <div className="mx-auto max-w-[96rem] px-3 sm:px-5">
-            <div className="glass-strong rounded-2xl sm:rounded-3xl p-3 sm:p-4 shadow-premium border border-white/10">
+            <div className="glass-strong-dark rounded-2xl sm:rounded-3xl p-3 sm:p-4 shadow-premium border border-white/10">
               <div className="flex items-center gap-2 mb-3 px-1">
                 <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#ffd700] shrink-0">
                   <span className="w-1.5 h-1.5 rounded-full bg-black animate-pulse" />

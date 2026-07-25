@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
+import { Analytics } from '@vercel/analytics/next'
 import { Bebas_Neue, Fraunces, Inter, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import Navbar from '@/components/Navbar'
@@ -48,14 +49,17 @@ const themeInitScript = `
   try {
     var t = localStorage.getItem('theme');
     if (t !== 'light' && t !== 'dark') {
-      t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      t = 'light';
     }
     document.documentElement.dataset.theme = t;
     document.documentElement.classList.add(t);
     document.documentElement.style.colorScheme = t;
+    if (sessionStorage.getItem('beeteam_visited')) {
+      document.documentElement.classList.add('has-visited');
+    }
   } catch (e) {
-    document.documentElement.dataset.theme = 'dark';
-    document.documentElement.classList.add('dark');
+    document.documentElement.dataset.theme = 'light';
+    document.documentElement.classList.add('light');
   }
 })();
 `
@@ -79,6 +83,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               <main className="relative min-h-screen">{children}</main>
               <Footer />
             </SmoothScroll>
+            <Analytics />
           </AuthProvider>
         </ThemeProvider>
       </body>
