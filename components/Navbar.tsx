@@ -128,11 +128,11 @@ export default function Navbar() {
 
             <MagneticButton
               href="/tickets"
-              className="hidden sm:inline-flex group items-center gap-2 bg-gold-bright text-ink px-4 py-2 rounded-full sheen overflow-hidden shadow-gold"
+              className="inline-flex group items-center justify-center w-9 h-9 sm:w-auto sm:h-auto sm:gap-2 bg-gold-bright text-ink sm:px-4 sm:py-2 rounded-full sheen overflow-hidden shadow-gold"
               strength={0.25}
             >
-              <Ticket size={13} strokeWidth={2.5} className="relative z-10" />
-              <span className="relative z-10 text-[10px] font-extrabold uppercase tracking-[0.2em]">
+              <Ticket size={14} strokeWidth={2.5} className="relative z-10" />
+              <span className="hidden sm:inline relative z-10 text-[10px] font-extrabold uppercase tracking-[0.2em]">
                 Buy Tickets
               </span>
             </MagneticButton>
@@ -142,9 +142,9 @@ export default function Navbar() {
                 <a
                   href="/dashboard"
                   aria-label="Your dashboard"
-                  className="hidden sm:inline-flex items-center rounded-full transition-transform hover:scale-105"
+                  className="inline-flex items-center rounded-full transition-transform hover:scale-105"
                 >
-                  <Avatar name={user.fullName} size={34} />
+                  <Avatar name={user.fullName} size={32} />
                 </a>
                 <button
                   type="button"
@@ -210,16 +210,6 @@ export default function Navbar() {
                   {link.name}
                 </motion.a>
               ))}
-              <button
-                type="button"
-                onClick={() => {
-                  toggleTheme()
-                }}
-                className="mx-1 mt-1 flex items-center justify-center gap-2 rounded-full border border-line px-5 py-3 text-[11px] font-extrabold uppercase tracking-[0.2em] text-fg"
-              >
-                {theme === 'dark' ? <Sun size={14} /> : <Moon size={14} />}
-                {theme === 'dark' ? 'Light mode' : 'Dark mode'}
-              </button>
               <a
                 href={user ? '/dashboard' : '/login'}
                 onClick={() => setMobileOpen(false)}
@@ -240,14 +230,6 @@ export default function Navbar() {
                     Sign in / Register
                   </span>
                 )}
-              </a>
-              <a
-                href="/tickets"
-                onClick={() => setMobileOpen(false)}
-                className="mt-1 mx-1 flex items-center justify-center gap-2 rounded-full bg-gold-bright text-ink px-5 py-3.5 text-[11px] font-extrabold uppercase tracking-[0.2em]"
-              >
-                <Ticket size={14} />
-                Buy Tickets
               </a>
               {user && (
                 <button

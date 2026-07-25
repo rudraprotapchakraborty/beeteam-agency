@@ -194,17 +194,25 @@ export default function TicketFlow() {
                     key={m}
                     type="button"
                     onClick={() => setMethod(m)}
-                    className={`rounded-2xl border p-5 text-left transition-colors ${
-                      active ? 'border-gold/60 bg-fill-hover' : 'border-line hover:bg-fill-hover'
+                    className={`relative rounded-2xl border p-5 transition-all duration-300 flex items-center justify-center ${
+                      active
+                        ? 'border-gold bg-gold-bright/5 shadow-premium'
+                        : 'border-line bg-fill-soft hover:border-line-strong hover:bg-fill-hover'
                     }`}
                   >
-                    <span
-                      className="inline-flex h-9 items-center rounded-lg px-3 text-sm font-extrabold text-white"
-                      style={{ background: m === 'bkash' ? '#e2136e' : '#ec1c24' }}
-                    >
-                      {PAYMENT_LABELS[m]}
-                    </span>
-                    <p className="mt-3 text-xs text-muted">Send Money manually</p>
+                    <div className="h-10 w-28 rounded-lg bg-white p-1.5 flex items-center justify-center shadow-sm">
+                      <img
+                        src={m === 'bkash' ? '/bkash-full.png' : '/nagad-full.png'}
+                        alt={PAYMENT_LABELS[m]}
+                        className="h-full object-contain"
+                      />
+                    </div>
+
+                    {active && (
+                      <span className="absolute top-2 right-2 flex h-5 w-5 items-center justify-center rounded-full bg-gold-bright text-ink shadow-sm">
+                        <Check size={12} strokeWidth={3} />
+                      </span>
+                    )}
                   </button>
                 )
               })}
@@ -228,6 +236,18 @@ export default function TicketFlow() {
             <StepTitle icon={<Ticket size={16} />} n="03" title="Send money & submit" />
 
             <div className="mt-5 rounded-2xl border border-gold/30 bg-gold-bright/5 p-5">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="h-8 w-20 rounded bg-white p-1 flex items-center justify-center shadow-sm">
+                  <img
+                    src={method === 'bkash' ? '/bkash-full.png' : '/nagad-full.png'}
+                    alt={PAYMENT_LABELS[method]}
+                    className="h-full object-contain"
+                  />
+                </div>
+                <span className="text-xs font-semibold text-gold-bright uppercase tracking-[0.1em]">
+                  Payment via {PAYMENT_LABELS[method]}
+                </span>
+              </div>
               <p className="text-sm text-muted">
                 Open <span className="font-semibold text-fg">{PAYMENT_LABELS[method]}</span>, choose{' '}
                 <span className="font-semibold text-fg">Send Money</span>, and send{' '}
