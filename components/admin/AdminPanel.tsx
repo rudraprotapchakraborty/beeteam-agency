@@ -163,10 +163,17 @@ export default function AdminPanel() {
                     <p className="text-xs text-subtle">{p.showTime}</p>
                   </td>
                   <td className="px-4 py-4">
-                    <p className="text-fg">
-                      {PAYMENT_LABELS[p.method]} · {p.amount} BDT
-                    </p>
-                    <p className="text-xs text-subtle font-mono-d">from {p.senderNumber}</p>
+                    <div className="flex items-center gap-1.5 text-fg">
+                      <div className="h-5 w-5 rounded bg-white p-0.5 flex items-center justify-center shadow-sm shrink-0" title={PAYMENT_LABELS[p.method]}>
+                        <img
+                          src={p.method === 'bkash' ? '/bkash-mini.png' : '/nagad-mini.jpg'}
+                          alt={PAYMENT_LABELS[p.method]}
+                          className="h-full object-contain"
+                        />
+                      </div>
+                      <span className="font-medium">{p.amount} BDT</span>
+                    </div>
+                    <p className="text-xs text-subtle font-mono-d mt-1">from {p.senderNumber}</p>
                   </td>
                   <td className="px-4 py-4 font-mono-d text-xs text-fg">{p.transactionId}</td>
                   <td className="px-4 py-4">

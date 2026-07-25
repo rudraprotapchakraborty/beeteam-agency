@@ -265,9 +265,20 @@ function PurchaseCard({ p }: { p: Purchase }) {
     <div className="rounded-2xl border border-line bg-fill-soft p-5 flex flex-wrap items-center justify-between gap-4">
       <div className="min-w-0">
         <p className="font-serif-d text-lg text-fg">{p.showLabel}</p>
-        <p className="text-xs text-muted mt-0.5">
-          {p.showTime} · {PAYMENT_LABELS[p.method]} · {p.amount} BDT
-        </p>
+        <div className="flex flex-wrap items-center gap-1.5 text-xs text-muted mt-1">
+          <span>{p.showTime}</span>
+          <span>·</span>
+          <div className="inline-flex items-center gap-1">
+            <div className="h-5 w-5 rounded bg-white p-0.5 flex items-center justify-center shadow-sm shrink-0" title={PAYMENT_LABELS[p.method]}>
+              <img
+                src={p.method === 'bkash' ? '/bkash-mini.png' : '/nagad-mini.jpg'}
+                alt={PAYMENT_LABELS[p.method]}
+                className="h-full object-contain"
+              />
+            </div>
+            <span className="text-fg font-medium">{p.amount} BDT</span>
+          </div>
+        </div>
         <p className="text-[11px] text-subtle font-mono-d mt-1">TrxID: {p.transactionId}</p>
       </div>
       <StatusBadge status={p.status} />
