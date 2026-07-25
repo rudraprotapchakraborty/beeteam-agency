@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
-import { LogOut, Ticket as TicketIcon, Loader2, ShieldCheck, Edit2, Check, X } from 'lucide-react'
+import { Ticket as TicketIcon, Loader2, ShieldCheck, Edit2, Check, X } from 'lucide-react'
 import { useAuth } from '@/context/AuthContext'
 import Avatar from '@/components/ui/Avatar'
 import StatusBadge from '@/components/ui/StatusBadge'
@@ -23,7 +23,7 @@ type Purchase = {
 }
 
 export default function DashboardPage() {
-  const { user, loading, logout, refresh } = useAuth()
+  const { user, loading, refresh } = useAuth()
   const router = useRouter()
   const [purchases, setPurchases] = useState<Purchase[]>([])
   const [loadingPurchases, setLoadingPurchases] = useState(true)
@@ -178,18 +178,7 @@ export default function DashboardPage() {
               )}
             </div>
 
-            {!user.isAdmin && (
-              <button
-                type="button"
-                onClick={async () => {
-                  await logout()
-                  router.push('/')
-                }}
-                className="inline-flex items-center gap-1.5 rounded-full border border-line px-4 py-2.5 text-[10px] font-extrabold uppercase tracking-[0.18em] text-muted hover:bg-fill-hover transition-colors"
-              >
-                <LogOut size={13} /> Sign out
-              </button>
-            )}
+
           </div>
 
           {!user.isAdmin && (

@@ -102,7 +102,6 @@ export default function AdminPanel() {
     <div>
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="label-mono text-gold-bright mb-2">Control Room</p>
           <h2 className="font-serif-d text-2xl sm:text-3xl text-fg">Admin dashboard</h2>
           <p className="text-sm text-muted mt-1">
             {users.length} users · {purchases.length} purchases · {pending} awaiting verification
