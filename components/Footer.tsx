@@ -71,7 +71,7 @@ Dakshinkhan, Dhaka 1230`,
             <SectionEyebrow index="/09" label={t.eyebrow} />
             <h2 className="h-display text-[clamp(52px,10vw,140px)] leading-[0.86] text-fg">
               {t.title1}{' '}
-              <span className="text-gold-bright">{t.title2}</span>
+              <span className="text-(--gold-text)">{t.title2}</span>
             </h2>
             <p className="text-base text-muted max-w-md mt-6 leading-relaxed">{t.subtitle}</p>
           </Reveal>
@@ -103,7 +103,7 @@ Dakshinkhan, Dhaka 1230`,
             </h4>
             <div className="flex flex-col gap-3 text-sm">
               <FooterLink href="/">{t.home}</FooterLink>
-              <FooterLink href="/works">{t.works}</FooterLink>
+              <FooterLink href="/#works">{t.works}</FooterLink>
               <FooterLink href="/team">{t.team}</FooterLink>
             </div>
           </div>
@@ -126,14 +126,14 @@ Dakshinkhan, Dhaka 1230`,
               {t.contact}
             </h4>
             <div className="flex items-start gap-3 text-sm leading-relaxed whitespace-pre-line text-muted">
-              <MapPin size={14} className="text-gold-bright mt-1 shrink-0" />
+              <MapPin size={14} className="text-(--gold-text) mt-1 shrink-0" />
               <div>{t.address}</div>
             </div>
             <a
               href="tel:+8801400872857"
-              className="flex items-center gap-3 text-sm font-medium text-muted hover:text-gold-bright transition-colors"
+              className="flex items-center gap-3 text-sm font-medium text-muted hover:text-(--gold-text) transition-colors"
             >
-              <Phone size={14} className="text-gold-bright" />
+              <Phone size={14} className="text-(--gold-text)" />
               {t.phone}
             </a>
             <div className="flex gap-2 pt-2">
@@ -193,7 +193,7 @@ Dakshinkhan, Dhaka 1230`,
           </a>
 
           <div className="flex items-center gap-5">
-            <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-gold-bright hidden md:block">
+            <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-(--gold-text) hidden md:block">
               {t.thanks}
             </div>
             <motion.button
@@ -222,9 +222,9 @@ function FooterLink({ href, children }: { href: string; children: React.ReactNod
       target={href.startsWith('http') ? '_blank' : undefined}
       rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
       whileHover={{ x: 4 }}
-      className="inline-flex items-center text-muted hover:text-gold-bright transition-colors group"
+      className="inline-flex items-center text-muted hover:text-(--gold-text) transition-colors group"
     >
-      <span className="opacity-0 group-hover:opacity-100 transition mr-1.5 text-gold-bright">→</span>
+      <span className="opacity-0 group-hover:opacity-100 transition mr-1.5 text-(--gold-text)">→</span>
       {children}
     </motion.a>
   )

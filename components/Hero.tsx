@@ -1,11 +1,7 @@
 'use client'
 
 import { useRef } from 'react'
-import {
-  motion,
-  useScroll,
-  useTransform,
-} from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import {
   ChevronLeft,
   ChevronRight,
@@ -100,43 +96,41 @@ const newsBarItems: NewsBarItem[] = [
     outlet: news.outlet,
     title: news.title,
     href: news.href,
-    thumb: getNewsImage(news), // null when image is empty — no auto thumbnail
+    thumb: getNewsImage(news),
     kind: 'link' as const,
     featured: Boolean(news.featured),
   })),
 ].sort((a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)))
 
+const t = {
+  tagline: 'When a team failed',
+  title1: 'BEETEAM',
+  title2: 'STUDIOS',
+  trailer: 'Watch Trailer',
+  viewWork: 'View Reel',
+  press: 'Press Desk',
+  open: 'Open',
+  featured: 'Featured',
+  link: 'Link',
+  prev: 'Previous',
+  next: 'Next',
+  scrollHint: 'Drag or scroll',
+  live: 'Now screening',
+  film: 'The University of Chankharpul',
+}
+
 export default function Hero() {
   const containerRef = useRef<HTMLElement | null>(null)
   const scrollerRef = useRef<HTMLDivElement | null>(null)
-
-
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end start'],
   })
-  const heroBgY = useTransform(scrollYProgress, [0, 1], ['0%', '28%'])
-  const heroBgScale = useTransform(scrollYProgress, [0, 1], [1, 1.15])
-  const titleY = useTransform(scrollYProgress, [0, 1], ['0%', '-25%'])
-  const titleOpacity = useTransform(scrollYProgress, [0, 0.55], [1, 0])
-
-  const t = {
-      tagline: 'When a team failed',
-      title1: 'BEETEAM',
-      title2: 'STUDIOS',
-      trailer: 'Watch Trailer',
-      viewWork: 'View Reel',
-      press: 'Press Desk',
-      open: 'Open',
-      featured: 'Featured',
-      link: 'Link',
-      prev: 'Previous',
-      next: 'Next',
-      scrollHint: 'Drag or scroll',
-      live: 'Now screening',
-      film: 'The University of Chankharpul',
-    }
+  const bgY = useTransform(scrollYProgress, [0, 1], ['0%', '30%'])
+  const bgScale = useTransform(scrollYProgress, [0, 1], [1, 1.18])
+  const contentY = useTransform(scrollYProgress, [0, 1], ['0%', '-22%'])
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.55], [1, 0])
 
   const scrollByCards = (dir: -1 | 1) => {
     const el = scrollerRef.current
@@ -145,97 +139,73 @@ export default function Hero() {
   }
 
   return (
-    <section
-      ref={containerRef}
-      className="relative"
-    >
-      <div className="relative min-h-[100svh] w-full overflow-hidden bg-[#030303] flex flex-col hero-cinematic">
-        {/* Cinematic background */}
-        <motion.div style={{ y: heroBgY, scale: heroBgScale }} className="absolute inset-0">
+    <section ref={containerRef} className="relative bg-[#030303] hero-cinematic">
+      {/* Letterbox bar — top */}
+      <div className="h-3 sm:h-5 bg-black relative z-40" />
+
+      <div className="relative min-h-[92svh] w-full overflow-hidden flex flex-col">
+        <motion.div style={{ y: bgY, scale: bgScale }} className="absolute inset-0">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/hero.jpg"
-            alt=""
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-[#030303]" />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-black/40" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,rgba(3,3,3,0.85)_100%)]" />
+          <img src="/hero.jpg" alt="" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/25 to-[#030303]" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-transparent to-black/45" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_18%,rgba(3,3,3,0.88)_100%)]" />
         </motion.div>
 
+        {/* Fine grain frame corners — cinema-frame cue */}
+        <div className="absolute top-6 left-6 w-8 h-8 border-t border-l border-[#ffd700]/25 z-20 hidden sm:block" />
+        <div className="absolute top-6 right-6 w-8 h-8 border-t border-r border-[#ffd700]/25 z-20 hidden sm:block" />
 
-
-        {/* Floating particles (CSS only — performant) */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {Array.from({ length: 12 }).map((_, i) => (
-            <span
-              key={i}
-              className="absolute rounded-full bg-[#ffd700]/30"
-              style={{
-                width: 2 + (i % 3),
-                height: 2 + (i % 3),
-                left: `${8 + i * 7.5}%`,
-                top: `${15 + (i * 13) % 60}%`,
-                animation: `float-y ${5 + (i % 4)}s ease-in-out ${i * 0.3}s infinite`,
-                opacity: 0.25 + (i % 5) * 0.08,
-              }}
-            />
-          ))}
-        </div>
-
-        {/* Branding — fills space above news, clears navbar */}
         <motion.div
-          style={{ y: titleY, opacity: titleOpacity }}
-          className="relative z-20 flex-1 min-h-0 flex flex-col items-center justify-center text-white px-6 pt-24 sm:pt-28 pb-6"
+          style={{ y: contentY, opacity: contentOpacity }}
+          className="relative z-20 flex-1 min-h-0 flex flex-col items-center justify-center text-white px-6 pt-28 sm:pt-32 pb-8"
         >
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.15, ease: EASE_OUT_EXPO }}
-            className="mb-3 sm:mb-4 flex items-center gap-3"
+            transition={{ duration: 0.8, delay: 0.1, ease: EASE_OUT_EXPO }}
+            className="mb-4 flex items-center gap-3"
           >
             <span className="dot-pulse" />
-            <span className="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.4em] text-[#ffd700]/90">
+            <span className="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.4em] text-[#ffd700]">
               {t.tagline}
             </span>
           </motion.div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 48 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.1, delay: 0.25, ease: EASE_OUT_EXPO }}
-            className="h-display text-[clamp(44px,11vw,140px)] text-center leading-[0.82] w-full"
-          >
-            <span className="block text-white drop-shadow-[0_8px_40px_rgba(0,0,0,0.5)]">
-              {t.title1}
-            </span>
-            <span className="block text-[#ffd700] -mt-[0.06em]">
-              {t.title2}
-            </span>
-          </motion.h1>
+          <div className="overflow-hidden">
+            <motion.h1
+              initial={{ y: '100%' }}
+              animate={{ y: '0%' }}
+              transition={{ duration: 1, delay: 0.2, ease: EASE_OUT_EXPO }}
+              className="h-display text-[clamp(46px,12vw,150px)] text-center leading-[0.82] w-full"
+            >
+              <span className="block text-white">{t.title1}</span>
+              <span className="block text-[#ffd700] -mt-[0.06em]">{t.title2}</span>
+            </motion.h1>
+          </div>
 
           <motion.div
-            initial={{ scaleX: 0, opacity: 0 }}
-            animate={{ scaleX: 1, opacity: 1 }}
-            transition={{ duration: 1, delay: 0.45, ease: EASE_OUT_EXPO }}
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 0.9, delay: 0.55, ease: EASE_OUT_EXPO }}
             style={{ originX: 0.5 }}
-            className="mt-4 h-px w-36 bg-gradient-to-r from-transparent via-[#ffd700] to-transparent"
+            className="mt-5 h-px w-40 bg-gradient-to-r from-transparent via-[#ffd700] to-transparent"
           />
 
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.55, duration: 0.8 }}
-            className="mt-4 font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.32em] text-white/45 text-center"
+            transition={{ delay: 0.7, duration: 0.7 }}
+            className="mt-5 font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.32em] text-white/50 text-center"
           >
             {t.live} · {t.film}
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.6, ease: EASE_OUT_EXPO }}
-            className="flex flex-col sm:flex-row items-center gap-3 mt-6"
+            transition={{ duration: 0.8, delay: 0.8, ease: EASE_OUT_EXPO }}
+            className="flex flex-col sm:flex-row items-center gap-3 mt-8"
           >
             <MagneticButton
               href="https://www.youtube.com/watch?v=ErRnSJQ9nhg"
@@ -248,7 +218,7 @@ export default function Hero() {
             </MagneticButton>
 
             <MagneticButton
-              href="/works"
+              href="/#works"
               className="group flex items-center gap-2.5 text-white text-[11px] font-extrabold uppercase tracking-[0.22em] px-8 py-3.5 rounded-full border border-white/15 hover:border-[#ffd700]/60 hover:text-[#ffd700] transition-colors glass-dark"
             >
               <Film size={14} />
@@ -261,7 +231,7 @@ export default function Hero() {
           </motion.div>
         </motion.div>
 
-        {/* Press strip — in flow, not overlaid on CTAs */}
+        {/* Press strip */}
         <div id="press" className="relative z-30 shrink-0 pb-5 sm:pb-7 pt-2">
           <div className="mx-auto max-w-[96rem] px-3 sm:px-5">
             <div className="glass-strong-dark rounded-2xl sm:rounded-3xl p-3 sm:p-4 shadow-premium border border-white/10">
@@ -309,7 +279,7 @@ export default function Hero() {
                     rel="noopener noreferrer"
                     className="group shrink-0 w-[140px] sm:w-[152px] snap-start"
                   >
-                    <div className="relative h-[128px] sm:h-[136px] rounded-xl overflow-hidden border border-white/10 group-hover:border-[#ffd700]/70 bg-[#111] transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-[0_16px_40px_-12px_rgba(255, 215, 0,0.25)]">
+                    <div className="relative h-[128px] sm:h-[136px] rounded-xl overflow-hidden border border-white/10 group-hover:border-[#ffd700]/70 bg-[#111] transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-[0_16px_40px_-12px_rgba(255,215,0,0.25)]">
                       {item.thumb ? (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img
@@ -364,6 +334,9 @@ export default function Hero() {
           </div>
         </div>
       </div>
+
+      {/* Letterbox bar — bottom */}
+      <div className="h-3 sm:h-5 bg-black relative z-40" />
     </section>
   )
 }

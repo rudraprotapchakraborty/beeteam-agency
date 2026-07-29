@@ -18,7 +18,6 @@ import { EASE_OUT_EXPO } from '@/lib/motion'
 
 const navLinks = [
   { name: 'Home', href: '/' },
-  { name: 'Works', href: '/works' },
   { name: 'Team', href: '/team' },
 ]
 
@@ -100,7 +99,7 @@ export default function Navbar() {
               >
                 <span
                   className={`relative z-10 transition-colors duration-300 ${
-                    hovered === link.name ? 'text-gold-bright' : 'text-muted'
+                    hovered === link.name ? 'text-(--gold-text)' : 'text-muted'
                   }`}
                 >
                   {link.name}
@@ -121,7 +120,7 @@ export default function Navbar() {
               type="button"
               onClick={toggleTheme}
               aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-              className="flex items-center justify-center w-9 h-9 rounded-full border border-line bg-fill-soft text-fg hover:border-gold/40 hover:text-gold-bright transition-colors"
+              className="flex items-center justify-center w-9 h-9 rounded-full border border-line bg-fill-soft text-fg hover:border-gold/40 hover:text-(--gold-text) transition-colors"
             >
               {theme === 'dark' ? <Sun size={15} strokeWidth={2.2} /> : <Moon size={15} strokeWidth={2.2} />}
             </button>
@@ -153,7 +152,7 @@ export default function Navbar() {
                     router.push('/')
                   }}
                   aria-label="Sign out"
-                  className="hidden sm:inline-flex items-center justify-center w-9 h-9 rounded-full border border-line bg-fill-soft text-fg hover:border-gold/40 hover:text-gold-bright transition-colors"
+                  className="hidden sm:inline-flex items-center justify-center w-9 h-9 rounded-full border border-line bg-fill-soft text-fg hover:border-gold/40 hover:text-(--gold-text) transition-colors"
                 >
                   <LogOut size={15} strokeWidth={2.2} />
                 </button>
@@ -161,7 +160,7 @@ export default function Navbar() {
             ) : (
               <a
                 href="/login"
-                className="hidden sm:inline-flex items-center rounded-full border border-line bg-fill-soft px-4 py-2 text-[10px] font-extrabold uppercase tracking-[0.2em] text-fg hover:border-gold/40 hover:text-gold-bright transition-colors"
+                className="hidden sm:inline-flex items-center rounded-full border border-line bg-fill-soft px-4 py-2 text-[10px] font-extrabold uppercase tracking-[0.2em] text-fg hover:border-gold/40 hover:text-(--gold-text) transition-colors"
               >
                 Sign in
               </a>
@@ -205,7 +204,7 @@ export default function Navbar() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.05 * i }}
                   onClick={() => setMobileOpen(false)}
-                  className="px-5 py-4 rounded-2xl text-sm font-bold uppercase tracking-[0.2em] text-fg hover:bg-fill-soft hover:text-gold-bright transition-colors"
+                  className="px-5 py-4 rounded-2xl text-sm font-bold uppercase tracking-[0.2em] text-fg hover:bg-fill-soft hover:text-(--gold-text) transition-colors"
                 >
                   {link.name}
                 </motion.a>

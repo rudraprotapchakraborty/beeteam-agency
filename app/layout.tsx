@@ -6,6 +6,7 @@ import './globals.css'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import OpeningScene from '@/components/OpeningScene'
+import WhatsAppFloat from '@/components/WhatsAppFloat'
 import SmoothScroll from '@/components/providers/SmoothScroll'
 import { ThemeProvider } from '@/context/ThemeContext'
 import { AuthProvider } from '@/context/AuthContext'
@@ -49,7 +50,7 @@ const themeInitScript = `
   try {
     var t = localStorage.getItem('theme');
     if (t !== 'light' && t !== 'dark') {
-      t = 'light';
+      t = 'dark';
     }
     document.documentElement.dataset.theme = t;
     document.documentElement.classList.add(t);
@@ -58,8 +59,8 @@ const themeInitScript = `
       document.documentElement.classList.add('has-visited');
     }
   } catch (e) {
-    document.documentElement.dataset.theme = 'light';
-    document.documentElement.classList.add('light');
+    document.documentElement.dataset.theme = 'dark';
+    document.documentElement.classList.add('dark');
   }
 })();
 `
@@ -82,6 +83,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               <Navbar />
               <main className="relative min-h-screen">{children}</main>
               <Footer />
+              <WhatsAppFloat />
             </SmoothScroll>
             <Analytics />
           </AuthProvider>

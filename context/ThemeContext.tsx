@@ -27,12 +27,12 @@ function applyTheme(theme: Theme) {
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>('light')
+  const [theme, setThemeState] = useState<Theme>('dark')
   const [ready, setReady] = useState(false)
 
   useEffect(() => {
     const stored = localStorage.getItem('theme')
-    let initial: Theme = 'light'
+    let initial: Theme = 'dark'
     if (stored === 'light' || stored === 'dark') {
       initial = stored
     }
@@ -53,7 +53,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   // Avoid flash of wrong controls; children still render
   return (
-    <ThemeContext.Provider value={{ theme: ready ? theme : 'light', setTheme, toggleTheme }}>
+    <ThemeContext.Provider value={{ theme: ready ? theme : 'dark', setTheme, toggleTheme }}>
       {children}
     </ThemeContext.Provider>
   )

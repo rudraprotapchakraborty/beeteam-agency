@@ -1,20 +1,20 @@
 import Hero from '@/components/Hero'
-import PressRelease from '@/components/PressRelease'
 import DirectorVision from '@/components/DirectorVision'
 import LatestRelease from '@/components/LatestRelease'
 import HallOfFame from '@/components/HallOfFame'
 import FilmInfoSection from '@/components/FilmInfoSection'
 import SynopsisSection from '@/components/SynopsisSection'
+import Works from '@/components/Works'
 
 export default function Home() {
   return (
     <>
       <Hero />
-      <PressRelease />
+      <SynopsisSection />
+      <DirectorVision />
       <LatestRelease />
       <FilmInfoSection />
-      <DirectorVision />
-      <SynopsisSection />
+      <Works />
       <HallOfFame />
     </>
   )

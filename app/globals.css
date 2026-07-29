@@ -32,6 +32,8 @@ html[data-theme="dark"] {
   --gold: #ffd700;
   --gold-bright: #ffd700;
   --gold-dim: #ffd700;
+  /* Text-safe gold: on dark bg the vivid brand yellow already has huge contrast margin */
+  --gold-text: #ffd700;
   --ink: #0a0a0a;
   --cream: #faf8f3;
   color-scheme: dark;
@@ -66,6 +68,8 @@ html[data-theme="light"] {
   --gold: #ffd700;
   --gold-bright: #ffd700;
   --gold-dim: #ffd700;
+  /* Text-safe gold: deep amber-gold, ~5.5–6:1 contrast on light backgrounds (vivid #ffd700 text here would be ~1.3:1) */
+  --gold-text: #7a5f00;
   --ink: #0a0a0a;
   --cream: #faf8f3;
   color-scheme: light;
@@ -90,6 +94,7 @@ html[data-theme="light"] {
   --color-gold: var(--brand);
   --color-gold-bright: var(--brand);
   --color-gold-dim: var(--brand);
+  --color-gold-text: var(--gold-text);
   --color-ink: var(--ink);
   --color-cream: var(--cream);
   --color-void: var(--page);

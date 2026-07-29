@@ -96,7 +96,7 @@ export function SectionEyebrow({
   return (
     <div className="flex items-center gap-3 mb-6">
       {index && (
-        <span className="font-mono text-[10px] uppercase tracking-[0.32em] text-gold">
+        <span className="font-mono text-[10px] uppercase tracking-[0.32em] text-(--gold-text)">
           {index}
         </span>
       )}

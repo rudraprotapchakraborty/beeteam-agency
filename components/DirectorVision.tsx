@@ -1,20 +1,13 @@
 'use client'
 
-import { useRef } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
-import Reveal, { SectionEyebrow } from '@/components/ui/Reveal'
+import { useRef, useState } from 'react'
+import { motion, useMotionValueEvent, useScroll, useTransform } from 'framer-motion'
+import { SectionEyebrow } from '@/components/ui/Reveal'
 import { EASE_OUT_EXPO } from '@/lib/motion'
 
 export default function DirectorVision() {
   const sectionRef = useRef<HTMLElement | null>(null)
-
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start end', 'end start'],
-  })
-  const lineHeight = useTransform(scrollYProgress, [0.15, 0.75], ['0%', '100%'])
-  const questionScale = useTransform(scrollYProgress, [0.55, 0.9], [0.92, 1])
-  const questionOpacity = useTransform(scrollYProgress, [0.5, 0.7], [0.3, 1])
+  const [active, setActive] = useState(0)
 
   const t = {
       directorTitle: "Director's Vision",
@@ -26,93 +19,107 @@ export default function DirectorVision() {
       p3: `This approach allows the viewer to feel the humidity of student hostels, the chaos of campus rallies, the politics hidden in tea stalls. The film observes its characters without judgment. It doesn't ask who is innocent or guilty, it asks what ambition does to innocence in the first place. It explores how deeply young people crave recognition, how cheaply it can be traded, and how tragedy becomes just another stepping stone to power.`,
       endingLine: 'The film ends not with closure, but with a question:',
       finalQuestion: 'How much of ourselves are we willing to sacrifice to feel important?',
-      chapters: [
-        { id: '01', title: 'Ambition' },
-        { id: '02', title: 'Method' },
-        { id: '03', title: 'Truth' },
-      ],
     }
-  const paragraphs = [t.p1, t.p2, t.p3]
   const titleParts = t.directorTitle.split(' ')
+
+  const slides = [
+    { kind: 'intro' as const },
+    { kind: 'chapter' as const, id: '01', title: 'Ambition', text: t.p1 },
+    { kind: 'chapter' as const, id: '02', title: 'Method', text: t.p2 },
+    { kind: 'chapter' as const, id: '03', title: 'Truth', text: t.p3 },
+    { kind: 'final' as const },
+  ]
+  const count = slides.length
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start start', 'end end'],
+  })
+  const x = useTransform(scrollYProgress, [0, 1], ['0%', `-${(count - 1) * 100}%`])
+
+  useMotionValueEvent(scrollYProgress, 'change', (v) => {
+    setActive(Math.min(count - 1, Math.max(0, Math.round(v * (count - 1)))))
+  })
 
   return (
     <section
       ref={sectionRef}
-      className="relative bg-page-3 text-fg py-20 md:py-32 overflow-hidden"
+      className="relative bg-page-3 text-fg"
+      style={{ height: `${count * 100}vh` }}
     >
-      <div className="absolute inset-0 pointer-events-none opacity-60">
-        <div className="glow-orb top-1/4 left-1/3 w-[600px] h-[600px] bg-gold/[0.08]" />
-      </div>
-
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="grid lg:grid-cols-12 gap-10 mb-16 items-end">
-          <Reveal className="lg:col-span-7">
-            <SectionEyebrow index="/02" label={t.directorSub} />
-            <h2 className="h-display text-[clamp(48px,9vw,120px)] leading-[0.86] text-fg">
-              {titleParts[0]}
-              <br />
-              <span className="text-gold-bright">{titleParts.slice(1).join(' ')}</span>
-            </h2>
-          </Reveal>
-          <Reveal delay={0.12} className="lg:col-span-5 lg:pl-8 lg:border-l border-line">
-            <p className="font-serif-d italic text-xl md:text-2xl text-gold-bright leading-snug">
-              &ldquo;{t.pullQuote}&rdquo;
-            </p>
-            <div className="mt-4 font-mono text-[10px] uppercase tracking-[0.25em] text-subtle">
-              — MONIRUL HAQUE AKASH
-            </div>
-          </Reveal>
+      <div className="sticky top-0 h-screen w-full overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none opacity-60">
+          <div className="glow-orb top-1/4 left-1/3 w-[600px] h-[600px] bg-gold/[0.08]" />
         </div>
 
-        {/* Sticky scroll storytelling */}
-        <div className="relative grid lg:grid-cols-12 gap-10">
-          {/* Progress spine */}
-          <div className="hidden lg:block lg:col-span-1 relative">
-            <div className="sticky top-32 h-[50vh] w-px bg-line mx-auto">
-              <motion.div
-                style={{ height: lineHeight }}
-                className="absolute top-0 left-0 w-full bg-gradient-to-b from-gold-bright to-gold/40 origin-top"
-              />
-            </div>
-          </div>
-
-          <div className="lg:col-span-11 space-y-16 md:space-y-24">
-            {paragraphs.map((text, i) => (
-              <motion.div
-                key={t.chapters[i].id}
-                initial={{ opacity: 0, x: 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, amount: 0.35 }}
-                transition={{ duration: 0.9, ease: EASE_OUT_EXPO }}
-                className="grid md:grid-cols-12 gap-6 items-start"
-              >
-                <div className="md:col-span-3">
-                  <div className="font-display text-5xl md:text-6xl text-faint leading-none">
-                    {t.chapters[i].id}
+        <motion.div style={{ x }} className="relative z-10 flex h-full w-full">
+          {slides.map((slide, i) => (
+            <div
+              key={i}
+              className="flex h-full w-screen shrink-0 items-center justify-center px-6 md:px-12"
+            >
+              {slide.kind === 'intro' && (
+                <div className="max-w-4xl mx-auto text-center">
+                  <div className="flex justify-center">
+                    <SectionEyebrow index="/02" label={t.directorSub} />
                   </div>
-                  <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-gold mt-2">
-                    {t.chapters[i].title}
+                  <h2 className="h-display text-[clamp(40px,9vw,110px)] leading-[0.86] text-fg mt-4">
+                    {titleParts[0]}
+                    <br />
+                    <span className="text-(--gold-text)">{titleParts.slice(1).join(' ')}</span>
+                  </h2>
+                  <p className="mt-8 font-serif-d italic text-xl md:text-2xl text-(--gold-text) leading-snug max-w-2xl mx-auto">
+                    &ldquo;{t.pullQuote}&rdquo;
+                  </p>
+                  <div className="mt-4 font-mono text-[10px] uppercase tracking-[0.25em] text-subtle">
+                    — MONIRUL HAQUE AKASH
                   </div>
                 </div>
-                <p className="md:col-span-9 text-base md:text-lg text-muted leading-[1.8] font-light max-w-2xl">
-                  {text}
-                </p>
-              </motion.div>
-            ))}
+              )}
 
-            {/* Final question — signature moment */}
-            <motion.div
-              style={{ scale: questionScale, opacity: questionOpacity }}
-              className="pt-12 md:pt-16 border-t border-line"
-            >
-              <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-gold mb-6">
-                ⟶ {t.endingLine}
-              </p>
-              <p className="font-serif-d italic text-3xl md:text-5xl lg:text-6xl text-fg leading-[1.15] tracking-tight max-w-4xl">
-                &ldquo;{t.finalQuestion}&rdquo;
-              </p>
-            </motion.div>
-          </div>
+              {slide.kind === 'chapter' && (
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: active === i ? 1 : 0.3, y: 0 }}
+                  transition={{ duration: 0.6, ease: EASE_OUT_EXPO }}
+                  className="max-w-3xl mx-auto"
+                >
+                  <div className="font-display text-6xl md:text-8xl text-faint leading-none">
+                    {slide.id}
+                  </div>
+                  <div className="font-mono text-[10px] md:text-xs uppercase tracking-[0.3em] text-(--gold-text) mt-3 mb-6">
+                    {slide.title}
+                  </div>
+                  <p className="text-lg md:text-xl text-muted leading-[1.8] font-light">
+                    {slide.text}
+                  </p>
+                </motion.div>
+              )}
+
+              {slide.kind === 'final' && (
+                <div className="max-w-4xl mx-auto text-center">
+                  <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-(--gold-text) mb-6">
+                    ⟶ {t.endingLine}
+                  </p>
+                  <p className="font-serif-d italic text-3xl md:text-5xl lg:text-6xl text-fg leading-[1.15] tracking-tight">
+                    &ldquo;{t.finalQuestion}&rdquo;
+                  </p>
+                </div>
+              )}
+            </div>
+          ))}
+        </motion.div>
+
+        {/* Progress dots */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2.5">
+          {slides.map((_, i) => (
+            <div
+              key={i}
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                active === i ? 'w-8 bg-gold-bright' : 'w-1.5 bg-line'
+              }`}
+            />
+          ))}
         </div>
       </div>
     </section>
