@@ -101,7 +101,7 @@ export default function HallOfFame() {
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="grid lg:grid-cols-12 gap-8 mb-14 items-end">
           <Reveal className="lg:col-span-7">
-            <SectionEyebrow index="/06" label={t.eyebrow} />
+            <SectionEyebrow index="/05" label={t.eyebrow} />
             <h2 className="h-display text-[clamp(48px,9vw,120px)] text-fg leading-[0.86]">
               {t.title1} <span className="text-(--gold-text)">{t.title2}</span>
             </h2>

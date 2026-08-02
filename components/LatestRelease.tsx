@@ -51,7 +51,7 @@ const t = {
   title2: 'Release',
   tagline: 'Production House · Studio 2026',
   caption:
-    'A satirical political drama by Monirul Haque Akash. Premiered at the 24th Dhaka International Film Festival.',
+    'A satirical political drama by Akash Haque. Premiered at the 24th Dhaka International Film Festival.',
   posters: 'Posters',
   postersSub: 'Theatrical assets',
   trailers: 'Trailers',

@@ -14,8 +14,8 @@ export default function Home() {
       <DirectorVision />
       <LatestRelease />
       <FilmInfoSection />
-      <Works />
       <HallOfFame />
+      <Works />
     </>
   )
 }

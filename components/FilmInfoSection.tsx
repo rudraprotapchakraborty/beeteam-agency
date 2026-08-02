@@ -10,7 +10,7 @@ const t = {
   title1: 'Film',
   title2: 'Information',
   creatorLabel: 'Producer · Writer · Director · Editor · Cinematographer',
-  creator: 'Monirul Haque Akash',
+  creator: 'Akash Haque',
   production: 'Production Company',
   genre: 'Genre',
   country: 'Country',

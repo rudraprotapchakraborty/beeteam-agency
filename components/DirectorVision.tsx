@@ -11,7 +11,7 @@ export default function DirectorVision() {
 
   const t = {
       directorTitle: "Director's Vision",
-      directorSub: 'A Note from Monirul Haque Akash · 2026',
+      directorSub: 'A Note from Akash Haque · 2026',
       pullQuote:
         'Identity is conditional. Power is performance. The horse, then, is everything.',
       p1: `This film is not about student politics alone; it is about the marketplace of ambition in a third-world society. In a world where young people are asked to dream, they are also forced to gamble those dreams in exchange for influence and power. Our characters have no names because identity here is conditional, one is known by his position only. The horse becomes a satire of status. It symbolizes a shortcut, an absurd object that suddenly grants social legitimacy. Students laugh at it as a joke, then worship it as power.`,
@@ -72,7 +72,7 @@ export default function DirectorVision() {
                     &ldquo;{t.pullQuote}&rdquo;
                   </p>
                   <div className="mt-4 font-mono text-[10px] uppercase tracking-[0.25em] text-subtle">
-                    — MONIRUL HAQUE AKASH
+                    — AKASH HAQUE
                   </div>
                 </div>
               )}

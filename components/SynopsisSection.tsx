@@ -7,7 +7,8 @@ import { EASE_OUT_EXPO } from '@/lib/motion'
 
 const t = {
   presents: 'Bee Team Presents',
-  title: 'Synopsis',
+  title: 'The University of Chankharpul',
+  synopsisLabel: 'Synopsis',
   blurb: `In a third-world university where student politics is a ruthless gamble, a nameless student rises to power through an unexpected symbol—a horse.`,
   blurb2: `What begins as absurdity quickly becomes influence, status, and political capital. But as ambition grows, friendship collapses.`,
   blurb3: `In a world built on selfishness, every rise demands a sacrifice.`,
@@ -57,13 +58,16 @@ export default function SynopsisSection() {
                     >
                       &ldquo;
                     </span>
-                    <h2 className="relative h-display text-[clamp(64px,13vw,180px)] text-[#ffd700] leading-[0.86]">
+                    <h2 className="relative h-display text-[clamp(40px,7vw,88px)] text-[#ffd700] leading-[0.9]">
                       {t.title}
                     </h2>
                   </div>
                 </Reveal>
 
                 <Reveal delay={0.12} className="mt-10 max-w-xl space-y-6">
+                  <p className="font-mono text-[11px] uppercase tracking-[0.32em] text-white/50">
+                    {t.synopsisLabel}
+                  </p>
                   <p className="font-serif-d text-2xl md:text-3xl text-white leading-[1.3]">
                     {t.blurb}
                   </p>
