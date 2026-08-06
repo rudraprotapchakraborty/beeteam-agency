@@ -9,9 +9,14 @@ const t = {
   presents: 'Bee Team Presents',
   title: 'The University of Chankharpul',
   synopsisLabel: 'Synopsis',
-  blurb: `In a third-world university where student politics is a ruthless gamble, a nameless student rises to power through an unexpected symbol—a horse.`,
-  blurb2: `What begins as absurdity quickly becomes influence, status, and political capital. But as ambition grows, friendship collapses.`,
-  blurb3: `In a world built on selfishness, every rise demands a sacrifice.`,
+  lead: `Unlike universities in most parts of the world, a third-world institution like The University of Chankharpul becomes a gambling arena where ambitious students sacrifice their youth, careers, and principles for a single dream: a political post in a government-backed student wing. A post that promises shortcuts to influence, corruption, and future power.`,
+  body: [
+    `The film follows a group of friends who enter university as brothers, eating together, marching together, fighting together. But slowly, ambition rips them apart. They begin to compete silently, desperately, to rise in the political hierarchy. Friendship here becomes nothing more than a temporary alliance built only to be broken.`,
+    `Our protagonist has no name; also no other character does. They are known only as “vai”, “mama”, etc, here, identities shaped by position. Our protagonist dreams of rising in politics but lacks the key tool of networking: a Motorbike. Without family support or income, he sinks into depression, trying every humiliating way to earn one.`,
+    `Then one day, he returns to campus riding a Horse. Absurdity becomes power. The horse instantly transforms him into a symbol: stylish, rebellious, and influential. The University President of the student wing notices him, elevates him, praises him, uses him. With the horse comes money, protection, respect. The protagonist’s world flips overnight.`,
+    `Soon he forgets who he started with. Friends turn into shadows behind him. He becomes the selfish figure he once despised.`,
+  ],
+  pullQuote: `Day by day it becomes clear that, In this world, nobody climbs without stepping on someone else.`,
 }
 
 export default function SynopsisSection() {
@@ -64,20 +69,27 @@ export default function SynopsisSection() {
                   </div>
                 </Reveal>
 
-                <Reveal delay={0.12} className="mt-10 max-w-xl space-y-6">
+                <Reveal delay={0.12} className="mt-10 max-w-2xl space-y-6">
                   <p className="font-mono text-[11px] uppercase tracking-[0.32em] text-white/50">
                     {t.synopsisLabel}
                   </p>
-                  <p className="font-serif-d text-2xl md:text-3xl text-white leading-[1.3]">
-                    {t.blurb}
+                  <p className="font-serif-d text-xl md:text-2xl text-white leading-[1.35]">
+                    {t.lead}
                   </p>
-                  <p className="text-base md:text-lg text-white/55 leading-relaxed font-light">
-                    {t.blurb2}
-                  </p>
+                  <div className="space-y-4">
+                    {t.body.map((para) => (
+                      <p
+                        key={para}
+                        className="text-sm md:text-base text-white/55 leading-relaxed font-light"
+                      >
+                        {para}
+                      </p>
+                    ))}
+                  </div>
                 </Reveal>
               </div>
 
-              <div className="lg:col-span-5 lg:pl-6 flex items-end">
+              <div className="lg:col-span-5 lg:pl-6 flex items-start lg:items-end">
                 <Reveal delay={0.2}>
                   <motion.div
                     initial={{ scaleY: 0 }}
@@ -87,8 +99,8 @@ export default function SynopsisSection() {
                     style={{ originY: 0 }}
                     className="border-l-2 border-[#ffd700] pl-6 py-1"
                   >
-                    <p className="font-serif-d italic text-2xl md:text-4xl text-[#ffd700] leading-snug">
-                      {t.blurb3}
+                    <p className="font-serif-d italic text-xl md:text-3xl text-[#ffd700] leading-snug">
+                      {t.pullQuote}
                     </p>
                   </motion.div>
                 </Reveal>

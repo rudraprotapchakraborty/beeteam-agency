@@ -26,6 +26,12 @@ const posters = [
     label: 'Poster 03',
     size: '27 × 40 IN',
   },
+  {
+    src: '/posters/poster4.jpg',
+    alt: 'The University of Chankharpul — Theatrical Poster 04',
+    label: 'Poster 04',
+    size: '27 × 40 IN',
+  },
 ] as const
 
 type Poster = (typeof posters)[number]
@@ -113,7 +119,7 @@ export default function LatestRelease() {
         <div className="mb-20">
           <SectionLabel title={t.posters} sub={t.postersSub} count={posters.length} />
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 md:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
             {posters.map((poster, i) => (
               <motion.button
                 key={poster.src}
@@ -124,14 +130,14 @@ export default function LatestRelease() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.7, delay: i * 0.08, ease: EASE_OUT_EXPO }}
                 whileHover={{ y: -8 }}
-                className={`group relative text-left cursor-pointer ${i === 1 ? 'sm:-translate-y-4' : ''}`}
+                className={`group relative text-left cursor-pointer ${i % 2 === 1 ? 'sm:-translate-y-4' : ''}`}
               >
                 <div className="relative aspect-[2/3] rounded-2xl overflow-hidden border border-line bg-black shadow-premium group-hover:border-gold/50 transition-colors duration-500">
                   <Image
                     src={poster.src}
                     alt={poster.alt}
                     fill
-                    sizes="(min-width: 640px) 33vw, 100vw"
+                    sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                     className="object-cover transition-transform duration-700 group-hover:scale-[1.05]"
                     priority={i < 2}
                   />
